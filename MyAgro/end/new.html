@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
+    <title>User Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-cover bg-no-repeat bg-[url('/end/images/reg.jpg')]">
+    <!-- registration form -->
+    <div class="flex flex-col items-center mr-[250px]">
+        <div class="flex flex-col items-center">
+            <h1 class="font-serif text-6xl mb-3 italic font-bold text-[#30f915]">MyAgro</h1>
+            <h2 class="mb-3 text-3xl font-semibold text-white">Register for your MyAgro account</h2>
+        </div>
+        <form id="registrationform" action="" class="flex flex-col items-center font-semibold border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
+            <!-- common field -->
+            <div class="flex flex-col w-[330px]" id="commonfield">
+                <label for="name" class="mt-1">Enter your name</label>
+                <input type="text" id="name" placeholder=" E.g. charitha buddhika " class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                <label for="username" class="mt-2">Enter your Username</label>
+                <input type="text" placeholder=" E.g. charitha" id="username" class="rounded-md h-7 placeholder:italic placeholder:text-[14px]" required>
+                <label for="password" class="mt-2">Enter your Password</label>
+                <input type="password" placeholder=" pick up your password" id="password" class="rounded-md h-7 placeholder:italic placeholder:text-[14px]" required>
+                <label for="userType" class="mt-2">Select your user type</label>
+                <select name="userType" id="userType" placeholder="E.g. your farmer select 'farmer'" class="mb-2 rounded-lg h-7 placeholder:italic placeholder:text-[14px]" required>
+                    <option value="" disabled selected>Please choose your user type</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Supplier">Supplier</option>
+                </select>
+            </div>
+
+            <!-- Customer Fields -->
+            <div class="user-type-section hidden flex flex-col w-[330px]" id="Customerfield">
+                <label for="customerAddress">Enter your address</label>
+                <input type="text" id="customerAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="customerEmail" class="mt-2">Enter your Email Address</label>
+                <input type="email" id="customerEmail" placeholder=" E.g. charit@gmail.com" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="customerPhone" class="mt-2">Enter your phone number</label>
+                <input type="tel" id="customerPhone" placeholder=" E.g. 0795555555" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <div class="flex">
+                    <button type="reset" class="mt-6 mr-6 h-8 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
+                    <button type="submit" class="mt-6 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-[#f9e912]">Register</button>
+                </div>
+                <h1 class="relative mt-5 mb-2 text-sm left-10">Already have an account? <a href="login.html">Login</a></h1>
+            </div>
+
+            <!-- Farmer Fields -->
+            <div class="user-type-section hidden flex flex-col w-[330px]" id="Farmerfield">
+                <label for="farmerNIC">Enter your NIC number</label>
+                <input type="text" id="farmerNIC" placeholder=" E.g. 458458756789/258963147 without v or x" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="farmerAddress" class="mt-2">Enter your address</label>
+                <input type="text" id="farmerAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="farmerEmail" class="mt-2">Enter your Email Address</label>
+                <input type="email" id="farmerEmail" placeholder=" E.g. charit@gmail.com" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="farmerPhone" class="mt-2">Enter your phone number</label>
+                <input type="tel" id="farmerPhone" placeholder=" E.g. 0795555555" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="farmerProof" class="mt-2">Enter your proof image</label>
+                <input type="file" id="farmerProof" class="rounded-md h-[70px] border-4 placeholder:text-[14px] placeholder:italic">
+                <div class="flex">
+                    <button type="reset" class="mt-6 h-8 mr-6 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
+                    <button type="submit" class="mt-6 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-[#f9e912]">Register</button>
+                </div>
+                <h1 class="relative mt-5 mb-2 text-sm left-10">Already have an account? <a href="login.html">Login</a></h1>
+            </div>
+
+            <!-- Supplier Fields -->
+            <div class="user-type-section hidden flex flex-col w-[330px]" id="Supplierfield">
+                <label for="supplierNIC">Enter your NIC number</label>
+                <input type="text" id="supplierNIC" placeholder=" E.g. 458458756789/258963147 without v or x" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="supplierAddress" class="mt-2">Enter your address</label>
+                <input type="text" id="supplierAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="supplierEmail" class="mt-2">Enter your Email Address</label>
+                <input type="email" id="supplierEmail" placeholder=" E.g. charit@gmail.com" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="supplierOTP" class="mt-2">Enter your OTP number</label>
+                <input type="text" id="supplierOTP" placeholder=" E.g. 00000" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="supplierPhone" class="mt-2">Enter your phone number</label>
+                <input type="tel" id="supplierPhone" placeholder=" E.g. 0795555555" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic">
+                <label for="supplierProof" class="mt-2">Enter your proof image</label>
+                <input type="file" id="supplierProof" class="rounded-md h-[70px] border-4 placeholder:text-[14px] placeholder:italic">
+                <div class="flex">
+                    <button type="reset" class="mt-5 mr-6 h-8 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
+                    <button type="submit" class="mt-5 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-[#f9e912]">Register</button>
+                </div>
+                <h1 class="relative mt-4 text-sm left-10">Already have an account? <a href="login.html">Login</a></h1>
+                <button class="absolute top-[480px] left-[700px]">
+                    <input type="submit" value="Send OTP" class="mt-6 h-8 rounded-full w-[150px] bg-[#6EE70F]/50 focus:cursor-pointer">
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('userType').addEventListener('change', function () {
+            var userType = this.value;
+            var sections = document.querySelectorAll('.user-type-section');
+            sections.forEach(function (section) {
+                section.classList.add('hidden');
+            });
+            if (userType) {
+                document.getElementById(userType + 'field').classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

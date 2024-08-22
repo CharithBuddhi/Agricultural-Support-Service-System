@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
+    <title>Login page</title>
+</head>
+<body class="h-[81vh] bg-cover bg-no-repeat bg-[url('/end/images/login.jpg')]">
+    <div >
+        <div class="flex flex-col items-center h-[63vh] w-[60%] mx-auto mt-40 rounded-3xl shadow-6xl bg-[#BAEAD3]/50">
+            <h1 class="font-serif text-6xl mb-6 italic font-bold text-[#30f915]">MyAgro</h1>
+            <h1 class="mb-20 text-3xl font-bold">Log in to your MyAgro account</h1>
+            <div class="flex flex-col items-center">
+                <form action="" class="flex flex-col font-semibold w-[300px]">
+                    <label for="userType">Select your user type</label>
+                    <select name="" id="userType" placeholder="E.g. your farmer select “farmer”" class="rounded-lg h-7 placeholder:italic bg-[#f3f2f2]">
+                        <option value="def" disabled selected >Please choose your user type</option>
+                        <option value="Farmer" >Farmer</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Supplier">Supplier</option>
+                    </select>
+                    <label for="username" class="mt-4">Enter your Username</label>
+                    <input type="text" placeholder=" E.g.charitha" id="username"class="rounded-lg h-7 placeholder:italic">
+                    <label for="password"class="mt-4">Enter your Password</label>
+                    <input type="password" placeholder="  pick up your password" id="password" class="rounded-lg h-7 placeholder:italic bg-[#f3f2f2] ">
+                    <p class="relative mt-1 left-[172px]">
+                        <a href="forgot.html">Forgot Password?</a>
+                    </p>
+                    <button class="flex mt-6 h-10 rounded-full bg-[#E8E025] justify-center">
+                        <input type="submit" value="Login" class="py-2 focus:cursor-pointer">
+                    </button>
+                    <p class="relative mt-3 left-8">Don't have an account? <a href="register.html">Register</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
