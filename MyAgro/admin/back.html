@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>back</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="w-screen h-screen bg-[#3c5077] flex items-center justify-center">
+
+        <button onclick="openPopup()" type="submit" class="p-2 w-[120px] bg-lime-300 hover:bg-lime-500 active:bg-lime-600 rounded-xl">submit</button>
+
+        <div id="popup" class="absolute self-center h-[500px] p-2 items-center w-[500px] bg-white rounded-3xl">
+            <img src="images/eye-close.png" alt="back" class="w-[100px] h-[100px]">
+            <button onclick="closePopup()" type="button" class="h-[50px] mt-[10px] w-[200px] bg-lime-400">Ok</button>
+        </div>
+        
+    </div>
+
+    <script>
+        let popup = document.getElementById('popup');
+
+        function openPopup(){
+            popup.classList.remove('hidden');
+            
+        }
+        function closePopup(){
+            popup.classList.add('hidden');
+        }
+    </script>
+
+</body>
+</html>

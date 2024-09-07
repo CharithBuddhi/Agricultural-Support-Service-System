@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
     <title>User Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 <body class="bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
@@ -18,53 +20,53 @@
         <div class="flex flex-col items-center mt-3">
             <h2 class="mb-3 text-3xl font-semibold text-white">Register for your MyAgro account</h2>
         </div>
-        <form id="registrationform" action="connect.php" method="POST" class="flex flex-col items-center text-md font-semibold  border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
+        <form id="registrationform" action="#" method="POST" class="flex flex-col items-center text-md font-semibold  border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
 
             <div class="flex flex-col w-[330px]" id="commonfield">
                 <label for="name" class="mt-1">Enter your name</label>
-                <input type="text" pattern="[a-zA-Z\s]+" minlength="15" id="name" name="yourname" placeholder=" E.g. charitha buddhika " class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" required>
+                <input type="text" pattern="[a-zA-Z\s]+" minlength="15" id="aname" name="yourname" placeholder=" E.g. charitha buddhika " class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" >
                 
                 <label for="username" class="mt-2">Enter your Username</label>
-                <input type="text" placeholder=" E.g. charitha" minlength="5" id="username" name="username" class="rounded-md h-7 px-1 placeholder:italic placeholder:text-[14px]" required>
+                <input type="text" placeholder=" E.g. charitha" minlength="5" id="username" name="username" class="rounded-md h-7 px-1 placeholder:italic placeholder:text-[14px]" >
                 
                 <label for="password" class="mt-2">Enter your Password</label>
                 <div class="relative flex items-center">
-                    <input type="password" placeholder=" pick up your password" id="password" name="password" class=" rounded-md h-7 px-1 placeholder:italic placeholder:text-[14px] w-full" required>
+                    <input type="password" placeholder=" pick up your password" id="password" name="password" class=" rounded-md h-7 px-1 placeholder:italic placeholder:text-[14px] w-full" >
                     <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
                 </div> 
                 
                 <label for="usertype" class="mt-2">Select your user type</label>
-                <select name="usertype" id="usertype" class="rounded-lg h-7  px-1 text-[14px]" required>
+                <select name="usertype" id="usertype" class="rounded-lg h-7  px-1 text-[14px]" >
                     <option value="supplier" class="text-[14px]">Supplier</option>
                 </select>
 
                 <label for="supplierNIC"  class="mt-2">Enter your NIC number</label>
-                <input type="text" pattern="\d+" maxlength="12" minlength="9" id="supplierNIC" placeholder=" E.g. 458458756789 or 258963147(without v,x)" class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" required>
+                <input type="text" pattern="\d+" maxlength="12" minlength="9" id="supplierNIC" placeholder=" E.g. 458458756789 or 258963147(without v,x)" class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" >
                 
                 <label for="supplierAddress" class="mt-2">Enter your address</label>
-                <input type="text" id="supplierAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] px-1 placeholder:italic" required>
+                <input type="text" id="supplierAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] px-1 placeholder:italic" >
                 
                 <div class="flex flex-col ">
                     <label for="supplierEmail" class="mt-2">Enter your Email Address</label>
-                    <input type="email" id="supplierEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder=" E.g. charit@gmail.com" class="rounded-md px-1 h-7 placeholder:text-[14px] placeholder:italic" required>
-                    <button name="emailSubmit" class="h-6 text-sm rounded-md w-[100px] mt-1 bg-[#6EE70F]/50 focus:cursor-pointer self-end">Send OTP</button>
+                    <input type="email" id="email" placeholder=" E.g. charit@gmail.com" class="rounded-md px-1 h-7 placeholder:text-[14px] placeholder:italic" >
+                    <button name="email_btn" id="email_btn" class="h-6 text-sm rounded-md w-[100px] mt-1 bg-[#6EE70F]/50 focus:cursor-pointer self-end">Send OTP</button>
                 </div>
                 
                 <div class="flex flex-col ">
                     <label for="supplierOTP" class="mt-2">Enter your OTP number</label>
-                    <input type="text" id="supplierOTP" pattern="[0-9]{4}" placeholder=" E.g. 0123" class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" required>
-                    <button name="verifybtn" class="h-6 text-sm rounded-md w-[100px] mt-1 bg-[#6EE70F]/50  focus:cursor-pointer self-end">Verify OTP</button>
+                    <input name="verify_otp" type="text" id="verify_otp" pattern="[0-9]{4}" placeholder=" E.g. 0123" class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" >
+                    <button name="verify_btn" id="verify_btn" type="submit" class="h-6 text-sm rounded-md w-[100px] mt-1 bg-[#6EE70F]/50  focus:cursor-pointer self-end">Verify OTP</button>
                 </div>
                 
                 <label for="supplierPhone" class="mt-2">Enter your phone number</label>
-                <input type="tel" id="supplierPhone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" required>
+                <input type="tel" id="supplierPhone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md h-7 px-1 placeholder:text-[14px] placeholder:italic" >
                 
                 <label for="supplierProof" class="mt-2">Enter your proof image</label>
-                <input type="file" accept="image/*" id="supplierProof" class="rounded-md h-[70px] border-4 placeholder:text-[14px] px-1 placeholder:italic" required>
+                <input type="file" accept="image/*" id="supplierProof" class="rounded-md h-[70px] border-4 placeholder:text-[14px] px-1 placeholder:italic" >
                 
                 <div class="flex">
                     <button type="reset" class="mt-5 mr-6 h-8 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
-                    <button type="submit" class="mt-5 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-yellow-300">Register</button>
+                    <button type="submit" id="request_btn" class="mt-5 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 disabled:bg-[#6EE70F]/30 text-yellow-300 active:bg-pink-600">Request</button>
                 </div>
                 
                 <h1 class="relative mt-4 mb-2 text-sm left-10">Already have an account? <a href="login.php">Login</a></h1>
@@ -100,9 +102,29 @@
 
     </div>
 
+    <!-- toast massage pop -->
+    <div class="absolute top-5 h-[75px] right-5 justify-end w-[370px] hidden" id="success">
+        <div class="flex border-l-8 border-green-400 rounded shadow-xl mt-5 h-[75px] items-center mr-5 w-[370px] bg-white">
+            <i class="fas fa-solid fa-check ml-2 rounded-full w-[30px] h-[30px] bg-green-400 align-center items-center justify-center flex text-white"></i>
+            <div class="flex flex-col ml-4">
+                <label class="font-bold">Successfull</label> 
+                <label class="text-sm">Your has been successfully requested</label> 
+            </div>
+            <div class="absolute top-6 right-2">
+                <button type="button" id="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-500 size-4 hover:text-gray-900">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg> 
+                </button>             
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="javascript/registration.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         // toggle password visibility script
         let toggleImg =document.getElementById('toggleImg');
         var password = document.getElementById('password');
@@ -118,8 +140,15 @@
                 toggleImg.style.height = '16px';
             }
         });
-  
     </script>
 
+    <!-- remvoe success massage after display -->   
+    <script>
+        const close = document.getElementById('close');
+        close.addEventListener('click', () => {
+            document.getElementById('success').style.display = 'none';
+        })
+    </script>
+    
 </body>
 </html>
