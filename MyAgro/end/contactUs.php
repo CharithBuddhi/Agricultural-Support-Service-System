@@ -8,14 +8,14 @@
     <title>Contact Us</title>
 
 </head>
-<body class="bg-gray-100 ">
+<body class="bg-slate-100 ">
     <?php require('header.php'); ?>
     <div class="flex items-center justify-center w-full min-h-screen overflow-hidden">
         <div class="overflow-hidden ">
             <div class="relative flex flex-col w-full max-w-4xl gap-10 p-8 text-white shadow-lg md:pt-10 md:pb-10 md:space-y-0 md:flex-row md:space-x-6 bg-cyan-700 rounded-xl">
                 <div class="flex flex-col justify-between gap-8 ">
                     <div class="flex flex-col gap-2 align-center">
-                        <h1 class="text-3xl font-bold tracking-wide">Contact MyAgro</h1>
+                        <h1 class="text-3xl font-bold tracking-wide">Get in Touch</h1>
                         <p class="pt-2 text-sm text-cyan-100">If you have any questions or concerns, please don't hesitate to contact us. Our team is always here to help. We're here to answer any questions you may have.</p>
                     </div>
                     <div class="flex flex-col space-y-4 ">

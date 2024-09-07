@@ -49,7 +49,7 @@
                 
                 <div class="flex">
                     <button type="reset" class="mt-6 mr-6 h-8 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
-                    <input type="submit" value="Register" class=" mt-6 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-[#f9e912]">
+                    <input type="submit" value="Register" class=" mt-6 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 hover:bg-lime-500 active:bg-[#7bbd17]  text-[#ffffff]">
                 
                 </div>
                 <h1 class="relative mt-4 mb-2 text-sm left-10">Already have an account? <a href="login.php">Login</a></h1>
