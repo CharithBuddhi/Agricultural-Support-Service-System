@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- Dashboard Menu bar -->
-    <div type="text" class="flex h-screen flex-col text-white bg-[#3d1caf] rounded-r-3xl" id="menubar">
+    <div type="text" class="flex h-screen flex-col text-white bg-[#08025e] rounded-r-3xl" id="menubar">
 
         <!-- logo MyAgro -->
         <div class="flex justify-center h-[80px] p-2 mt-2 border-b-2 border-slate-100">
@@ -34,7 +34,7 @@
         </a>
 
         <!-- control price icon -->
-        <a href="controlprice.php" class="flex gap-2 pl-5 mt-6 text-lg w-fit" >
+        <a href="price.php" class="flex gap-2 pl-5 mt-6 text-lg w-fit" >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
             </svg>

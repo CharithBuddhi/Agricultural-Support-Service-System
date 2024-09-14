@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
     <title>User Registration</title>
+    <style>
+        label{font-weight: 600;}
+    </style>
 
 </head>
 <body class="bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
@@ -18,7 +21,7 @@
         <div class="flex flex-col items-center mt-3">
             <h2 class="mb-3 text-3xl font-semibold text-white">Register for your MyAgro account</h2>
         </div>
-        <form id="registrationform" action="connect.php" method="POST" class="flex flex-col items-center font-semibold border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
+        <form id="registrationform" action="connect.php" method="POST" class="flex flex-col items-center border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
             <div class="flex flex-col w-[330px]" id="commonfield">
 
                 <label for="name" class="mt-1">Enter your name</label>
@@ -34,12 +37,12 @@
                 </div> 
 
                 <label for="usertype" class="mt-2">Select your user type</label>
-                <select name="usertype" id="usertype" class="rounded-lg h-7 placeholder:italic placeholder:text-[14px]" required>
-                    <option value="customer">Customer</option>
+                <select name="usertype" id="usertype" class="rounded-lg h-7 placeholder:italic text-[14px]" required>
+                    <option value="customer" class="text-[14px]">Customer</option>
                 </select>
 
                 <label for="customerAddress" class="mt-2">Enter your address</label>
-                <input type="text" id="customerAddress" name="address" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                <input type="text" id="customerAddress" name="address" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 fill:bg-black placeholder:text-[14px] placeholder:italic" required>
                 
                 <label for="customerEmail" class="mt-2">Enter your Email Address</label>
                 <input type="email" id="customerEmail" name="email" placeholder=" E.g. charit@gmail.com" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
@@ -48,8 +51,8 @@
                 <input type="tel" id="customerPhone" name="phone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
                 
                 <div class="flex">
-                    <button type="reset" class="mt-6 mr-6 h-8 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
-                    <input type="submit" value="Register" class=" mt-6 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 hover:bg-lime-500 active:bg-[#7bbd17]  text-[#ffffff]">
+                    <button type="reset" class="mt-6 mr-6 h-8 rounded-full font-semibold w-[145px] bg-[#6EE70F]/50 hover:bg-lime-500 active:bg-[#7bbd17]">Clear</button>
+                    <input type="submit" value="Register" class=" mt-6 h-8 font-semibold rounded-full w-[160px] bg-[#6EE70F]/50 hover:bg-lime-500 active:bg-[#7bbd17] text-[#ffffff]">
                 
                 </div>
                 <h1 class="relative mt-4 mb-2 text-sm left-10">Already have an account? <a href="login.php">Login</a></h1>

@@ -27,9 +27,9 @@
                             <input type="password" placeholder=" pick up your password" id="password" class="w-full pl-1 rounded-lg h-7 placeholder:italic" required>
                             <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
                         </div>
-                        <button class="flex mt-6 h-10 rounded-full bg-[#E8E025] justify-center">
-                            <input type="submit" value="Login" class="py-2 focus:cursor-pointer">
-                        </button>
+                        <a href="admin.php" class="flex mt-6 h-10 rounded-full bg-[#E8E025] justify-center">
+                            <input type="submit" value="Login"  class="py-2 focus:cursor-pointer">
+                        </a>
                     </form>
                 </div>
             </div>
