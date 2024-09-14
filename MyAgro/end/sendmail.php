@@ -48,8 +48,7 @@ try {
         <h4>All you have to do now is use the confirmation code in the app to complete the request.</h4>
         <p>Then enter your phone number and business registration certificate and make the request.
         If you did not request this code, you can safely ignore this email. Someone might have typed your email address by mistake.</p>
-        <pre>Thank you,
-    MyAgro Team.</pre>
+        <pre>Thank you, MyAgro Team.</pre>
     ';
 
     if($mail->send()){

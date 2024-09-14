@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- Dashboard Menu bar -->
-    <div type="text" class="flex h-screen flex-col text-white bg-[#3d1caf] rounded-r-3xl" id="menubar">
+    <div type="text" class="flex h-auto flex-col text-white bg-[#08025e]  rounded-r-3xl" id="menubar">
         
         <div class="flex justify-center h-20 p-2 mt-2 border-b-2 border-slate-100">
             <ion-icon name="leaf-outline" class="  w-[35px] h-[35px]"></ion-icon>

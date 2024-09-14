@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="style.css"> 
     <title>User Registration</title>
 
+    <style>
+        label{font-weight: 600;}
+    </style>
+
 </head>
 <body class="bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
     
@@ -18,7 +22,7 @@
         <div class="flex flex-col items-center mt-3">
             <h2 class="mb-3 text-3xl font-semibold text-white">Register for your MyAgro account</h2>
         </div>
-        <form id="registrationform" action="connect.php" method="POST" class="flex flex-col items-center font-semibold border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
+        <form id="registrationform" enctype="multipart/form-data" action="connect.php" method="POST" class="flex flex-col items-center border rounded-3xl w-[350px] bg-[#D9D9D9]/80">
 
             <div class="flex flex-col w-[330px]" id="commonfield">
                 <label for="name" class="mt-1">Enter your name</label>
@@ -34,23 +38,27 @@
                 </div> 
                 
                 <label for="usertype" class="mt-2">Select your user type</label>
-                <select name="usertype" id="usertype" class="rounded-lg h-7 placeholder:italic placeholder:text-[14px]" required>
-                    <option value="farmer">Farmer</option>
+                <select name="usertype" id="usertype" class="rounded-lg h-7 placeholder:italic text-[14px]" required>
+                    <option value="farmer" class="text-[14px]">Farmer</option>
                 </select>
                 
                 <label for="farmerNIC" class="mt-2">Enter your NIC number</label>
-                <input type="text" id="farmerNIC" pattern="\d+" maxlength="12" minlength="9" placeholder=" E.g. 458458756789 or 258963147(without v,x)" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic"  required>
+                <input type="text" name="nic" id="farmerNIC" pattern="\d+" maxlength="12" minlength="9" placeholder=" E.g. 458458756789 or 258963147(without v,x)" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic"  required>
+                
                 <label for="farmerAddress" class="mt-2">Enter your address</label>
-                <input type="text" id="farmerAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                <input type="text" name="address" id="farmerAddress" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                
                 <label for="farmerEmail" class="mt-2">Enter your Email Address</label>
-                <input type="email" id="farmerEmail" placeholder=" E.g. charit@gmail.com" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                <input type="email" name="email" id="farmerEmail" placeholder=" E.g. charit@gmail.com" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                
                 <label for="farmerPhone" class="mt-2">Enter your phone number</label>
-                <input type="tel" id="farmerPhone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                <input type="tel" name="phone" id="farmerPhone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md h-7 placeholder:text-[14px] placeholder:italic" required>
+                
                 <label for="farmerProof" class="mt-2">Enter your proof image</label>
-                <input type="file" accept="image/*" id="farmerProof" class="rounded-md h-[70px] border-4 placeholder:text-[14px] placeholder:italic" required>
+                <input type="file" name="image" accept="image/*" id="farmerProof" class="rounded-md h-[70px] border-4 placeholder:text-[14px] placeholder:italic" required>
                 <div class="flex">
-                    <button type="reset" class="mt-6 h-8 mr-6 rounded-full w-[145px] bg-[#6EE70F]/50">Clear</button>
-                    <button type="submit" class="mt-6 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-[#f9e912]">Register</button>
+                    <button type="reset" class="mt-6 h-8 mr-6 font-semibold rounded-full w-[145px] bg-[#6EE70F]/50 hover:bg-lime-500 active:bg-[#7bbd17]">Clear</button>
+                    <button type="submit" class="mt-6 h-8 rounded-full w-[160px] font-semibold bg-[#6EE70F]/50 hover:bg-lime-500 active:bg-[#7bbd17] text-[#f9e912]">Request</button>
                 </div>
                 <h1 class="relative mt-4 mb-2 text-sm left-10">Already have an account? <a href="login.php">Login</a></h1>
             </div>
@@ -83,6 +91,24 @@
 
     </div>
 
+    <!-- toast massage pop -->
+    <div id="popup" class="absolute top-5 h-[75px] right-5 justify-end w-[370px] hidden">
+        <div class="flex border-l-8 border-green-400 rounded shadow-xl mt-5 h-[75px] items-center mr-5 w-[370px] bg-white">
+            <i class="fas fa-solid fa-check ml-2 rounded-full w-[30px] h-[30px] bg-green-400 align-center items-center justify-center flex text-white"></i>
+            <div class="flex flex-col ml-4">
+                <label class="font-bold">Successfull</label> 
+                <label class="text-sm">Your has been successfully requested</label> 
+            </div>
+            <div class="absolute top-6 right-2">
+                <button type="button" onclick="closePopup()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-500 size-4 hover:text-gray-900">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg> 
+                </button>             
+            </div>
+        </div>
+    </div>
+
 
     <script>
 
@@ -102,6 +128,18 @@
             }
         });
  
+    </script>
+
+    <script>
+        let popup = document.getElementById('popup');
+
+        function openPopup(){
+            popup.classList.remove('hidden');
+            
+        }
+        function closePopup(){
+            popup.classList.add('hidden');
+        }
     </script>
 
 </body>
