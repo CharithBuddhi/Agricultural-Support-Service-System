@@ -1,6 +1,10 @@
 <?php 
 error_reporting(0);
 session_start(); 
+if(!isset($_SESSION['login_admin_user'])){
+    header('Location: index.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -251,15 +255,20 @@ session_start();
                                                     ?>
     
                                                         <!-- using = mark can access the data, this are the print like echo -->
-                                                        <td class="font-bold"><?= $items['harvest_id']; ?></td>
-                                                        <td><?= $items['crop_name']; ?></td>
-                                                        <td><?= $items['crop_variety']; ?></td>
-                                                        <td><?= $items['yala_start']; ?></td>
-                                                        <td><?= $items['yala_end']; ?></td>
-                                                        <td><?= $items['maha_start']; ?></td>
-                                                        <td><?= $items['maha_end']; ?></td>
+                                                        <td class="font-bold" id="db_harvest_id"><?= $items['harvest_id']; ?></td>
+                                                        <td id="db_crop_name"><?= $items['crop_name']; ?></td>
+                                                        <td id="db_crop_variety"><?= $items['crop_variety']; ?></td>
+                                                        <td id="db_yala_start"><?= $items['yala_start']; ?></td>
+                                                        <td id="db_yala_end"><?= $items['yala_end']; ?></td>
+                                                        <td id="db_maha_start"><?= $items['maha_start']; ?></td>
+                                                        <td id="db_maha_end"><?= $items['maha_end']; ?></td>
                                                         <td class="flex justify-center">
-                                                            <button type="button" value=<?php echo $items['harvest_id'] ?> class="hrvst_delete_btn">
+                                                            <button type="button" id="edit_harvest_month" value="<?= $row['harvest_id']; ?>" class="h-fit" data-bs-toggle="modal" data-bs-target="#edit_harvest">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class= "size-6 hover:text-blue-500">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                </svg>
+                                                            </button>
+                                                            <button type="button" value=<?php echo $items['harvest_id'] ?> class="hrvst_delete_btn h-fit">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hover:text-red-500">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                                 </svg>
@@ -300,16 +309,18 @@ session_start();
 <div class="modal fade" id="add_harvest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content absolute text-black left-[200px] w-[500px]">
+
             <div class="modal-header">
                 <b><h5 class="modal-title" id="exampleModalLabel">Add Harvesting Month</h5></b>
                 <button type="button" class=" btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <form action="insert.php" method="POST">
                 <div class="modal-body">
                     <div class="flex flex-col gap-2"> 
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="">Crop Name:</label>
-                            <input type="text" name="crop" id="crop"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
+                            <input type="text" name="crop" id="crop" class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
                         </div>
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="">Variety Name:</label>
@@ -348,9 +359,68 @@ session_start();
                     <button type="submit" name="harvest_submit"  class="w-24 btn btn-primary">Add</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
+
+<!-- Modal for edit month -->
+<div class="modal fade" id="edit_harvest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content absolute text-black left-[200px] w-[500px]">
+            <div class="modal-header">
+                <b><h5 class="modal-title" id="exampleModalLabel">Edit Harvesting Month</h5></b>
+                <button type="button" class=" btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="update.php" method="POST">
+                <input type="hidden" name="month_id" id="month_id">
+                <div class="modal-body">
+                    <div class="flex flex-col gap-2"> 
+                        <div class="flex flex-col gap-1 font-bold">
+                            <label for="">Crop Name:</label>
+                            <input type="text" name="month_crop" id="month_crop"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
+                        </div>
+                        <div class="flex flex-col gap-1 font-bold">
+                            <label for="">Variety Name:</label>
+                            <input type="text" id="month_variety" name="month_variety"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
+                        </div>
+                        <div class="flex flex-col font-bold">
+                            <label for="">Yala Season</label>
+                            <div class="flex gap-4">
+                                <div class="flex flex-col gap-1 font-semibold">
+                                    <label for="">Start Month:</label>
+                                    <input type="date" name="month_yala_start" id="month_yala_start" class="h-10 border-2 rounded-lg w-44 border-slate-300" required>
+                                </div>
+                                <div class="flex flex-col gap-1 font-semibold">
+                                    <label for="">End Month:</label>
+                                    <input type="date" name="month_yala_end" id="month_yala_end" class="h-10 border-2 rounded-lg w-44 border-slate-300" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-bold">
+                            <label for="">Maha Season</label>
+                            <div class="flex gap-4">
+                                <div class="flex flex-col gap-1 font-semibold">
+                                    <label for="">Start Month:</label>
+                                    <input type="date" name="month_maha_start" id="month_maha_start" class="h-10 border-2 rounded-lg w-44 border-slate-300" required>
+                                </div>
+                                <div class="flex flex-col gap-1 font-semibold">
+                                    <label for="">End Month:</label>
+                                    <input type="date" name="month_maha_end" id="month_maha_end" class="h-10 border-2 rounded-lg w-44 border-slate-300" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="w-24 bg-slate-400 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="harvest_month_update"  class="w-24 btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -362,6 +432,42 @@ session_start();
     $(document).ready(function(){
         $('.load_data_container').load('sendcode/adminpanel.php');
     })
+</script>
+
+<!-- pass value for update modal -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        // Get all reply buttons
+        let replyButtons = document.querySelectorAll('#edit_harvest_month');
+
+        // Add a click event listener to each reply button
+        replyButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+
+                // Find the closest row to the clicked button
+                let row = this.closest('tr');
+
+                // Get the username, email, and subject from the row
+                let update_month_id = row.querySelector('#db_harvest_id').innerText;
+                let update_month_crop = row.querySelector('#db_crop_name').innerText;
+                let update_month_crop_variety = row.querySelector('#db_crop_variety').innerText;
+                let update_month_yala_start = row.querySelector('#db_yala_start').innerText;
+                let update_month_yala_end = row.querySelector('#db_yala_end').innerText;
+                let update_month_maha_start = row.querySelector('#db_maha_start').innerText;
+                let update_month_maha_end = row.querySelector('#db_maha_end').innerText;
+
+                // Set the values in the modal's input fields
+                document.getElementById('month_id').value = update_month_id;
+                document.getElementById('month_crop').value = update_month_crop;
+                document.getElementById('month_variety').value = update_month_crop_variety;
+                document.getElementById('month_yala_start').value = update_month_yala_start;
+                document.getElementById('month_yala_end').value = update_month_yala_end;
+                document.getElementById('month_maha_start').value = update_month_maha_start;
+                document.getElementById('month_maha_end').value = update_month_maha_end;
+            });
+        });
+    });
 </script>
 
 <!-- show output message -->

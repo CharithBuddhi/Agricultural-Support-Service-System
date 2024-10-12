@@ -6,8 +6,9 @@ $(document).ready(function () {
 
     Swal.fire({
       title: "Are you sure?",
-      text: "You can't recover this again!",
-      icon: "warning",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -54,8 +55,9 @@ $(document).ready(function () {
 
     Swal.fire({
       title: "Are you sure?",
-      text: "You can't recover this again!",
-      icon: "warning",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -96,55 +98,6 @@ $(document).ready(function () {
     });
   });
 
-  // request delet message show
-  $(".request_delete_btn").click(function (e) {
-    e.preventDefault();
-    var id = $(this).val();
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You can't recover this again!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Delete",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // after confirm using ajax and creating object send object delete.php file
-        $.ajax({
-          method: "POST",
-          url: "delete.php",
-          data: {
-            request_id: id,
-            request_delete_btn: true,
-          },
-          success: function (response) {
-            console.log(response);
-            if (response == 200) {
-              Swal.fire({
-                title: "Success!",
-                text: "Request deleted successfully.",
-                icon: "success",
-                timer: 1000,
-              });
-              // reload request page  here
-              setTimeout(function () {
-                location.reload();
-              }, 1000); // 1000 milliseconds = 2 seconds
-            } else {
-              Swal.fire({
-                title: "Cancelled",
-                text: "Request is safe.",
-                icon: "error",
-              });
-            }
-          },
-        });
-      }
-    });
-  });
-
   // harvest delet message show
   $(".hrvst_delete_btn").click(function (e) {
     e.preventDefault();
@@ -152,8 +105,9 @@ $(document).ready(function () {
 
     Swal.fire({
       title: "Are you sure?",
-      text: "You can't recover this again!",
-      icon: "warning",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -201,8 +155,9 @@ $(document).ready(function () {
 
     Swal.fire({
       title: "Are you sure?",
-      text: "You can't recover this again!",
-      icon: "warning",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -239,6 +194,224 @@ $(document).ready(function () {
               Swal.fire({
                 title: "Cancelled",
                 text: "Technology details already deleted.",
+                icon: "error",
+              });
+            }
+          },
+        });
+      }
+    });
+  });
+
+  // varities details delete message show
+  $(".verity_delete_btn").click(function (e) {
+    e.preventDefault();
+    var id = $(this).val();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // after confirm using ajax and creating object send object delete.php file
+        $.ajax({
+          method: "POST",
+          url: "delete.php",
+          data: {
+            verity_id: id,
+            verity_delete_btn: true,
+          },
+          success: function (response) {
+            console.log(response);
+            if (response == 200) {
+              Swal.fire({
+                title: "Success!",
+                text: "Verities details deleted successfully.",
+                icon: "success",
+                timer: 1000,
+              });
+              // reload request page  here
+              setTimeout(function () {
+                location.reload();
+              }, 1000); // 1000 milliseconds = 2 seconds
+            } else if (response !== 200) {
+              Swal.fire({
+                title: "Cancelled",
+                text: response,
+                icon: "error",
+              });
+            } else if (response == 500) {
+              Swal.fire({
+                title: "Cancelled",
+                text: "Verities details already deleted.",
+                icon: "error",
+              });
+            }
+          },
+        });
+      }
+    });
+  });
+
+  // staff member delete message show
+  $(".staff_delete_btn").click(function (e) {
+    e.preventDefault();
+    var id = $(this).val();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          method: "POST",
+          url: "delete.php",
+          data: {
+            staff_id: id,
+            staff_delete_btn: true,
+          },
+          success: function (response) {
+            console.log(response);
+            if (response == 200) {
+              Swal.fire({
+                title: "Success!",
+                text: "Staff member deleted successfully.",
+                icon: "success",
+                timer: 1000,
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
+            } else if (response == 500) {
+              Swal.fire({
+                title: "Cancelled",
+                text: "This member details are missin.",
+                icon: "error",
+              });
+            } else {
+              Swal.fire({
+                title: "Cancelled",
+                text: response,
+                icon: "error",
+              });
+            }
+          },
+        });
+      }
+    });
+  });
+
+  // customer delete message show
+  $(".customer_detail_delete_btn").click(function (e) {
+    e.preventDefault();
+    var id = $(this).val();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          method: "POST",
+          url: "delete.php",
+          data: {
+            customer_id: id,
+            customer_detail_delete_btn: true,
+          },
+          success: function (response) {
+            console.log(response);
+            if (response == 200) {
+              Swal.fire({
+                title: "Success!",
+                text: "Customer details deleted successfully.",
+                icon: "success",
+                timer: 1000,
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
+            } else if (response == 500) {
+              Swal.fire({
+                title: "Cancelled",
+                text: "This customer details are missin.",
+                icon: "error",
+              });
+            } else {
+              Swal.fire({
+                title: "Cancelled",
+                text: response,
+                icon: "error",
+              });
+            }
+          },
+        });
+      }
+    });
+  });
+
+  // supplier delete message show
+  $(".supplier_detail_delete_btn").click(function (e) {
+    e.preventDefault();
+    var id = $(this).val();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You can't recover this record again!",
+      icon: "question",
+      iconColor: "#f44336",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          method: "POST",
+          url: "delete.php",
+          data: {
+            supplier_id: id,
+            supplier_detail_delete_btn: true,
+          },
+          success: function (response) {
+            console.log(response);
+            if (response == 200) {
+              Swal.fire({
+                title: "Success!",
+                text: "Supplier details deleted successfully.",
+                icon: "success",
+                timer: 1000,
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
+            } else if (response == 500) {
+              Swal.fire({
+                title: "Cancelled",
+                text: "This supplier details are missin.",
+                icon: "error",
+              });
+            } else {
+              Swal.fire({
+                title: "Cancelled",
+                text: response,
                 icon: "error",
               });
             }

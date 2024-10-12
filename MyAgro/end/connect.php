@@ -1,7 +1,9 @@
 <?php 
     session_start();
-    require ('db_connect.php');    
+    require ('db_connect.php');  
     
+    
+    // registration manage here
     if(isset($_SESSION['register'])){
         
         $usertype = $_POST['usertype'];    
@@ -347,19 +349,17 @@
         }
     }
     
+    // user login manage here
     if(isset($_POST['login'])){
         $username = $_POST['username'];
         $password = $_POST['password'];
-
-        echo $username;
-        echo $password;
 
         if(empty($username) && empty($password)){
             $_SESSION['login_message'] = "Please fill the all input field";
             header("Location: login.php");
             exit();
 
-        }else if(($_POST['usertype'])=="farmer" && ($_POST['usertype'])=="supplier" && ($_POST['usertype'])=="customer"){
+        }else if(($_POST['usertype'])=="farmer" || ($_POST['usertype'])=="supplier" || ($_POST['usertype'])=="customer"){
             
             $usertype = $_POST['usertype']; 
 

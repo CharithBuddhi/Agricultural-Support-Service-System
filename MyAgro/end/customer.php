@@ -12,13 +12,13 @@
     </style>
 
 </head>
-<body class="bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
+<body>
     
     <!-- navigation bar -->
     <?php require('header.php'); ?>
 
     <!-- registration form customer -->
-    <div class="flex flex-col items-center mr-[250px]">
+    <div class="flex flex-col items-center pr-[250px] bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
         <div class="flex flex-col items-center mt-3">
             <h2 class="mb-3 text-3xl font-semibold text-white">Register for your MyAgro account</h2>
         </div>
@@ -49,7 +49,7 @@
                 </div>
 
                 <label for="customerPhone" class="mt-2">Enter your phone number</label>
-                <input type="tel" id="customerPhone" name="phone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md p-1 font-semibold h-8 placeholder:text-[14px] placeholder:italic" required>
+                <input type="tel" id="customerPhone" name="phone" pattern="[0-9]{11}" placeholder=" E.g. 94795555555" class="rounded-md p-1 font-semibold h-8 placeholder:text-[14px] placeholder:italic" required>
                 
                 <div class="flex">
                     <button type="reset" class="mt-6 mr-6 h-8 rounded-full font-semibold w-[145px] bg-[#6EE70F]/80 hover:bg-lime-300 hover:text-[#000000] text-[#ffffff]">Clear</button>

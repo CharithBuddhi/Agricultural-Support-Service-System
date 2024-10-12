@@ -11,11 +11,16 @@
     <div class="flex flex-col ml-2 bg-slate-400">
         <!-- search bar -->
         <form action="techno.php" method="post" class="flex justify-center mt-2 mb-1" enctype="multipart/form-data">
-            <div class="flex ml-6">
-                <input type="text" name="search_techniq" value="<?php if(isset($_POST['search_techniq'])){ echo $_POST['search_techniq']; } ?>"
-                    class="h-10 text-xl border-l-2 rounded-l-md w-96" placeholder="search all techniques using keyword all"  required>
-                <button type="submit" class="h-10 text-white bg-blue-500 rounded-r-md w-28">Search</button>
-            </div>  
+            <a href="techno.php" class="relative right-[310px]">
+                <button  type="button" class="bg-red-300 w-[100px] rounded-3xl border border-slate-500 text-lg font-bold">Back</button>
+            </a>
+            <div class="flex">
+                <div class="flex">
+                    <input type="text" name="search_techniq" value="<?php if(isset($_POST['search_techniq'])){ echo $_POST['search_techniq']; } ?>"
+                        class="h-10 text-xl outline-none border-l-2 rounded-l-3xl w-96" placeholder="search all techniques using keyword all"  required>
+                    <button type="submit" class="h-10 text-white bg-blue-500 rounded-r-3xl w-28">Search</button>
+                </div>  
+            </div>
         </form>
         
         <!-- clickble video display -->

@@ -1,14 +1,20 @@
+<?php session_start(); 
+if(!isset($_SESSION['login_staff_user'])){
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Staff</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body class="bg-[#350dc3] text-white">
-    <div class="w-screen h-screen ">
+    <div class="w-screen h-screen">
         <div class="flex w-full h-full">
 
             <!-- Dashboard Menu bar load here-->
@@ -216,13 +222,60 @@
         </div>
     </div>
 
+    <script src="js/jquery-3.7.1.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
     <script>
     $(document).ready(function(){
         $('.load_data_container').load('sendcode/satffpanel.php');
     })
+    </script>
+
+    <!-- show inquiry reply success or error message -->
+    <script>
+        var message = "<?php echo isset($_SESSION['staff_home_message']) ? $_SESSION['staff_home_message'] : ''; ?>"; //send status include massage  varible message, but if not status then print ''.
+        if (message != "") {
+            if(message.includes('success')) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#69f44a",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "success",
+                title: message,
+                });
+            } else {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#f84444",
+                background: "#fae1e1",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "error",
+                title: message,
+                });
+            }
+            // remove after once message is shown
+            <?php unset($_SESSION['staff_home_message']); ?>
+        }   
     </script>
 
 </body>

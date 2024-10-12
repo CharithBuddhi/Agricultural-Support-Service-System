@@ -11,17 +11,25 @@
 </head>
 <body>
     <!-- navigation bar -->
-    <?php require('header.php'); ?>
+    <?php 
+    include('db_connect.php');
+
+    require('header.php');
+    
+    ?>
     
     <!-- first section in home page -->
-    <div class="h-[80vh] mt-10 bg-no-repeat bg-cover" style="background-image: url(images/home.jpg)">
-        <marquee  behavior="scroll" direction="down" height="120px" width="70%" scrolldelay="150" class="font-serif text-7xl font-bold text-[#6fff00] mt-[10rem] px-4">Welcome to MyAgro</marquee>
-        <h2 class="text-5xl text-[#73F80B] font-serif mt-[12rem] px-2 font-semibold animate-pulse">The only place to sell <br> your products at <br>reasonable prices.</h2>
+    <div class="h-[70vh] p-6 bg-no-repeat bg-cover">
+        <img id="dynamicImage" src="images/home9.jpg" alt="" class="w-[100%] h-[100%] object-cover">
+        <h2 class="absolute top-[120px] text-5xl text-[#73F80B] font-serif px-2 font-semibold animate-pulse">The only place to sell <br> your products at <br> reasonable prices.</h2>
+    </div>
+    <div class=" shadow-xl h-[100px] rounded-3xl border-b-2 border-slate-300 relative bottom-[70px] bg-slate-100 w-[50%] ml-[25%]">
+        <marquee  behavior="scroll" direction="left" height="120px" width="100%" scrolldelay="1" class="font-serif p-3 text-7xl font-bold text-[#6fff00] ">Welcome to MyAgro</marquee>
     </div>
 
     <!-- Mostly soled Products section in home page -->
     <div class="flex flex-col ">
-        <h1 class="flex justify-center mt-16 font-serif text-3xl italic font-bold mb-14 ">Mostly soled Product</h1>
+        <h1 class="flex justify-center font-serif text-3xl italic font-bold mb-8 ">Mostly soled Product</h1>
         <div class="flex justify-evenly">
             <div  class="font-semibold">
                 <img class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/carrot.jpg" alt="carrot">
@@ -89,12 +97,12 @@
             </div>
         </div> 
         <br><br> 
-        <button class="flex justify-center cursor-pointer w-[200px] self-center text-black font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">Know more</button>
+        <a href="productSell.php" class="flex justify-center cursor-pointer w-[200px] self-center text-black font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-2 ">Know more</a>
     </div>
 
     <!-- Most Demand Agrochemicals section in home page -->
     <div class="flex flex-col">
-        <h1 class="flex justify-center mt-20 font-serif text-3xl italic font-bold mb-14">Most Demand Agrochemicals</h1>
+        <h1 class="flex justify-center mt-16 font-serif text-3xl italic font-bold mb-14">Most Demand Agrochemicals</h1>
         <div class="flex justify-evenly">
             <div  class="flex flex-col items-center font-semibold w-[300px] h-[380px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
                 <div class="">
@@ -166,7 +174,7 @@
             </div>
         </div>  
         <br><br> 
-        <button class="flex justify-center cursor-pointer w-[200px] self-center text-black font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">View All</button>
+        <a href="agrosell.php" class="flex justify-center cursor-pointer w-[200px] self-center text-black font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">View All</a>
     </div>
 
     <!-- system services in home page -->
@@ -231,11 +239,11 @@
         <h1 class="flex justify-center mt-32 font-serif text-3xl italic font-bold mb-14">About Us</h1> 
         <div class="">
             <div class="">
-                <img src="images/home1.jpg" alt="" class="w-[500px] h-[350px] relative left-12 top-4 rounded-3xl">
-                <img src="images/home2.jpg" alt="" class="w-[300px] h-[200px] absolute left-[450px] top-[3460px] rounded-3xl">
-                <img src="images/home.jpg" alt="" class="w-[350px] h-[220px] absolute left-28 top-[3540px] rounded-3xl">
+                <img src="images/home8.jpg" alt="" class="w-[500px] h-[350px] relative left-12 top-4 rounded-3xl">
+                <img src="images/futter.jpg" alt="" class="w-[300px] h-[200px] absolute left-[450px] top-[3270px] rounded-3xl">
+                <img src="images/home.jpg" alt="" class="w-[350px] h-[220px] absolute left-32 top-[3340px] rounded-3xl">
             </div>
-            <div class=" absolute left-[790px] top-[3300px] w-[470px] h-[320px]">
+            <div class=" absolute left-[790px] top-[3050px] w-[470px] h-[320px]">
                 <p class="justify-self-end text-justify font-semibold w-[450px] h-[250px]">
                 The MyAgro website creates a platform for farmers engaged in vegetable and fruit cultivation to sell their produce at fair prices. 
                 MyAgro Institute can be known as an institute recognized by farmers, governments, and farmer organizations. Chamoth Migara owns the company MyAgro, which was founded in Nugegoda in 2013.
@@ -247,9 +255,9 @@
     </div>
 
     <!-- footer section in home page -->
-    <div class="flex flex-col border-4 mt-[400px] h-[380px] rounded-t-[150px] bg-[#D9D9D9] ">
+    <div class="flex flex-col border-4 mt-[400px] h-[300px]  bg-[#D9D9D9] ">
         <div class="flex">
-            <div class="absolute flex flex-col py-16 left-12">
+            <div class="absolute flex flex-col py-8 left-12">
                 <h1 class="py-2 text-2xl font-semibold">MyAgro</h1>
                 <label>
                     The company is owned by Chamoth Migara.
@@ -261,7 +269,7 @@
                     No 250/ Nugegoda/ Colombo
                 </label>
             </div>
-            <div class="absolute flex flex-col gap-2 py-16 left-[500px]">
+            <div class="absolute flex flex-col gap-2 py-8 left-[500px]">
                 <h1 class="py-1 text-2xl font-semibold ">Quick Link</h1>
                 <a href="#" class="text-1xl">Register</a>
                 <a href="#" class="text-1xl">Login</a>
@@ -270,24 +278,50 @@
                 <a href="#" class="text-1xl">Contact Us</a>
                 <a href="#" class="text-1xl">FAQ</a>
             </div>
-            <div class="absolute flex flex-col gap-2 py-16 left-[850px]">
+            <div class="absolute flex flex-col gap-2 py-8 left-[850px]">
                 <h1 class="py-1 text-2xl font-semibold">Follow Us</h1>
                 <a href="#" class="text-1xl">Facebook : https://www.facebook.com/MyAgro</a>
                 <a href="#" class="text-1xl">Twitter  : https://www.twitter.com/MyAgro</a>
                 <a href="#" class="text-1xl">Instagram : https://www.instagram.com/ MyAgro</a>
                 <div class="flex gap-4">
-                    <img src="images/insta.png" class="w-[50px] h-[50px] mt-2" alt="instagram image">
-                    <img src="images/fb.png" class="w-[45px] h-[46px] mt-[9px]" alt="facebook image">
-                    <img src="images/x.png" class="w-[45px] h-[44px] mt-[10px]" alt="twitter image">
+                    <img src="images/insta.png" class="w-[30px] h-[30px] mt-2" alt="instagram image">
+                    <img src="images/fb.png" class="w-[25px] h-[26px] mt-[9px]" alt="facebook image">
+                    <img src="images/x.png" class="w-[25px] h-[24px] mt-[10px]" alt="twitter image">
                 </div>
             </div>
         </div>
-        <h1 class="relative flex justify-center italic top-[350px]">Copyright @ 2024 MyAgro Pvt  Ltd: All Right Reserved</h1>
+        <h1 class="relative flex text-sm justify-center text-white bg-black  italic top-[280px]">Copyright @ 2024 MyAgro Pvt  Ltd: All Right Reserved</h1>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- sweetalert cdn -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- change image every minute -->
+    <script>
+        // Array of image URLs
+        const images = [   
+            "images/home9.jpg", 
+            "images/home2.png",
+            "images/home.jpeg",
+            "images/home8.jpg",
+            "images/farm.jpg",
+            "images/vegetable.jpg",
+            // Add more images as needed
+        ];
+
+        let currentIndex = 0; // Start from the first image
+
+        // Function to change the image
+        function changeImage() {
+            // Update the image source
+            currentIndex = (currentIndex + 1) % images.length; // Cycle through images
+            document.getElementById("dynamicImage").src = images[currentIndex];
+        }
+
+        // Change image every minute (60000 milliseconds)
+        setInterval(changeImage, 5000);
+    </script>
 
     <!-- show output message -->
     <script>

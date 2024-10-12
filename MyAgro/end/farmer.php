@@ -13,13 +13,13 @@
     </style>
 
 </head>
-<body class="bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
+<body>
     
     <!-- navigation bar -->
     <?php require('header.php'); ?>
 
     <!-- registration form -->
-    <div class="flex flex-col items-center mr-[250px] h-[870px]">
+    <div class="flex flex-col items-center pr-[250px] h-[870px] bg-cover bg-no-repeat bg-[url('images/reg.jpg')]">
         <div class="flex flex-col items-center mt-3">
             <h2 class="mb-3 text-3xl font-semibold text-white">Register for your MyAgro account</h2>
         </div>
@@ -54,7 +54,7 @@
                 </div>
 
                 <label for="farmerPhone" class="mt-3">Enter your phone number</label>
-                <input type="tel" name="phone" id="farmerPhone" pattern="[0-9]{10}" placeholder=" E.g. 0795555555" class="rounded-md font-semibold h-8 placeholder:text-[14px] placeholder:italic" required>
+                <input type="tel" name="phone" id="farmerPhone" pattern="[0-9]{11}" placeholder=" E.g. 94795555555" class="rounded-md font-semibold h-8 placeholder:text-[14px] placeholder:italic" required>
                 
                 <label for="farmerProof" class="mt-3">Enter your SL-GAP document image</label>
                 <input type="file" name="image" accept="image/*" id="farmerProof" placeholder=" E.g. 0795555555" class="rounded-md h-[70px] border-4 placeholder:text-[14px] placeholder:italic" required>

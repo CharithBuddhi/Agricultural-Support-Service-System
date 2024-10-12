@@ -10,10 +10,9 @@
     <title>Contact Us</title>
 
 </head>
-<body class="">
-    <img src="images/contact.png" alt="" class="absolute top-[80px] h-[750px] left-[-50px]">
+<body >
     <?php require('header.php'); ?>
-    <div class="flex items-center justify-center w-full min-h-screen overflow-hidden">
+    <div class="flex items-center justify-center w-full min-h-screen overflow-hidden bg-cover bg-no-repeat bg-[url('images/contact.jpg')]">
         <div class="overflow-hidden ">
             <div class="relative flex flex-col w-full max-w-4xl gap-10 p-8 text-white shadow-lg md:pt-10 md:pb-10 md:space-y-0 md:flex-row md:space-x-6 bg-cyan-700 rounded-xl">
                 <div class="flex flex-col justify-between gap-8 ">
@@ -60,7 +59,7 @@
 
                 <div class="z-30 flex flex-col bg-white text-black shadow-lg rounded-xl md:w-[1000px]">
                                         
-                    <form action="insert.php" method="post" class="z-20 flex flex-col">
+                    <form action="insert.php" method="post" class="z-20 flex flex-col ml-2 mt-1">
                         <label for="" class="mb-3 font-serif text-3xl font-semibold">Let's Talk</label>
 
                         <div class="flex flex-col ml-1 mr-1 space-y-4">

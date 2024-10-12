@@ -1,5 +1,8 @@
-<?php session_start();
-$_SESSION['id'] = '2';
+<?php session_start(); 
+if(!isset($_SESSION['login_staff_user'])){
+    header('Location: inquiry.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,32 +11,33 @@ $_SESSION['id'] = '2';
     <link rel="stylesheet" href="/src/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> -->
     <title>Profile</title>
     
 </head>
 <body class="bg-[#350dc3] text-white">
 
-    <div class="flex w-full h-full">
+    <div class="flex w-full h-screen">
 
         <!-- load staff menu bar here -->
         <div class="load_data_container w-[20%]"></div> 
 
         <div class="flex flex-col w-[79%] rounded-3xl pl-2 ml-4 gap-5 ">
 
+            <!-- user information form -->
             <form action="update.php" method="post" class="flex flex-col mt-14 ">
                 <h1 class="text-2xl font-bold">User information</h1><hr class="w-[90%]">
                 
                 <?php
                     require('db_conn.php');
 
-                    $id = $_SESSION['id'];
-                    $sql = "SELECT * FROM `staff` WHERE `staff_id` = '$id'";
+                    $requ = $_SESSION['login_staff_user'];
+                    $sql = "SELECT * FROM `staff` WHERE `staff_userName` = '$requ'";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
                         
                     ?>
 
+                    <input type="text" name="user_id" value="<?php echo $row['staff_id']; ?>" hidden readonly>
                     <div class="flex gap-32 mt-5 text-lg">
                         <div class="flex flex-col gap-2">
                             <h1 class="font-semibold">User name</h1>
@@ -41,7 +45,7 @@ $_SESSION['id'] = '2';
                         </div>
                         <div class="flex flex-col gap-2">
                             <h1 class="font-semibold">Name</h1>
-                            <input type="text" value="<?php echo $row['staff_name']; ?>" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black disabled:bg-slate-300" disabled>
+                            <input type="text" name="name" value="<?php echo $row['staff_name']; ?>" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black disabled:bg-slate-300" disabled>
                         </div>
                     </div>
 
@@ -61,14 +65,16 @@ $_SESSION['id'] = '2';
                 ?>
 
                 <div class="flex gap-4 mt-7">
-                    <button type="submit" name="profile_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg hover:bg-purple-500">Update</button>
+                    <button type="submit" name="staff_profile_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg hover:bg-purple-500">Update</button>
                     <button type="reset" class="px-3 py-1 text-white rounded-lg bg-slate-400 hover:bg-slate-300">Cancel</button>
                 </div>
             </form>
 
+            <!-- password change form -->
             <form action="update.php" method="post" class="flex flex-col mt-2">
                 <h1 class="text-2xl font-bold">Password Change</h1><hr class="w-[90%]">
                 <div class="flex flex-col gap-8 mt-5 text-lg">
+                <input type="text" name="user_id" value="<?php echo $row['staff_id']; ?>" hidden readonly>
                     <div class="flex flex-col gap-2">
                         <h1 class="font-semibold">Old Password</h1>
                         <input type="text" name="old_password" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black"  required>
@@ -90,7 +96,7 @@ $_SESSION['id'] = '2';
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <button type="submit" name="password_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg h-9 hover:bg-purple-500">Update</button>
+                        <button type="submit" name="staff_password_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg h-9 hover:bg-purple-500">Update</button>
                         <button type="reset" class="px-3 py-1 text-white rounded-lg h-9 hover:bg-slate-300 bg-slate-400">Cancel</button>
                     </div>
                 </div>
@@ -186,8 +192,6 @@ $_SESSION['id'] = '2';
             }
         });
     </script>
-
-
 
 </body>
 </html>

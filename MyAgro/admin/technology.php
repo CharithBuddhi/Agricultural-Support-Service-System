@@ -1,6 +1,11 @@
 <?php 
 error_reporting(0);
-session_start(); ?>
+session_start();
+if(!isset($_SESSION['login_staff_user'])){
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,14 +29,14 @@ session_start(); ?>
 
     <div class="flex flex-col w-[79%] ">
         
+        <!-- New Technology manage table section -->
         <div class="flex flex-col w-full">
-            <!-- New Technology manage table section -->
             <div class="mt-[18px]">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-mt-2">
                             <div class="flex card-header ">
-                                <h1 class="mt-4 text-xl">New Technology manage</h1>
+                                <h1 class="mt-4 text-xl">New Technology Manage</h1>
                             </div>
                             <div class="p-1 ml-3 h-[50px]">
         
@@ -61,12 +66,11 @@ session_start(); ?>
                     <div class="col-md-12">
                         <div class="card-mt-1">
                             <form action="" method="post" enctype="multipart/form-data">
-                                <div class="card-body table-responsive" id="price_table" style="max-height: 400px; overflow-y: auto;">
+                                <div class="card-body table-responsive" id="price_table" style="max-height: 350px; overflow-y: auto;">
                                     <table class="table text-center text-white table-hover">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Technology Type</th>
                                                 <th scope="col">Video Name</th>
                                                 <th scope="col">Video</th>
                                                 <th scope="col">Action</th>
@@ -79,7 +83,7 @@ session_start(); ?>
                                                 
                                                 if(isset($_POST['search_technology'])){
                                                     $filter_technology = $_POST['search_technology'];
-                                                    $query = "SELECT * FROM `technology` WHERE CONCAT(`tech_id`, `video_name`, `type`) LIKE '%$filter_technology%'";
+                                                    $query = "SELECT * FROM `technology` WHERE CONCAT(`tech_id`, `video_name`) LIKE '%$filter_technology%'";
                                                     $query_run = mysqli_query($conn, $query);
                                                 
                                                     // CONCAT keyword filter the inside bracket column data only
@@ -93,7 +97,6 @@ session_start(); ?>
                                                             <tr>   
                                                                 <!-- using = mark can access the data, this are the print like echo -->
                                                                 <td class="font-bold"><?= $items['tech_id']; ?></td>
-                                                                <td><?= $items['type']; ?></td> 
                                                                 <td><?= $items['view_name']; ?></td>            
                                                                 <td class="w-[120px]"><?php echo '<video src="videos/'.$items['video_name'].'" controls class="h-[60px] w-[150px]" loop></video>'; ?></td>
                                                                 <td class="flex justify-center h-[80px]">
@@ -131,6 +134,50 @@ session_start(); ?>
                 </div>
             </div>
         </div>
+        
+        <!-- Send Notification -->
+        <div class="flex flex-col h-full gap-2 my-5 ml-3 ">
+            <form action="send.php" method="POST" class="flex flex-col gap-3">
+                <h1 class="text-2xl border-b border-[#302952]">Send Notification</h1>
+                <div class="flex flex-col gap-2">
+                
+                <!-- get all farmers phone numbers -->
+
+                <?php
+                
+                    $sql = "SELECT farmer_phone FROM farmer";
+                    $result = $conn->query($sql);
+                
+                ?>
+                
+                    <label for="phone">Select a Phone Number:</label>
+                    <select name="phone" id="phone" class="h-10 text-black rounded-md w-80" required>
+                        <?php
+                        // Check if there are results from the query
+                        if ($result->num_rows > 0) {
+                            // Output each phone number as an option
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['farmer_phone'] . "'>" . $row['farmer_phone'] . "</option>";
+                            }
+                        } else {
+                            echo "<option>No phone numbers found</option>";
+                        }
+                        ?>
+                    </select>    
+                </div>
+                <div class="flex">
+                    <div class="flex flex-col gap-2">
+                        <h1 class="p-1">Message:</h1>
+                        <textarea name="message" rows="4" type="text" id="message" class="text-black rounded-md w-[320px]" required></textarea>    
+                    </div>
+                    <div class="flex gap-4 mt-20 ml-10">
+                        <button type="reset" class="w-24 h-10 border-2 border-white bg-slate-500 hover:bg-slate-700 hover:text-white rounded-xl">Clear</button>
+                        <button type="submit" class="w-24 h-10 bg-blue-500 border-2 border-white hover:bg-blue-700 hover:text-white rounded-xl">Send</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
     
     </div>
         
@@ -147,15 +194,7 @@ session_start(); ?>
             <form action="insert.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="flex flex-col gap-2"> 
-
-                        <div class="flex flex-col gap-1 font-bold">
-                            <label for="video_type">Video Type:</label>
-                            <select id="video_type" name="video_type" class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
-                                <option value="simple">Simple</option>
-                                <option value="complex">Complex</option>
-                            </select>
-                        </div>
-                        
+                                               
                         <div class="flex flex-col font-bold">
                             <label for="video_name">Upload Video:</label>
                             <input type="text" name="video_name" id="video_name" class="h-10 p-2 border-2 rounded-lg w-96 border-slate-300" required>
@@ -175,6 +214,11 @@ session_start(); ?>
         </div>
     </div>
 </div>
+
+<?php
+// Close the database connection
+$conn->close();
+?>
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

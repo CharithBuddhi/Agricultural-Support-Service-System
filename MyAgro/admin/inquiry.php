@@ -1,4 +1,9 @@
-<?php session_start();?>
+<?php session_start();
+if(!isset($_SESSION['login_staff_user'])){
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +31,7 @@
     <div class="flex flex-col w-[79%] ">
         <div class="h-[70%] ml-5">
             <!-- heder section of the page -->
-             <div class="flex justify-between mt-8 mb-3 ">  <!--border-2 border-red-600 -->
+             <div class="flex justify-between mt-10 mb-3 ">  <!--border-2 border-red-600 -->
                 <h1 class="text-2xl ">User Inquires</h1>   
             </div>  
             

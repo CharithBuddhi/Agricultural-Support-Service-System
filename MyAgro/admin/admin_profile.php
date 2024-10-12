@@ -1,0 +1,207 @@
+<?php session_start(); 
+if(!isset($_SESSION['login_admin_user'])){
+    header('Location: index.php');
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/MyAgro/style.css">
+    
+</head>
+<body class="bg-[#350dc3] text-white">
+
+    <div class="flex w-full h-full">
+
+        <!-- load staff menu bar here -->
+        <div class="load_data_container w-[20%]"></div> 
+
+        <div class="flex flex-col w-[79%] rounded-3xl pl-2 ml-4">
+
+            <form action="update.php" method="post" class="flex flex-col mt-14 ">
+                <fieldset class="ml-2 rounded-2xl border-2 h-fit p-5 border-white w-[80%]">
+                    <legend class="text-xl font-bold ">User information</legend>
+                    
+                    <?php
+                        require('db_conn.php');
+
+                        $user = $_SESSION['login_admin_user'];
+                        $sql = "SELECT * FROM `staff` WHERE `staff_userName` = '$user'";
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                            
+                        ?>
+
+                        <div class="flex gap-32 text-lg">
+                        <input type="text" name="admin_id" value="<?php echo $row['staff_id']; ?>" hidden readonly>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="font-semibold">User name</h1>
+                                <input type="text" value="<?php echo $row['staff_userName']; ?>" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black disabled:bg-slate-300" disabled>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="font-semibold">Name</h1>
+                                <input type="text" name="name" value="<?php echo $row['staff_name']; ?>" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black disabled:bg-slate-300">
+                            </div>
+                        </div>
+
+                        <div class="flex gap-32 mt-10 text-lg">
+                            <div class="flex flex-col gap-2">
+                                <h1 class="font-semibold">Position</h1>
+                                <input type="text" value="<?php echo $row['staff_type']; ?>" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black disabled:bg-slate-300" disabled>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="font-semibold">Email Address</h1>
+                                <input type="email" name="email" value="<?php echo $row['staff_email']; ?>" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black" required>
+                            </div>
+                        </div>
+
+                        <?php
+                    
+                    ?>
+
+                    <div class="flex gap-4 mt-7">
+                        <button type="submit" name="admin_profile_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg h-9 hover:bg-purple-500">Update</button>
+                        <button type="reset" class="px-3 py-1 text-white rounded-lg h-9 bg-slate-400 hover:bg-slate-300">Cancel</button>
+                    </div>
+
+                </fieldset>
+            </form>
+
+            <form action="update.php" method="post" class="flex flex-col mt-2">
+                <fieldset class="mt-10 ml-2 rounded-2xl border-2 h-fit p-5 border-white w-[80%]">
+                <legend class="text-xl font-bold ">Password Change</legend>
+                    <div class="flex flex-col gap-8 text-lg">
+                        <input type="text" name="admin_id" value="<?php echo $row['staff_id']; ?>" hidden readonly>
+                        <div class="flex flex-col gap-2">
+                            <h1 class="font-semibold">Old Password</h1>
+                            <input type="text" name="old_password" class="rounded-lg text-base h-7 w-[280px] pl-2 text-black"  required>
+                        </div>
+                        <div class="flex gap-32">
+                            <div class="flex flex-col gap-2">
+                                <h1 class="font-semibold">New Password</h1>
+                                <div class="relative flex items-center">
+                                    <input type="password" id="password1" name="new_password" class="rounded-lg w-[280px] text-base h-7 pl-2 text-black" required>
+                                    <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg1">
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="font-semibold">Confirm Password</h1>
+                                <div class="relative flex items-center">
+                                    <input type="password" id="password" name="confirm_password" class="rounded-lg w-[280px] text-base h-7 pl-2 text-black" required>
+                                    <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <button type="submit" name="admin_password_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg h-9 hover:bg-purple-500">Update</button>
+                            <button type="reset" class="px-3 py-1 text-white rounded-lg h-9 hover:bg-slate-300 bg-slate-400">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- load side menu bar  -->
+    <script>
+        $(document).ready(function(){
+            $('.load_data_container').load('sendcode/adminpanel.php');
+        })
+    </script>
+
+    <script>
+        var message ="<?php echo isset($_SESSION['admin_profile_status']) ? $_SESSION['admin_profile_status'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
+
+        if (message != "") {
+            if(message.includes('success')) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#69f44a",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "success",
+                title: message,
+                });
+            } else {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#f84444",
+                background: "#fcf2f2",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "error",
+                title: message,
+                });
+            }
+            // remove after once message is shown
+            <?php unset($_SESSION['admin_profile_status']); ?>
+        } 
+    </script>
+
+    <script>
+        // toggle password visibility script
+        let toggleImg =document.getElementById('toggleImg');
+        var password = document.getElementById('password');
+        var toggleImg1 =document.getElementById('toggleImg1');
+        var password1 = document.getElementById('password1');
+
+        toggleImg.addEventListener('click', function() {
+            if (password.type === 'password') {
+                password.type = 'text';
+                toggleImg.src = 'images/eye-open.png';
+                toggleImg.style.height = '14px';
+            } else {
+                password.type = 'password';
+                toggleImg.src = 'images/eye-close.png';
+                toggleImg.style.height = '16px';
+            }
+        });
+
+        toggleImg1.addEventListener('click', function() {
+            if (password1.type === 'password') {
+                password1.type = 'text';
+                toggleImg1.src = 'images/eye-open.png';
+                toggleImg1.style.height = '14px';
+            } else {
+                password1.type = 'password';
+                toggleImg1.src = 'images/eye-close.png';
+                toggleImg1.style.height = '16px';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+<?php
+
+
+
+
+?>
