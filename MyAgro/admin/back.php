@@ -8,7 +8,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div class="">
+ 
+  <div class="flex justify-between bg-red-500">
+    <div class="text-lg">
+        <label for="video" class="pl-2 mt-3 text-lg font-semibold">helo</label>    
+    </div>
+    <div class="flex gap-6 pr-5 text-lg">
+        <h1>good</h1>
+        <h1>bad</h1>   
+    </div>
+</div>
+
+    <!-- <div class="">
       <button
         onclick="openPopup()"
         type="submit"
@@ -34,7 +45,7 @@
           Ok
         </button>
       </div>
-    </div>
+    </div> -->
 
     <script>
       let popup = document.getElementById("popup");

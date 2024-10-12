@@ -1,3 +1,4 @@
+// after click proof document display popup
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("proof_doc")) {
     const src = e.target.getAttribute("src");

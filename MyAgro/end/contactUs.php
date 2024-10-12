@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Contact Us</title>
 
 </head>
-<body class="bg-slate-100 ">
+<body class="">
+    <img src="images/contact.png" alt="" class="absolute top-[80px] h-[750px] left-[-50px]">
     <?php require('header.php'); ?>
     <div class="flex items-center justify-center w-full min-h-screen overflow-hidden">
         <div class="overflow-hidden ">
@@ -57,28 +60,33 @@
 
                 <div class="z-30 flex flex-col bg-white text-black shadow-lg rounded-xl md:w-[1000px]">
                                         
-                    <form action="" class="z-20 flex flex-col">
+                    <form action="insert.php" method="post" class="z-20 flex flex-col">
                         <label for="" class="mb-3 font-serif text-3xl font-semibold">Let's Talk</label>
 
-                        <div class="flex flex-col ml-1 mr-1 space-y-4 ">
-                            <div  class="flex flex-col gap-4">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" placeholder="charitha buddhika" class="rounded-md outline-none h-7 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300" required>
+                        <div class="flex flex-col ml-1 mr-1 space-y-4">
+                            <div  class="flex flex-col gap-1">
+                                <label for="name" class="font-semibold">Name</label>
+                                <input name="name" maxlength="40" type="text" id="name" placeholder="charitha buddhika" class="rounded-md outline-none h-7 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300" required>
                             </div>
-                            <div class="flex flex-col space-y-2">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" placeholder="anne123@gmail.com" class="rounded-md outline-none h-7 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300" required>
+                            <div class="flex flex-col space-y-1">
+                                <label for="email" class="font-semibold">Email</label>
+                                <input type="email" maxlength="50" id="email" name="email" placeholder="anne123@gmail.com" class="rounded-md outline-none h-7 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300" required>
                             </div>
-                            <div class="flex flex-col space-y-2">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" placeholder="How to get free access" class="rounded-md outline-none h-7 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300" required>
+                            <div class="flex flex-col space-y-1">
+                                <label for="subject"  class="font-semibold">Subject</label>
+                                <input name="subject" maxlength="60" type="text" id="subject" placeholder="How to get free access" class="rounded-md outline-none h-7 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300" required>
                             </div>
-                            <div class="flex flex-col space-y-2">
-                                <label for="message">Message</label>
-                                <textarea id="message" placeholder="message" class="rounded-md outline-none h-28 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300 rows-5" required></textarea>
+                            <div class="flex flex-col space-y-1">
+                                <label for="message" class="font-semibold">Message</label>
+                                <textarea name="message" maxlength="800" id="message" placeholder="message" class="rounded-md outline-none h-28 ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300 rows-5" required></textarea>
                             </div>
                             <div class="flex justify-end">
-                                <button type="submit" class="w-40 h-8 mb-4 font-bold text-white rounded-lg bg-cyan-600 hover:bg-cyan-300">Send Message</button> 
+                                <button type="submit" id="contact_submit" name="contact_submit" class="flex items-center justify-center h-10 gap-1 mb-4 font-bold text-white w-28 rounded-3xl bg-gradient-to-r from-cyan-600 to-teal-400">   
+                                    <h1>Submit</h1>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </button> 
                             </div>
                             
                         </div> 
@@ -90,12 +98,74 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <script>
+        // verify email is correct format or not
+        const contact_submit = document.getElementById("contact_submit");
+        const email = document.getElementById('email');
+        
+        contact_submit.addEventListener("click", (e) => {
+            const emailValue = email.value.trim();
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(emailValue)) {
+                
+                alert('Invalid email address');
+                e.preventDefault(); // prevent form submission
+            }
+        })
+    
+    </script>
+    
+    <script>
+    // show success or error message
+    var message ="<?php echo isset($_SESSION['status']) ? $_SESSION['status'] : ''; ?>";   //send status include massage  varible message, but if not status then print ''.
 
+    if (message != "") {
+        if(message.includes('success')) {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            iconColor: "#69f44a",
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            },
+            });
+            Toast.fire({
+            icon: "success",
+            title: message,
+            });
+        } else {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            iconColor: "#f84444",
+            background: "#fae1e1",
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            },
+            });
+            Toast.fire({
+            icon: "error",
+            title: message,
+            });
+        }
+        // remove after once message is shown
+        <?php unset($_SESSION['status']); ?>
+    }   
     </script>
     
 </body>
 </html>
+

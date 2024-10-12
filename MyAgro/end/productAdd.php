@@ -44,7 +44,7 @@
             </div>
             <div class="">
                 <h3 class="">Stock Images :</h3>
-                <input type="image" width="48" height="48" class="text-lg text-justify border-2 w-[300px] h-[80px] rounded border-black">
+                <input type="file" width="48" height="48" class="text-lg text-justify border-2 w-[300px] h-[80px] rounded border-black">
             </div>
         </div> 
         <div class="flex flex-col gap-5">
@@ -65,8 +65,8 @@
                 <input type="text" class="text-lg text-justify border-2 w-[300px] h-[28px] rounded border-black">
             </div>
             <div class="flex gap-5 mt-3 justify-evenly">
-                <input type="reset" value="Clear" class="border-2 border-black rounded rounded-lg focus:cursor-pointer w-[125px]">
-                <input type="submit" value="Submit" class="border-2 border-black rounded rounded-lg focus:cursor-pointer w-[125px]">
+                <input type="reset" value="Clear" class="border-2 border-black rounded-lg focus:cursor-pointer w-[125px]">
+                <input type="submit" value="Submit" class="border-2 border-black rounded-lg focus:cursor-pointer w-[125px]">
             </div>
         </div>  
     </div>     

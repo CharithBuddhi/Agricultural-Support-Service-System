@@ -12,19 +12,19 @@
     <!-- navigation bar -->
     <?php require('header.php'); ?>
 
-    <!--select technology type -->
+    <!--select techniques type -->
     <div class="flex flex-col gap-5 font-serif text-center">
-        <h1 class="mt-12 font-serif text-3xl italic font-bold">New Technology</h1>  
+        <h1 class="mt-12 font-serif text-3xl italic font-bold">New Techniques</h1>  
         <p class="text-2xl">Select the category you want to study</p>
         <div class="flex justify-center gap-8 mt-10 font-bold ">
             <div class="flex flex-col gap-3">
-                <a href="#"><img src="images/complex.jpg" alt="Complex Technology image" class="cursor-pointer w-[319.8px] h-[246px] rounded-3xl shadow-xl shadow-gray-400"></a>
-                <a href="#" class="text-xl">Complex Technology</a>
+                <a href="techno.php"><img src="images/complex.jpg" alt="Complex Techniques image" class="cursor-pointer w-[319.8px] h-[246px] rounded-3xl shadow-xl shadow-gray-400"></a>
+                <a href="techno.php" class="text-xl">Complex Techniques</a>
                 <h1 class="mt-3">Large scale machinery and equipment</h1>
             </div>
             <div class="flex flex-col gap-3">
-                <a href="#"><img src="images/simpl.jpg" alt="Simple Technology image" class="cursor-pointer w-[319.8px] h-[246px] rounded-3xl shadow-xl shadow-gray-400 "></a>
-                <a href="#" class="text-xl">Simple Technology</a>
+                <a href="techno.php"><img src="images/simpl.jpg" alt="Simple Techniques image" class="cursor-pointer w-[319.8px] h-[246px] rounded-3xl shadow-xl shadow-gray-400 "></a>
+                <a href="techno.php" class="text-xl">Simple Techniques</a>
                 <h1 class="mt-3">Small size machinery and equipment</h1>
             </div>
         </div>

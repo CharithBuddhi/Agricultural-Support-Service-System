@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +14,9 @@
     <?php require('header.php'); ?>
     
     <!-- first section in home page -->
-    <div class="h-[100vh] bg-no-repeat bg-cover" style="background-image: url(images/home.jpg)">
+    <div class="h-[80vh] mt-10 bg-no-repeat bg-cover" style="background-image: url(images/home.jpg)">
         <marquee  behavior="scroll" direction="down" height="120px" width="70%" scrolldelay="150" class="font-serif text-7xl font-bold text-[#6fff00] mt-[10rem] px-4">Welcome to MyAgro</marquee>
-        <h2 class="text-6xl text-[#73F80B] font-serif mt-[18rem] px-2 font-semibold animate-pulse">The only place to sell <br> your products at <br>reasonable prices.</h2>
+        <h2 class="text-5xl text-[#73F80B] font-serif mt-[12rem] px-2 font-semibold animate-pulse">The only place to sell <br> your products at <br>reasonable prices.</h2>
     </div>
 
     <!-- Mostly soled Products section in home page -->
@@ -284,5 +284,55 @@
         </div>
         <h1 class="relative flex justify-center italic top-[350px]">Copyright @ 2024 MyAgro Pvt  Ltd: All Right Reserved</h1>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- sweetalert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- show output message -->
+    <script>
+        var message ="<?php echo isset($_SESSION['home_message']) ? $_SESSION['home_message'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
+        if (message != "") {
+            if(message.includes('success')) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#69f44a",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "success",
+                title: message,
+                });
+            } else {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#f84444",
+                background: "#fcf2f2",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "error",
+                title: message,
+                });
+            }
+            // remove after once message is shown
+            <?php unset($_SESSION['home_message']); ?>
+        } 
+    </script>
+    
 </body>
 </html>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>   
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,33 +20,44 @@
             <div class="p-3 border-1 rounded-3xl shadow-2xl bg-[#BAEAD3]/60">
                 <h1 class="mb-10 text-3xl font-bold">Log in to your MyAgro account</h1>
                 <div class="flex flex-col items-center">
-                    <form action="" class="flex flex-col font-semibold w-[300px]">
-                        <label for="userType">Select your user type</label>
-                        <select name="" id="userType" placeholder="E.g. your farmer select “farmer”" class="rounded-lg h-7 placeholder:italic bg-[#f3f2f2]" required>
-                            <option value="def" disabled selected >Please choose your user type</option>
-                            <option value="Farmer" >Farmer</option>
-                            <option value="Customer">Customer</option>
-                            <option value="Supplier">Supplier</option>
+                    
+                    <form action="connect.php" method="post" class="flex flex-col font-semibold w-[300px]">
+                        
+                        <label for="usertype">Select your user type</label>
+                        <select name="usertype" id="usertype" placeholder="E.g. your farmer select “farmer”" class="rounded-lg h-7 placeholder:italic bg-[#f3f2f2]" required>
+                            <option disabled selected >Please choose your user type</option>
+                            <option value="farmer" name="usertype" >Farmer</option>
+                            <option value="customer" name="usertype">Customer</option>
+                            <option value="supplier" name="usertype">Supplier</option>
                         </select>
+                        
                         <label for="username" class="mt-4">Enter your Username</label>
-                        <input type="text" placeholder=" E.g.charitha" id="username"class="pl-1 rounded-lg h-7 placeholder:italic" required>
+                        <input type="text" placeholder=" E.g.charitha" name="username" id="username"class="pl-1 rounded-lg h-7 placeholder:italic" required>
+                        
                         <label for="password" class="mt-4">Enter your Password</label>
                         <div class="relative flex items-center">
-                            <input type="password" placeholder=" pick up your password" id="password" class="w-full pl-1 rounded-lg h-7 placeholder:italic" required>
+                            <input type="password" placeholder=" pick up your password" id="password" name="password" class="w-full pl-1 rounded-lg h-7 placeholder:italic" required>
                             <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
                         </div>
+                        
                         <p class="relative mt-1 left-[172px]">
                             <a href="forgot.html">Forgot Password?</a>
                         </p>
-                        <button class="flex mt-6 h-10 rounded-full bg-[#E8E025] justify-center">
-                            <input type="submit" value="Login" class="py-2 focus:cursor-pointer">
-                        </button>
+                        
+                        <button type="submit" name="login" id="login" class="text-center mt-6 focus:cursor-pointer h-10 rounded-full bg-[#E8E025] justify-center">Login</button>
+                        
                         <p class="relative mt-3 left-8">Don't have an account? <a href="customer.php">Register</a></p>
+                    
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- sweetalert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         // toggle password visibility script
@@ -63,6 +75,52 @@
                 toggleImg.style.height = '16px';
             }
         });
+    </script>
+
+    <!-- show output message -->
+    <script>
+
+    var message ="<?php echo isset($_SESSION['login_message']) ? $_SESSION['login_message'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
+        if (message != "") {
+            if(message.includes('success')) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#69f44a",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "success",
+                title: message,
+                });
+            } else {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#f84444",
+                background: "#fcf2f2",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "error",
+                title: message,
+                });
+            }
+            // remove after once message is shown
+            <?php unset($_SESSION['login_message']); ?>
+        } 
     </script>
 
 </body>

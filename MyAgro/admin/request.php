@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- font-awesome icon cdn link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <style>
         .table-hover tbody tr:hover td {
             background: #e1e3e5;
@@ -26,9 +26,11 @@
 </head>
 <body class="text-white bg-[#350dc3]">
 
-<div class="flex">
-    <div class="flex flex-col w-[20%] bg-[#08025e] rounded-r-3xl  h-screen"></div>
-    <div class="flex flex-col w-[80%] rounded-3xl pl-2 ml-1">
+<div class="flex w-full h-full">
+    <!-- load staff menu bar here -->
+    <div class="load_data_container w-[20%]"></div>
+    
+    <div class="flex flex-col w-[79%] rounded-3xl pl-2 ml-1">
         <div class="flex gap-5">
             <h1 class="mt-10 text-2xl text-left font-sembiold">New Request</h1>
             <button type="button" onclick="reload()" id="btn_reload" class="bg-blue-300 font-semibold relative top-10 left-[720px] w-[100px] h-[34px] text-center rounded-xl border-2">Available</button>
@@ -42,7 +44,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">NIC</th>
-                    <th scope="col">Address</th>
+                    <th scope="col">Shop Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Proof</th>
                     <th scope="col">Type</th>
@@ -63,7 +65,7 @@
                                 <td class="font-bold"><?php echo $row['request_id']; ?></td>
                                 <td><?php echo $row['your_name']; ?></td>
                                 <td><?php echo $row['nic_number']; ?></td>
-                                <td><?php echo $row['user_address']; ?></td>
+                                <td><?php echo $row['shop_name']; ?></td>
                                 <td><?php echo $row['user_email']; ?></td>
                                 <!-- get image from array -->
                                 <td><?php echo '<img src="/Agricultural-Support-Service-System/MyAgro/admin/images/reg/'.$row['proof_image'].'" width="50px" height="50px" class="proof_doc">'; ?></td>
@@ -73,12 +75,11 @@
                                         <i class="text-green-500 fa-solid fa-square-check fs-4 "></i>
                                     </a>
                                     
-                                    <button type="button" class="ml-2 mr-2" name="<?php echo $row['request_id']; ?>" id="reject" onclick="rejected()">
+                                    <button type="button" class="ml-2 mr-2 request_delete_btn" value="<?= $row['request_id']; ?>">
                                         <i class="fa-duotone fa-solid fa-trash-can fs-4"></i>
                                     </button>                                                             
                                 </td>
                             </tr>
-
                             <?php
                         }
                     ?>
@@ -90,8 +91,8 @@
 
 
 
- <!-- Modal -->
- <div class="modal fade" id="proof-document" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- Modal for proof document view -->
+<div class="modal fade" id="proof-document" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -108,33 +109,32 @@
     </div>
 </div>
 
- <!-- reload for new request checking(refresh page)    -->
+<!-- load side menu bar  -->
 <script>
+    $(document).ready(function(){
+        $('.load_data_container').load('sendcode/satffpanel.php');
+    })
+</script>
 
+ <!-- reload for new request checking(refresh page) Available button -->
+<script>
     let btn_reload =document.getElementById('btn_reload');
     function reload(){
         location.reload();
     }
-
-    let reject =document.getElementById('reject');
-
-    reject.addEventListener("click", () => {
-        alert("Are you sure you want to reject this request?");
-        <?php 
-            require('db_conn.php');
-            $id = $_GET['name'];
-            $sql = "DELETE FROM request WHERE request_id = '$id'";
-            $result = mysqli_query($conn, $sql);
-            
-        ?>
-    })
 </script>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- boostrap script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <!-- link admin folderinsdie js file main javasript file -->
 <script src="js/main.js"></script>
+<script src="js/custom.js"></script>
+
+
 
 </body>
 </html>
