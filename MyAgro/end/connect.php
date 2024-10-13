@@ -4,11 +4,14 @@
     
     
     // registration manage here
-    if(isset($_SESSION['register'])){
-        
+    if(isset($_POST['register'])){
         $usertype = $_POST['usertype'];    
         $email = $_SESSION['email'];
-        $yourname = $_SESSION['yourname'];    
+        $yourname = $_SESSION['yourname'];
+        
+        echo $usertype;
+                echo $email;
+                echo $yourname;
         
         // identify user type
         switch($usertype){
@@ -21,9 +24,18 @@
                 $password = $_POST['password'];      
                 $address = $_POST['address'];
                 $phone = $_POST['phone'];
+                
+                echo $usertype;
+                echo $email;
+                echo $yourname;
+                echo $username;
+                echo $password;
+                echo $address;
+                echo $phone;
     
-                if(!empty($yourname) && !empty($username) && !empty($password) && !empty($address) && !empty($email) && !empty($phone)){
+                if (!empty($yourname) && !empty($username) && !empty($password) && !empty($address) && !empty($email) && !empty($phone)) {
     
+                    echo $phone;
                     $SELECT = "SELECT username FROM customer WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT customer_email FROM customer WHERE customer_email = ? LIMIT 1";
                     $INSERT = "INSERT INTO customer (customer_name, username, password, customer_address, customer_email, customer_telno) values(?, ?, ?, ?, ?, ?)";
@@ -67,7 +79,7 @@
                     }
     
                 }else{
-                    $_SESSION['reg_message'] = "Please fill the all input field";
+                    $_SESSION['reg_message'] = "Please customer fill the all input field";
                     header("Location: customer.php");
                     exit();  
                 }
@@ -83,7 +95,7 @@
                 $phone = $_POST['phone'];
                 $proof = $_FILES['image']['name'];
     
-                if(!empty($yourname) && !empty($username) && !empty($password) && !empty($nic) && !empty($address) && !empty($email) && !empty($phone) && !empty($proof)){
+                if(!empty($yourname) || !empty($username) || !empty($password) || !empty($nic) || !empty($address) || !empty($email) || !empty($phone) || !empty($proof)){
     
                     $SELECT = "SELECT username FROM farmer WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT farmer_email FROM farmer WHERE farmer_email = ? LIMIT 1";
@@ -220,9 +232,9 @@
                 $phone = $_POST['phone'];
                 $proof = $_FILES['image']['name'];
     
-                if(!empty($yourname) && !empty($username) && !empty($password) && !empty($nic) && !empty($address) && !empty($shop_name) && !empty($email) && !empty($phone) && !empty($proof)){
+                if(!empty($yourname) || !empty($username) || !empty($password) || !empty($nic) || !empty($address) || !empty($shop_name) || !empty($email) || !empty($phone) || !empty($proof)){
     
-                    $SELECT = "SELECT supplier_username FROM supplier WHERE supplier_username = ? LIMIT 1";
+                    $SELECT = "SELECT username FROM supplier WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT supplier_email FROM supplier WHERE supplier_email = ? LIMIT 1";
                     $SELECT2 = "SELECT supplier_nic FROM supplier WHERE supplier_nic = ? LIMIT 1";
                     $SELECT3 = "SELECT username FROM request WHERE username = ? LIMIT 1";
@@ -387,6 +399,15 @@
             header("Location: login.php");
             exit();
         }
+    }
+
+    // redirect to index page
+    if (
+        !isset($_POST["register"]) &&
+        !isset($_POST["login"])
+    ) {
+        header('Location: index.php');
+        exit(0);
     }
     
 ?>

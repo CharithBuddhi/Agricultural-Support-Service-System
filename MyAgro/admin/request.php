@@ -76,13 +76,14 @@ if(!isset($_SESSION['login_staff_user'])){
                                 <!-- get image from array -->
                                 <td><?php echo '<img src="/Agricultural-Support-Service-System/MyAgro/admin/images/reg/'.$row['proof_image'].'" width="50px" height="50px" class="proof_doc">'; ?></td>
                                 <td><?php echo $row['user_type']; ?></td>
-                                <td >                                       
+                                <td > 
+                                    <!-- approve button -->                                      
                                     <a href="approve.php?id=<?php echo $row['request_id']; ?>" class="ml-2 mr-1" type="submit">
                                         <i class="text-green-500 fa-regular hover:text-black fa-circle-check fa-xl"></i>
                                         <!-- <i class=" fa-square-check"></i> -->
                                     </a>
                                     <button type="button" id="reply_btn" class="ml-1 mr-1" value="<?= $row['request_id']; ?>" data-bs-toggle="modal" data-bs-target="#request_reply">
-                                        <i class="fa-solid text-blue-500 hover:text-black fa-xl fa-pen-to-square"></i>
+                                        <i class="text-blue-500 fa-solid hover:text-black fa-xl fa-pen-to-square"></i>
                                     </button>                                                         
                                 </td>
                             </tr>

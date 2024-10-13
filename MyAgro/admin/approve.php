@@ -40,7 +40,7 @@ if(!isset($_SESSION['login_staff_user'])){
             $new_path = 'images/user/'.$proof;
             $response = $_SESSION['login_staff_user'];     
             
-            $result = mysqli_query($conn,"UPDATE `request` SET `user_action`='1' WHERE request_id = '$id'");
+            // $result = mysqli_query($conn,"UPDATE `request` SET `user_action`='1' WHERE request_id = '$id'");
 
             switch($user_type){
                 case "farmer":
@@ -51,6 +51,8 @@ if(!isset($_SESSION['login_staff_user'])){
 
                     // move image old folder to new folder
                     rename($image_path, $new_path);
+                    $result = mysqli_query($conn,"UPDATE `request` SET `user_action`='1' WHERE request_id = '$id'");
+                    $_SESSION['request_status'] = "Farmer registraion successfull";
                     header('Location: request.php');
                     break;
 
@@ -62,6 +64,8 @@ if(!isset($_SESSION['login_staff_user'])){
 
                     // move image old folder to new folder
                     rename($image_path, $new_path);
+                    $result = mysqli_query($conn,"UPDATE `request` SET `user_action`='1' WHERE request_id = '$id'");
+                    $_SESSION['request_status'] = "Supplier registraion successfull";
                     header('Location: request.php');
                     break;
             }

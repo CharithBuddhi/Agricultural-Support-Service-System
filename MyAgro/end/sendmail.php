@@ -39,7 +39,7 @@
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Let\'s get you verified.';
             $mail->Body    = '<h1>Your OTP number is '.$otp.'</h1>
-                <h3>Welcome to MyAgro'.$yourname.'!</h3>
+                <h3>Welcome to MyAgro '.$yourname.'!</h3>
                 <h4>We are so thrilled you decided to join MyAgro!</h4>
                 <h4>All you need to do now is use the verification code in the app to confirm the email.</h4>
                 <p>If you did not request this code, you can safely ignore this email. Someone might have typed your email address by mistake.</p>
