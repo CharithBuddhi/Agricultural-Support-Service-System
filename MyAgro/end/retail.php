@@ -25,13 +25,13 @@
             <p class="mt-3 text-xl text-justify text-pink-500">This payment not a full payment. 
                 you can pay advance for your order. please note that you can’t refund or 
                 cancel after you pay. your order can go to provide location and get that product 
-                with pay of left of amount cash on hand.
+                with pay of left of amount cash on hand.if you have any question, please contact us.
             </p>
         </div>
-        <div class="flex flex-col items-start h-[310px] mt-32 ml-10 border-4 rounded-3xl">
+        <div class="flex flex-col items-start h-[310px] mt-32 ml-10 border-4 rounded-3xl p-4">
             <div class="flex">
-                <h3 class="mt-3 text-xl text-justify">Name : </h3>
-                <h3 class="mt-3 text-xl text-justify">cabbage</h3>
+                <h3 class="text-xl text-justify ">Name : </h3>
+                <h3 class="text-xl text-justify ">cabbage</h3>
             </div>
             <div class="flex">
                 <h3 class="mt-3 text-xl text-justify">Price 1kg: </h3>
@@ -43,7 +43,7 @@
             </div>
             <div class="flex">
                 <h3 class="mt-3 text-xl text-justify">Quantity  : </h3>
-                
+                <h1><h3 class="mt-3 text-xl text-justify">1kg</h1>
             </div>
             <div class="flex">
                 <h3 class="mt-3 text-xl text-justify">Total price : </h3>

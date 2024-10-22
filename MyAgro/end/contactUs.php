@@ -59,7 +59,7 @@
 
                 <div class="z-30 flex flex-col bg-white text-black shadow-lg rounded-xl md:w-[1000px]">
                                         
-                    <form action="insert.php" method="post" class="z-20 flex flex-col ml-2 mt-1">
+                    <form action="insert.php" method="post" class="z-20 flex flex-col mt-1 ml-2">
                         <label for="" class="mb-3 font-serif text-3xl font-semibold">Let's Talk</label>
 
                         <div class="flex flex-col ml-1 mr-1 space-y-4">
@@ -96,6 +96,9 @@
             </div>
         </div>
     </div>
+
+        <!-- footer section in home page -->
+        <?php require('footer.php'); ?>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

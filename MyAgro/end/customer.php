@@ -80,6 +80,9 @@
 
     </div>
 
+    <!-- footer section in home page -->
+    <?php require('footer.php'); ?>
+
     <!-- "verify otp code correct or not" -->
     <script> 
         const request_btn = document.getElementById("request_btn");

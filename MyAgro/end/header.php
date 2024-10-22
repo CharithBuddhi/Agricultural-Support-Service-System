@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="flex h-14 p-2 shadow-2xl border-b-2 border-slate-300">
+    <nav class="flex p-2 border-b-2 shadow-2xl h-14 border-slate-300">
         <div class="grow">
             <a href="index.php" class="font-serif text-3xl font-bold  text-transparent bg-clip-text bg-[#73F80B]">MyAgro</a>
         </div>
@@ -30,6 +30,9 @@
             </li>
             <li>
                 <a href="nutrients.php" class="" title="Find normal nutrients of vegetables and fruits here">Nutrients of Product</a>
+            </li>
+            <li>
+                <a href="faqs.php" class="" title="Find your common queastion answer here">FAQs</a>
             </li>
             <li>
                 <a href="contactUs.php" class="" title="Find our contact details,inquiry here">Contact Us</a>
@@ -54,7 +57,7 @@
 
                                 if($image != NULL) {
                                     ?>
-                                    <img src="images/user/<?php echo $image; ?>" class="w-10 h-10 rounded-full border-2 border-slate-300" alt="image">
+                                    <img src="images/user/<?php echo $image; ?>" class="w-10 h-10 border-2 rounded-full border-slate-300" alt="image">
                                     <?php
 
                                 }else{
@@ -88,8 +91,8 @@
         <div class="p-4 rounded-xl fixed border shadow-2xl border-slate-300 bg-[#fefefe] text-black top-11 right-3 w-[270px]">
 
             <!-- Modal Body -->
-            <div class="flex flex-col justify-center items-center">
-                <img src="images/user/<?php echo $image; ?>" alt="" class="w-24 h-24 rounded-full border-2 border-slate-300">
+            <div class="flex flex-col items-center justify-center">
+                <img src="images/user/<?php echo $image; ?>" alt="" class="w-24 h-24 border-2 rounded-full border-slate-300">
             </div>
             <div class="flex flex-col mt-5">
                 <label class="pl-2">Type : <?php echo $usertype; ?></label>
@@ -97,9 +100,9 @@
             </div>
 
             <div class="flex flex-col mt-5 gap-0.5 border-t-2 border-slate-300"> 
-                <a href="dashboard.php" class="mt-1 pl-2 hover:bg-blue-300 rounded-md">Profile</a>
-                <a href="login.php" class="hover:bg-blue-300 pl-2 rounded-md">Switch Account</a>   
-                <a href="logout.php" class="hover:bg-blue-300 pl-2 rounded-md">Log Out</a>
+                <a href="dashboard.php" class="pl-2 mt-1 rounded-md hover:bg-blue-300">Profile</a>
+                <a href="login.php" class="pl-2 rounded-md hover:bg-blue-300">Switch Account</a>   
+                <a href="logout.php" class="pl-2 rounded-md hover:bg-blue-300">Log Out</a>
             </div>
 
         </div>

@@ -15,6 +15,7 @@
     <!-- selling section -->
     <h1 class="flex justify-center mt-2 mb-3 font-serif text-3xl italic font-bold">Agrochemicals and Fertilizers</h1>
     <div class="flex"> 
+
         <!-- filter section -->
         <div class="relative flex flex-col ml-4 w-[250px]">
             <label for="" class="mb-3 font-serif text-2xl italic">Filter</label>
@@ -43,7 +44,17 @@
         
         <!-- product section -->
         <div class="flex flex-wrap gap-12 mt-10 ml-10">
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
+
+            <?php
+                include('db_connect.php');
+                if(isset($_POST['filter'])){
+                    $category = $_POST['category'];
+                    $name = $_POST['name'];
+                    $location = $_POST['location'];
+                }
+            ?>
+
+            <a href="retail.php"  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
                 <div class="">
                     <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
                 </div>
@@ -64,139 +75,8 @@
                         <label id="productLocation">Dehiowita</label>
                     </div>
                 </div> 
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-2">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-1 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div> 
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-2">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-1 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div> 
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-2">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-1 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div> 
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-2">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-1 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div> 
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-2">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-1 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div> 
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[280px] h-[350px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-2">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-1 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div> 
-            </div>
+            </a>
+          
         </div>
     </div>
 </body>
