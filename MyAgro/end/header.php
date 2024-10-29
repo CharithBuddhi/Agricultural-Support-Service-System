@@ -20,7 +20,7 @@
                 <a href="productSell.php" class="" title="Find vegetables and fruits product here">Product</a>
             </li>
             <li>
-                <a href="agrosell.php" class="" title="Find agrochemicals and fertilizers product here">Agrochemicals</a>
+                <a href="typeagrochemical.php" class="" title="Find agrochemicals and fertilizers product here">Agrochemicals</a>
             </li>
             <li>
                 <a href="techno.php" class="" title="Find agricultural related new techniques here">New Technology</a>
