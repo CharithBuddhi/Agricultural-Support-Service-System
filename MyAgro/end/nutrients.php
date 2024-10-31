@@ -11,9 +11,9 @@
     <!-- navigation bar -->
     <?php require('header.php'); ?>
 
-    <h1 class="my-6 font-serif text-3xl font-semibold text-center">Nutrients  of crop</h1>
+    <h1 class="my-6 font-serif text-3xl italic font-semibold text-center">Nutrients  of crop</h1>
 
-    <div class="flex justify-center gap-10">
+    <div class="flex justify-center gap-10 pb-20">
         <form class="flex p-4 flex-col ml-2 border-[1px] border-gray-400 shadow-lg rounded-xl shadow-gray-400">
             <label class="text-red-600 text-md">When inserting a photo, clearly insert the vegetable or fruit as follows.</br> Otherwise, the accuracy of your results may decrease.</label>
             <div class="flex flex-col mt-4">
@@ -54,6 +54,9 @@
             </div>
         </div>
     </div>
+
+    <!-- footer section in home page -->
+    <?php require('footer.php'); ?>
     
 </body>
 </html>

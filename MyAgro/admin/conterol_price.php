@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php session_start(); 
+if(!isset($_SESSION['login_admin_user'])){
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,7 @@
     <title>Price Calculation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <style>
         label{
@@ -17,7 +23,10 @@
 </head>
 <body class="bg-[#350dc3] text-white">
 <div class="flex">
-    <div class="flex flex-col w-[20%] bg-[#08025e] rounded-r-3xl  h-screen"></div>
+    <!-- load staff menu bar here -->
+    <div class="load_data_container w-[20%]"></div>
+
+    <!-- main content here -->
     <div class="flex flex-col pl-2 mt-6 ml-16 w-fit">
         <h1 class="font-serif text-3xl text-center font-pop">Price Calculation</h1>
         <form action="cal.php" method="post" class="flex self-center text-black gap-[75px] mt-7">
@@ -28,36 +37,53 @@
 
                 if(isset($_GET['name'])){
                    $name = $_GET['name'];
-                    echo "<div class='flex flex-col '>
-                            <label for='crop_name'>Name of the crop</label>
-                            <input type='text' id='crop_name' name='crop_name' placeholder='Potato' value='$name' class='h-8 rounded-md' required>
-                        </div>";
-
+                   ?>
+                    <div class='flex flex-col '>
+                        <label for='crop_name'>Name of the crop</label>
+                        <input type='text' id='crop_name' name='crop_name' value='<?php echo $name?>' class='h-8 rounded-md' required>
+                    </div>
+                    <?php
                 }else{
-                    echo "<div class='flex flex-col '>
-                            <label for='crop_name'>Name of the crop</label>
-                            <input type='text' id='crop_name' name='crop_name' placeholder='Potato' value='' class='h-8 rounded-md' required>
-                        </div>";
+                    ?>
+                    <div class='flex flex-col '>
+                        <label for='crop_name'>Name of the crop</label>
+                        <select id="crop_name" name="crop_name" class='h-8 rounded-md font-semibold' required>
+                            <option value="">Select Crop</option>
+                        </select>
+                    </div>
+                    <?php
                 }
+
                 if(isset($_GET['varieties'])){
                     $varieties = $_GET['varieties'];
-                    echo "<div class='flex flex-col '>
-                            <label for='crop_variety'>Varieties of the crop</label>
-                            <input type='text' id='crop_variety' name='crop_variety' placeholder='sweet potato' value='$varieties' class='h-8 rounded-md' required>
-                        </div>";
+                    ?>
+                    <div class='flex flex-col '>
+                        <label for='crop_variety'>Varieties of the crop</label>
+                        <input type='text' id='crop_variety' name='crop_variety'  value='<?php echo $varieties?>' class='h-8 rounded-md' required>
+                    </div>
+                    <?php
                 }else{
-                    echo "<div class='flex flex-col '>
-                            <label for='crop_variety'>Varieties of the crop</label>
-                            <input type='text' id='crop_variety' name='crop_variety' placeholder='sweet potato' value='' class='h-8 rounded-md' required>
-                        </div>";
+                    ?>
+                    <div class='flex flex-col '>
+                        <label for='crop_variety'>Varieties of the crop</label>
+                        <select id="crop_variety" name="crop_variety" class='h-8 rounded-md font-semibold' required>
+                            <option value="">Select Variety</option>
+                        </select>
+                    </div>
+                    <?php
                 }
+
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
-                    echo "<input type='hidden' id='price_id' name='price_id' value='$id' class='h-8 rounded-md'>";
+                    ?>
+                    <input type='hidden' id='price_id' name='price_id' value='<?php echo $id?>' class='h-8 rounded-md'>
+                    <?php
                 }
                 if(isset($_GET['search'])){
                     $search = $_GET['search'];
-                    echo "<input type='hidden' id='search' name='search' value='$search' class='h-8 rounded-md'>";
+                    ?>
+                    <input type='hidden' id='search' name='search' value='<?php echo $search?>' class='h-8 rounded-md'>
+                    <?php
                 }
                 
             ?>
@@ -65,7 +91,7 @@
                 <!-- Price Calculation Form -->
                 <div class="flex flex-col">
                     <label for="period">Average cultivation Period (as a days)</label>
-                    <input type="number" id="period" min="5" step="1" name="period" placeholder="30-40:50" class="h-8 rounded-md" required>
+                    <input type="number" id="period" min="30" step="1" name="period" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex flex-col">
                     <label for="farmer_salary">Salary per day for the farmer</label>
@@ -111,23 +137,23 @@
                 </div>
                 <div class="flex flex-col">
                     <label for="yield">Average yield per acre (kg)</label>
-                    <input type="number" id="yield" step="0.01" min="0" name="yield" class="h-8 rounded-md" required>
+                    <input type="number" id="yield" step="0.01" min="5" name="yield" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex flex-col">
                     <label for="min_profit">Minimum profit percentage</label>
-                    <input type="number" id="min_profit" step="0.01" min="0" name="min_profit" class="h-8 rounded-md" required>
+                    <input type="number" id="min_profit" step="0.01" min="1" name="min_profit" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex flex-col">
                     <label for="max_profit">Maximum profit percentage</label>
-                    <input type="number" id="max_profit" step="0.01" min="0" name="max_profit" class="h-8 rounded-md" required>
+                    <input type="number" id="max_profit" step="0.01" min="1" name="max_profit" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex flex-col">
-                    <label for="benefit">Marketing cost margin (as a percentage)</label>
-                    <input type="number" id="benefit" step="0.01" min="0" name="benefit"  placeholder="124.83" class="h-8 rounded-md" required>
+                    <label for="benefit">Marketing margin profit percentage</label>
+                    <input type="number" id="benefit" step="0.01" min="1" name="benefit" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex flex-col">
                     <label for="taxt">Tax percentage</label>
-                    <input type="number" id="taxt" step="0.01" min="0" name="taxt"  placeholder="124.83" class="h-8 rounded-md" required>
+                    <input type="number" id="taxt" step="0.01" min="1" name="taxt" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex justify-around">
                     <button type="reset" id="clear" class="px-4 py-1 mt-4 border-2 w-[120px] cursor-pointer bg-cyan-300 rounded-xl">Clear</button>
@@ -138,61 +164,142 @@
     </div>
  
     <!-- Calculated Price Form -->
-        <form action="" method="post" id="price_show" class="flex flex-col gap-1 mt-[110px] ml-10 h-fit w-max">
-            <div>
-                <h1 class="mb-4 font-serif text-2xl text-center">Calculated Price</h1>
+    <form action="" method="post" id="price_show" class="flex flex-col gap-1 mt-[110px] ml-10 h-fit w-max">
+        <div>
+            <h1 class="mb-4 font-serif text-2xl text-center">Calculated Price</h1>
+        </div>
+        <div class="flex flex-col gap-2">
+            <div class="flex gap-2">
+                <?php 
+                if(isset($_GET['crop_name'])){
+                    $crop_name_result = $_GET['crop_name'];
+                    echo "<p class='font-serif text-xl font-medium'>$crop_name_result</p>";
+                }
+                ?>
+                <?php 
+                if(isset($_GET['crop_variety'])){
+                    $crop_variety_result = $_GET['crop_variety'];
+                    echo "<p class='font-serif text-xl font-medium'>: $crop_variety_result</p>";
+                }
+                ?>
             </div>
-            <div class="flex flex-col gap-2">
-                <div class="flex gap-2">
-                    <?php 
-                    if(isset($_GET['crop_name'])){
-                        $crop_name_result = $_GET['crop_name'];
-                        echo "<p class='font-serif text-xl font-medium'>$crop_name_result</p>";
-                    }
-                    ?>
-                    <?php 
-                    if(isset($_GET['crop_variety'])){
-                        $crop_variety_result = $_GET['crop_variety'];
-                        echo "<p class='font-serif text-xl font-medium'>: $crop_variety_result</p>";
-                    }
-                    ?>
-                </div>
-                <div class="flex gap-2">
-                    <h1 class="text-lg font-pop">Low price</h1>
-                    <?php 
-                    if(isset($_GET['min_result'])){
-                        $min_result = $_GET['min_result'];
-                        echo "<p class='font-semibold'>Rs. $min_result</p>";
-                    }
-                    ?>
-                </div>
-                <div class="flex gap-2">
-                    <h1 class="text-lg font-pop">High price</h1>
+            <div class="flex gap-2">
+                <h1 class="text-lg font-pop">Low price</h1>
+                <?php 
+                if(isset($_GET['min_result'])){
+                    $min_result = $_GET['min_result'];
+                    echo "<p class='font-semibold'>Rs. $min_result</p>";
+                }
+                ?>
+            </div>
+            <div class="flex gap-2">
+                <h1 class="text-lg font-pop">High price</h1>
 
-                    <?php 
-                    if(isset($_GET['max_result'])){
-                        $max_result = $_GET['max_result'];
-                        echo "<p class='font-semibold'>Rs. $max_result</p>";
-                    }
-                    ?>
-                </div>
+                <?php 
+                if(isset($_GET['max_result'])){
+                    $max_result = $_GET['max_result'];
+                    echo "<p class='font-semibold'>Rs. $max_result</p>";
+                }
+                ?>
             </div>
+        </div>
 
-            <!-- Hidden inputs to pass data -->
-            <input type="hidden" name="crop_name" value="<?php echo $crop_name_result ?? ''; ?>">
-            <input type="hidden" name="crop_variety" value="<?php echo $crop_variety_result ?? ''; ?>">
-            <input type="hidden" name="min_result" value="<?php echo $min_result ?? ''; ?>">
-            <input type="hidden" name="max_result" value="<?php echo $max_result ?? ''; ?>">
+        <!-- Hidden inputs to pass data -->
+        <input type="hidden" name="crop_name" value="<?php echo $crop_name_result ?? ''; ?>">
+        <input type="hidden" name="crop_variety" value="<?php echo $crop_variety_result ?? ''; ?>">
+        <input type="hidden" name="min_result" value="<?php echo $min_result ?? ''; ?>">
+        <input type="hidden" name="max_result" value="<?php echo $max_result ?? ''; ?>">
 
-            <div class="flex justify-around gap-4 font-semibold text-black">
-                <input type="submit" name="confirm" class="py-1 mt-4 bg-yellow-300 border-2 cursor-pointer px-14 w-fit rounded-xl">
-            </div>
-            <div class="flex justify-around gap-4 font-semibold text-black">
-                <a href="price.php" class="px-16 py-1 mt-2 bg-red-500 border-2 cursor-pointer w-fit rounded-xl">Back</a>
-            </div>
-        </form>
+        <div class="flex justify-around gap-4 font-semibold text-black">
+            <input type="submit" name="confirm" class="py-1 mt-4 bg-yellow-300 border-2 cursor-pointer px-14 w-fit rounded-xl">
+        </div>
+    </form>
+
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- load side menu bar  -->
+<script>
+    $(document).ready(function(){
+        $('.load_data_container').load('sendcode/adminpanel.php');
+    })
+</script>
+
+<!-- Fetch crop names on page load -->
+<script>
+    $(document).ready(function() {
+        // Fetch crop names on page load
+        $.ajax({
+            url: 'getData.php',
+            method: 'POST',
+            data: { action: 'fetch_crop_names' },
+            success: function(data) {
+                $('#crop_name').html(data);
+            }
+        });
+
+        // Fetch crop varieties based on selected crop name
+        $('#crop_name').change(function() {
+            var crop_name = $(this).val();
+            $.ajax({
+                url: 'getData.php',
+                method: 'POST',
+                data: { action: 'fetch_crop_varieties', crop_name: crop_name },
+                success: function(data) {
+                    $('#crop_variety').html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<!-- show output message -->
+<script>
+        var message ="<?php echo isset($_SESSION['price_message']) ? $_SESSION['price_message'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
+
+        if (message != "") {
+            if(message.includes('success')) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#69f44a",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "success",
+                title: message,
+                });
+            } else {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#f84444",
+                background: "#fcf2f2",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "error",
+                title: message,
+                });
+            }
+            // remove after once message is shown
+            <?php unset($_SESSION['price_message']); ?>
+        } 
+</script>
 
 </body>
 </html>
@@ -200,7 +307,6 @@
 <!-- update in table in control price -->
 <!-- Insert to control price table in the database -->
 <?php
-session_start(); // Ensure session is started
 require('db_conn.php'); // Include the database connection
 
 if(isset($_POST['confirm'])) {
@@ -232,11 +338,13 @@ if(isset($_POST['confirm'])) {
                     $_SESSION['msg'] = "Control price updated successfully";
                     echo "<script>window.location.href = 'price.php?search=$search';</script>";
                 } else {
+                    $_SESSION['msg'] = "Failed to update data";
                     echo "Failed to update data: " . mysqli_error($conn);
                 }
 
                 mysqli_stmt_close($stmt); // Close statement
             } else {
+                $_SESSION['msg'] = "Database connection error.";
                 echo "Database connection error.";
             }
 
@@ -258,12 +366,12 @@ if(isset($_POST['confirm'])) {
                     $_SESSION['msg'] = "New control price added successfully";
                     echo "<script>window.location.href = 'price.php';</script>";
                 } else {
-                    echo "Failed to insert data: " . mysqli_error($conn);
+                    $_SESSION['msg'] = "Failed to insert data:". mysqli_error($conn);
                 }
 
                 mysqli_stmt_close($stmt); // Close statement
             } else {
-                echo "Database connection error.";
+                $_SESSION['msg'] = "Database connection error.";
             }
         }
 

@@ -42,7 +42,7 @@
         <div class="flex flex-wrap gap-12 ml-10 mt-9">
             <div  class="flex flex-col items-center font-semibold w-[290px] h-[290px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-lg shadow-lime-300 mb-12">
                 <div class="">
-                    <img class="w-[150px] h-[150px] py-1 " src="/MyAgro/end/images/fer1.png" alt="fertilizer">
+                    <img class="w-[150px] h-[150px] py-1 rounded-3xl" src="images/carrot.jpg" alt="fertilizer">
                 </div>
                 <div class="mt-2">
                     <label id="productName">Carrot</label>
@@ -72,7 +72,7 @@
             </div>
             <div  class="flex flex-col items-center font-semibold w-[290px] h-[290px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-lg shadow-lime-300 mb-12">
                 <div class="">
-                    <img class="w-[150px] h-[150px] py-1 " src="/MyAgro/end/images/fer1.png" alt="fertilizer">
+                    <img class="w-[150px] h-[150px] py-1 rounded-3xl" src="images/pineapple.jpg" alt="fertilizer">
                 </div>
                 <div class="mt-2">
                     <label id="productName">Carrot</label>
@@ -102,7 +102,7 @@
             </div>
             <div  class="flex flex-col items-center font-semibold w-[290px] h-[290px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-lg shadow-lime-300 mb-12">
                 <div class="">
-                    <img class="w-[150px] h-[150px] py-1 " src="/MyAgro/end/images/fer1.png" alt="fertilizer">
+                    <img class="w-[150px] h-[150px] py-1 rounded-3xl" src="images/watermelon.jpg" alt="fertilizer">
                 </div>
                 <div class="mt-2">
                     <label id="productName">Carrot</label>
