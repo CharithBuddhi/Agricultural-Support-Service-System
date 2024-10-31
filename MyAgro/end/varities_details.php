@@ -1,5 +1,3 @@
-<?php session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,12 +27,12 @@
 
         <!-- product name heading -->
         <div>
-            <h1><label class="font-semibold">You are here: </label><a href="verities.php" class="hover:underline font-medium"> Varieties</a> <label for="" class="font-semibold"> > </label><label for="" class="font-semibold"> <?php echo $product_name; ?> </label> </h1>
+            <h1><label class="font-semibold">You are here: </label><a href="verities.php" class="font-medium hover:underline"> Varieties</a> <label for="" class="font-semibold"> > </label><label for="" class="font-semibold"> <?php echo $product_name; ?> </label> </h1>
         <hr class=" mt-1 border-1 border-[#C19A6B]">
         </div>
 
         <!-- main two scroll part  -->
-        <div class="flex mt-10 gap-4 ">
+        <div class="flex gap-4 mt-10 ">
 
             <!-- h-screen overflow-y-auto w-fit varieties details scroll part -->
             <div class="w-[65%]">
@@ -92,16 +90,16 @@
 
                                 <!-- image section -->
                                 <div class="flex gap-4 ">
-                                    <img src="../admin/images/verity/<?= $items['Verities_image']; ?>" alt="varietes image" class="w-40 h-40 rounded-full bg-cover bg-white object-cover">
+                                    <img src="../admin/images/verity/<?= $items['Verities_image']; ?>" alt="varietes image" class="object-cover w-40 h-40 bg-white bg-cover rounded-full">
                                     <div class="flex flex-col">
                                         <h1 class="font-medium text-4xl font-serif  mt-[50px]"><?= $items['product_name']; ?></h1>
-                                        <h1 class="font-light text-2xl font-serif "> Variety name : <?= $items['verity_name']; ?></h1>
+                                        <h1 class="font-serif text-2xl font-light "> Variety name : <?= $items['verity_name']; ?></h1>
                                     </div>
                                 </div>
                 
                                 <!-- description section -->
                                 <div class="">
-                                    <h1 class="font-bold text-2xl mt-6 mb-2 font-serif">Description</h1>
+                                    <h1 class="mt-6 mb-2 font-serif text-2xl font-bold">Description</h1>
                                     <div class="w-[730px]">
                                         <p class="text-lg"><?= $items['Description']; ?>
                                         </p>
@@ -110,20 +108,20 @@
                 
                                 <!-- Days_Maturity section -->
                                 <div class="w-[730px] ">
-                                    <h1 class="font-semibold text-lg mt-6 font-serif">Days to Maturity:</h1>
+                                    <h1 class="mt-6 font-serif text-lg font-semibold">Days to Maturity:</h1>
                                     <p class="text-lg"><?= $items['Days_Maturity']; ?></p>
                                 </div>
 
                                 <!-- origin section -->
                                 <div class="w-[730px] ">
-                                    <h1 class="font-semibold text-xl mt-6 font-serif">Origin:</h1>
+                                    <h1 class="mt-6 font-serif text-xl font-semibold">Origin:</h1>
                                     <p class="text-lg"><?= $items['Origin']; ?></p>
                                     <hr class=" mt-4 border-1 border-[#C19A6B]">
                                 </div>
                 
                                 <!-- details section -->
                                 <div class="">
-                                    <h1 class="font-bold text-2xl mt-6 mb-2 font-serif">Details</h1>
+                                    <h1 class="mt-6 mb-2 font-serif text-2xl font-bold">Details</h1>
                                     <div class="grid grid-cols-2 gap-2 w-[730px]">
                     
                                         <div class="flex gap-2 bg-[#F7E7CE] rounded-lg p-4 w-[350px]">
@@ -187,7 +185,7 @@
                 
                                 <!-- Growing tips -->
                                 <div class="">
-                                    <h1 class="font-bold text-2xl mt-6 mb-2 font-serif">Growing tips</h1>
+                                    <h1 class="mt-6 mb-2 font-serif text-2xl font-bold">Growing tips</h1>
                                     <div class="w-[730px]">
                                         <p class="text-lg"><?= $items['Harvest_message']; ?></p>
                                         <hr class=" mt-4 border-1 border-[#C19A6B]">
@@ -198,9 +196,9 @@
                                 <div class="flex flex-col gap-2 mt-6 w-[730px] ">
                                     <div class="flex gap-2">
                                         <img src="images/varite/icone/papaya-leaf_7405486.png" alt="" class="w-8 h-8 mt-1">
-                                        <h1 class="font-bold text-2xl mt-1 mb-2 font-serif">Companion Plants</h1>
+                                        <h1 class="mt-1 mb-2 font-serif text-2xl font-bold">Companion Plants</h1>
                                     </div>
-                                    <div class="flex mt-2 gap-1 flex-wrap">
+                                    <div class="flex flex-wrap gap-1 mt-2">
                                         <?php
                                         foreach($filterCompanionArray as $Compan){
                                             ?>
@@ -218,9 +216,9 @@
                                 <div class="flex flex-col gap-2 mt-6 w-[730px] ">
                                     <div class="flex gap-2">
                                         <img src="images/varite/icone/monstera_12322235.png" alt="" class="w-8 h-8 mt-1">
-                                        <h1 class="font-bold text-2xl mt-1 mb-2 font-serif">Antagonistic Plants</h1>
+                                        <h1 class="mt-1 mb-2 font-serif text-2xl font-bold">Antagonistic Plants</h1>
                                     </div>
-                                    <div class="flex mt-2 gap-1 flex-wrap">
+                                    <div class="flex flex-wrap gap-1 mt-2">
                                         <?php
                                         foreach($filterAntagonisticArray as $Antago){
                                             ?>
@@ -237,9 +235,9 @@
                                 <div class="flex flex-col gap-2 mt-6 w-[730px] ">
                                     <div class="flex gap-2">
                                         <img src="images/varite/icone/microbe_8157303.png" alt="" class="w-8 h-8 mt-1">
-                                        <h1 class="font-bold text-2xl mt-1 mb-2 font-serif">Diseases</h1>
+                                        <h1 class="mt-1 mb-2 font-serif text-2xl font-bold">Diseases</h1>
                                     </div>
-                                    <div class="flex mt-2 gap-1 flex-wrap">
+                                    <div class="flex flex-wrap gap-1 mt-2">
                                         <?php
                                         foreach($filterDiseasesArray as $Diseas){
                                             ?>
@@ -256,9 +254,9 @@
                                 <div class="flex flex-col gap-2 mt-6 w-[730px] ">
                                     <div class="flex gap-2">
                                         <img src="images/varite/icone/pest_2674474.png" alt="" class="w-8 h-8 mt-1">
-                                        <h1 class="font-bold text-2xl mt-1 mb-2 font-serif">Pests</h1>
+                                        <h1 class="mt-1 mb-2 font-serif text-2xl font-bold">Pests</h1>
                                     </div>
-                                    <div class="flex mt-2 gap-1 flex-wrap">
+                                    <div class="flex flex-wrap gap-1 mt-2">
                                         <?php
                                         foreach($filterPestsArray as $Pests){
                                             ?>
@@ -277,7 +275,7 @@
                         }
                         else{
                             ?>
-                                <h1 class="text-4xl text-center font-semibold italic">No Record Founded</h1>
+                                <h1 class="text-4xl italic font-semibold text-center">No Record Founded</h1>
                             <?php
                         }
                     }
@@ -288,7 +286,7 @@
 
             <!-- different varieties scroll -->
             <div class="flex rounded-2xl p-3 bg-white overflow-y-scroll max-h-[600px] flex-col h-fit w-[34%]">
-                <h1 class="text-2xl font-bold font-serif">Varieties</h1>
+                <h1 class="font-serif text-2xl font-bold">Varieties</h1>
                 <div class="flex flex-col mt-5">
                     <form action="" method="post" class="flex">
                         <div for="search" class=" flex rounded-3xl h-10 pl-3 pr-3 bg-[#EEEEEE]">
@@ -323,7 +321,7 @@
                             while ($items = $result->fetch_assoc()){
                             //want to print table rows here and need to use insdie the td again php tag so close php tag here
                                 ?>
-                                <a href="varities_details.php?product=<?= $items['product_name'] ?>&verity=<?= $items['verity_name'] ?>" class="flex mt-4 ml-2 gap-2">
+                                <a href="varities_details.php?product=<?= $items['product_name'] ?>&verity=<?= $items['verity_name'] ?>" class="flex gap-2 mt-4 ml-2">
                                     <img src="../admin/images/verity/<?= $items['Verities_image'] ?>" alt="" class="w-[40px] h-[40px] rounded-2xl">
                                     <h1 class="font-medium"><?= $items['verity_name'] ?></h1>
                                 </a>
@@ -332,7 +330,7 @@
                             unset($_POST['search']);
                         }else{
                             ?>
-                                <h1 class="font-medium mt-5 text-center">Not varieties Found</h1>
+                                <h1 class="mt-5 font-medium text-center">Not varieties Found</h1>
                             <?php
                         }
                         $stmt->close();
@@ -353,7 +351,7 @@
                             while ($items = $result->fetch_assoc()){
                             //want to print table rows here and need to use insdie the td again php tag so close php tag here
                                 ?>
-                                <a href="varities_details.php?product=<?= $items['product_name'] ?>&verity=<?= $items['verity_name'] ?>" class="flex mt-4 ml-2 gap-2">
+                                <a href="varities_details.php?product=<?= $items['product_name'] ?>&verity=<?= $items['verity_name'] ?>" class="flex gap-2 mt-4 ml-2">
                                     <img src="../admin/images/verity/<?= $items['Verities_image'] ?>" alt="varietes image" class="w-[40px] h-[40px] rounded-2xl">
                                     <h1 class="font-medium"><?= $items['verity_name'] ?></h1>
                                 </a>
@@ -361,7 +359,7 @@
                             }
                         }else{
                             ?>
-                                <h1 class="font-medium mt-5 text-center">Not varieties Found</h1>
+                                <h1 class="mt-5 font-medium text-center">Not varieties Found</h1>
                             <?php
                         }
                         $stmt->close();

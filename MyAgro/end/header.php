@@ -1,3 +1,10 @@
+<?php 
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,23 +119,30 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            const modal = document.getElementById("menubar"); // The modal element
-            const show_btn =document.getElementById("menubar_btn");
+            <?php 
+                if(isset($_SESSION['login_user'])) {
+                    ?>
 
-            show_btn.onclick = function() {
-                if(modal.style.display === "block") {
-                    modal.style.display = "none";
-                }else {
-                    modal.style.display = "block";
-                }
-            }
+                    const modal = document.getElementById("menubar"); // The modal element
+                    const show_btn =document.getElementById("menubar_btn");
 
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
+                    show_btn.onclick = function() {
+                        if(modal.style.display === "block") {
+                            modal.style.display = "none";
+                        }else {
+                            modal.style.display = "block";
+                        }
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                <?php
                 }
-            }
+            ?>
         });
     </script>
 

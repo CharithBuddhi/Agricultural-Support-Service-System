@@ -382,11 +382,24 @@
             if(mysqli_num_rows($query_run) >  0){
 
                 $row = mysqli_fetch_assoc($query_run);
-                $_SESSION['login_id'] = $row['id'];
+
+                if($usertype == 'farmer'){
+                    $_SESSION['login_id'] = $row['farmer_id'];
+                }elseif($usertype == 'supplier'){
+                    $_SESSION['login_id'] = $row['supplier_id'];
+                }elseif($usertype == 'customer'){
+                    $_SESSION['login_id'] = $row['customer_id'];
+                }
                 $_SESSION['login_user'] = $row['username'];
                 $_SESSION['login_type'] = $usertype;
                 $_SESSION['home_message'] = "Login successfull";
-                header("Location: index.php");
+                
+                if(isset($_SESSION['login_url'])){
+                    $login_url = $_SESSION['login_url'];
+                    header("Location: $login_url");
+                }else{
+                    header("Location: index.php");
+                }
                 exit();    
             }else{
                 $_SESSION['login_message'] = "Invalid username or password";

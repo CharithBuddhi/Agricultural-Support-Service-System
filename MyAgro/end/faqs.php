@@ -21,9 +21,7 @@
 
 <body>
     <!-- navigation bar -->
-    <?php
-    require('header.php');
-    ?>
+    <?php require('header.php'); ?>
 
     <div class="flex flex-col justify-center gap-2 mb-[170px] select-none">
         <h1 class="mt-10 mb-20 text-4xl text-center libre-baskerville-regular-italic">Frequently Asked Questions</h1>

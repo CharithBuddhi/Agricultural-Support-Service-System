@@ -17,7 +17,7 @@
             <div class="flex">
                 <div class="flex">
                     <input type="text" name="search_techniq" value="<?php if(isset($_POST['search_techniq'])){ echo $_POST['search_techniq']; } ?>"
-                        class="h-10 text-xl outline-none border-l-2 rounded-l-3xl w-96" placeholder="search all techniques using keyword all"  required>
+                        class="h-10 text-xl border-l-2 outline-none rounded-l-3xl w-96" placeholder="search all techniques using keyword all"  required>
                     <button type="submit" class="h-10 text-white bg-blue-500 rounded-r-3xl w-28">Search</button>
                 </div>  
             </div>
