@@ -1,6 +1,6 @@
 <?php session_start(); 
 if(!isset($_SESSION['login_staff_user'])){
-    header('Location: inquiry.php');
+    header('Location: index.php');
     exit();
 }
 ?>

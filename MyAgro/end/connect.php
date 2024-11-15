@@ -384,11 +384,38 @@
                 $row = mysqli_fetch_assoc($query_run);
 
                 if($usertype == 'farmer'){
-                    $_SESSION['login_id'] = $row['farmer_id'];
+
+                    if($row['farmer_status'] == 0){
+
+                        $_SESSION['login_id'] = $row['farmer_id'];    
+                    }else{
+                        $_SESSION['login_message'] = "Your account has been hold temporarily by admin, please contact us for more information";
+                        header("Location: login.php");
+                        exit();
+                    }
+
                 }elseif($usertype == 'supplier'){
-                    $_SESSION['login_id'] = $row['supplier_id'];
+
+                    if($row['supplier_status'] == 0){
+
+                        $_SESSION['login_id'] = $row['supplier_id'];
+                    }else{
+                        $_SESSION['login_message'] = "Your account has been hold temporarily by admin, please contact us for more information";
+                        header("Location: login.php");
+                        exit();
+                    }
+
                 }elseif($usertype == 'customer'){
-                    $_SESSION['login_id'] = $row['customer_id'];
+
+                    if($row['customer_status'] == 0){
+
+                        $_SESSION['login_id'] = $row['customer_id'];
+                    }else{
+                        $_SESSION['login_message'] = "Your account has been hold temporarily by admin, please contact us for more information";
+                        header("Location: login.php");
+                        exit();
+                    }
+
                 }
                 $_SESSION['login_user'] = $row['username'];
                 $_SESSION['login_type'] = $usertype;
@@ -396,11 +423,13 @@
                 
                 if(isset($_SESSION['login_url'])){
                     $login_url = $_SESSION['login_url'];
+                    unset($_SESSION['login_url']);
                     header("Location: $login_url");
                 }else{
                     header("Location: index.php");
                 }
-                exit();    
+                exit();  
+
             }else{
                 $_SESSION['login_message'] = "Invalid username or password";
                 header("Location: login.php");
@@ -414,10 +443,35 @@
         }
     }
 
+    // CDM payment confirm
+    if (isset($_POST['confirm_btn'])) {
+
+        $ref = $_SESSION['ref'];
+        $sqln = "UPDATE `transaction` SET `payment_status`='Pending' WHERE `Reference_id` = '$ref'";
+        $result = mysqli_query($conn, $sqln);
+
+        if ($result) {
+            $type = $_SESSION['agro_type'];
+            $_SESSION['home_message'] = "Your order placed successfull";
+            if($_SESSION['category'] == "chemical"){
+                header("Location: chemicalsell.php?type=$type");
+                exit(0);
+            }elseif($_SESSION['category'] == "fertilizer"){
+                header("Location: agrosell.php?type=$type");
+                exit(0);    
+            }
+        } else {
+            $_SESSION['cdm_message'] = "Your order placed failed";
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
+        }
+    }
+
     // redirect to index page
     if (
         !isset($_POST["register"]) &&
-        !isset($_POST["login"])
+        !isset($_POST["login"]) &&
+        !isset($_POST["confirm_btn"])
     ) {
         header('Location: index.php');
         exit(0);

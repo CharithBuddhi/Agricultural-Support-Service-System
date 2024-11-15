@@ -33,7 +33,7 @@
             </div>
 
             <div class="" >
-                <a href="agro_category.php" class="flex flex-col items-center gap-3 p-2 border-2 shadow-2xl rounded-2xl border-slate-300"> 
+                <a href="chemical_category.php" class="flex flex-col items-center gap-3 p-2 border-2 shadow-2xl rounded-2xl border-slate-300"> 
                     <img src="images/agro.jpg" alt="Fertilizer type" class="  w-[300px] h-[300px]">
                     <label for="" class="font-serif font-bold cursor-pointer">Agrochemical</label>     
                 </a>

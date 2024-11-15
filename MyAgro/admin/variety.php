@@ -27,7 +27,7 @@ if(!isset($_SESSION['login_staff_user'])){
 </head>
 <body class="bg-[#350dc3] text-white">
 
-<div class="flex w-full h-full">
+<div class="flex w-full h-screen">
     
     <!-- load staff menu bar here -->
     <div class="load_data_container w-[20%]"></div>

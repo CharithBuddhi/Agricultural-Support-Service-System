@@ -232,13 +232,13 @@
     <!-- footer section in home page -->
     <?php require('footer.php'); ?>
 
-    <script>
+    <!-- <script>
         const filter_btn = document.getElementById("filter_btn");
         const search_not_found = document.getElementById("search_not_found");
         filter_btn.addEventListener("click", () => {
-            search_not_found.style.display = "none"; 
+            search_not_found.style.display = "none";
         })
-    </script>
+    </script> -->
     
 </body>
 </html>

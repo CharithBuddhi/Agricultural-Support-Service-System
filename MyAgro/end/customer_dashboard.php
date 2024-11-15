@@ -1,0 +1,367 @@
+<?php 
+session_start();
+if(!isset($_SESSION['login_id'])){
+    header("Location: login.php");
+    exit();
+}
+require('db_connect.php');
+
+// cutomer details update php code
+if(isset($_POST['update_profile_btn'])){
+
+    $profile_picture = $_FILES['profile_picture']['name'];
+    $query = "SELECT * FROM customer WHERE customer_id = '$_SESSION[login_id]' LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    $customer_name = $row['customer_name'];
+    $customer_address = $row['customer_address'];
+    $customer_email = $row['customer_email'];
+    $customer_phone = $row['customer_telno'];
+    $db_Profile_image = $row['images'];
+
+    if($customer_name == $_POST['customer_name'] && $customer_address == $_POST['customer_address'] && $customer_email == $_POST['customer_email'] && $customer_phone == $_POST['customer_phone'] && $profile_picture == ""){
+        $_SESSION['customer_profile_update'] = "You are not change your details";
+        header("Location: customer_dashboard.php");
+        exit(0);
+        
+    }else if(!($customer_name == $_POST['customer_name']) || !($customer_address == $_POST['customer_address']) || !($customer_email == $_POST['customer_email']) || !($customer_phone == $_POST['customer_phone']) || !($profile_picture == "")){
+        
+        $id = $_SESSION['login_id'];
+        $yourname = $_POST['customer_name'];
+        $address = $_POST['customer_address'];
+        $email = $_POST['customer_email'];
+        $phone = $_POST['customer_phone'];
+        
+        if(!empty(trim($yourname)) || !empty(trim($address)) || !empty(trim($email)) || !empty(trim($phone))){
+            
+            if(!empty(trim($profile_picture))){
+
+                $date_time = time();
+                echo $date_time ."<br>";
+                
+                $image_temp_name = $_FILES['profile_picture']['tmp_name'];
+
+                $profile_picture = $date_time . "_" . $_FILES['profile_picture']['name'];
+                
+                echo $image_temp_name ."<br>";
+                echo  $profile_picture ."<br>";
+
+                $image_destination = "D:\\a XAmpp projec\\htdocs\\Agricultural-Support-Service-System\\MyAgro\\end\\images\\user\\" . $profile_picture;   
+                echo $image_destination ."<br>";
+
+                $filePath = 'images/user/' . $db_Profile_image;
+                echo $filePath ."<br>";
+                
+    
+                // Delete the file from the server
+                if(file_exists($filePath)){ 
+    
+                    unlink($filePath);
+
+                    if(move_uploaded_file($image_temp_name,$image_destination)){
+
+                        $UPDATE = "UPDATE customer SET customer_name = ?, customer_address = ?, customer_email = ?, customer_telno = ?, images = ? WHERE customer_id = ?";
+                        $stmt = $conn->prepare($UPDATE);
+                        $stmt->bind_param("sssisi", $yourname, $address, $email, $phone, $profile_picture, $id);
+                        $_SESSION['customer_profile_update'] = "Your details Update successfully!";
+                        $stmt->execute();
+                        $stmt->close();
+                        $conn->close();
+                        header("Location: customer_dashboard.php");
+                        exit();
+                        
+                    }else{
+                        echo "Failed to upload file. Error: " . $_FILES['profile_picture']['error'];
+                        $_SESSION['customer_profile_update'] = "Your upload has been failed!";
+                        header("Location: customer_dashboard.php");
+                        exit();
+                    }
+    
+                }else{
+                    $_SESSION['customer_profile_update'] = "Your previous profile image missing!";
+                    header("Location: customer_dashboard.php");
+                    exit();
+                }
+
+            }else{
+                $UPDATE = "UPDATE customer SET customer_name = ?, customer_address = ?, customer_email = ?, customer_telno = ? WHERE customer_id = ?";
+                $stmt = $conn->prepare($UPDATE);
+                $stmt->bind_param("sssii", $yourname, $address, $email, $phone, $id);
+                $_SESSION['customer_profile_update'] = "Your details Update successfully!";
+                $stmt->execute();
+                $stmt->close();
+                $conn->close();
+                header("Location: customer_dashboard.php");
+                exit();
+            }
+        }else{
+            $_SESSION['customer_profile_update'] = "Please customer fill the all input field";
+            header("Location: customer_dashboard.php");
+            exit();  
+        }
+
+    }
+
+}
+
+// customer_password_update_btn in profile
+if(isset($_POST['customer_password_update_btn'])){
+
+    $id = $_POST['user_id'];
+    $old_password= $_POST['old_password'];
+    $new_password= $_POST['new_password'];
+    $confirm_password= $_POST['confirm_password'];
+
+    $check = "SELECT  `password` FROM `customer` WHERE customer_id  = '$id'";
+    $result = mysqli_query($conn, $check);
+    $row = mysqli_fetch_assoc($result);
+    $password = $row['password'];
+
+    if($old_password==$password){
+
+        if($old_password==$new_password){
+            $_SESSION['customer_profile_update'] = 'You are not change your password';
+            header("Location: customer_dashboard.php");
+            exit(0);
+
+        }else if($new_password!=$confirm_password){
+            $_SESSION['customer_profile_update'] = 'New password and confirm password not matched';
+            header("Location: customer_dashboard.php");
+            exit(0);
+
+        }else if($new_password==$confirm_password){
+            $sql = "UPDATE `customer` SET `password`='$confirm_password' WHERE customer_id  = '$id'";
+            $result1 = mysqli_query($conn, $sql);
+            if($result1){
+                $_SESSION['customer_profile_update'] = 'Your password update successfully';
+                header("Location: customer_dashboard.php");
+                exit(0);
+            }
+            else{
+                $_SESSION['customer_profile_update'] = 'Email address not update';
+                header("Location: customer_dashboard.php");
+                exit(0);
+            }
+        }
+
+    }else{
+        $_SESSION['customer_profile_update'] = 'Your Old password wrong';
+        header("Location: customer_dashboard.php");
+        exit(0);
+    }
+
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <?php require('user_header.php'); ?>
+    
+
+    <div class="flex w-full h-screen">
+
+        <div class="flex flex-col gap-5 pl-2 ml-4 rounded-3xl ">
+
+            <!-- user information form -->
+            <form action="" method="post" class="flex flex-col mt-12" enctype="multipart/form-data">
+                <h1 class="h-8 mb-1 font-serif text-3xl font-bold w-fi">Customer Information</h1><hr class="w-[90%]">
+                
+                <?php
+
+                    $customer_id = $_SESSION['login_id'];
+                    $sql = "SELECT * FROM customer WHERE customer_id = '$customer_id' LIMIT 1";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result); 
+                    ?>
+
+                    <div class="flex flex-col mt-5">
+
+                        <!-- change profile image -->
+                        <div class="flex flex-col self-center mt-5">
+                            <label for="profile_picture_input" class="cursor-pointer">
+                                <img id="user_profile" name="user_profile" src="images/user/<?php echo $row['images']; ?>" class="self-center w-40 h-40 border-2 rounded-full border-slate-300" alt="user_profile">
+                            </label>
+                            <input type="file" id="profile_picture_input" name="profile_picture" class="bg-red-500" accept="image/*" onchange="previewImage(event)" hidden>
+                        </div>
+
+                        <input type="text" name="user_id" value="<?php echo $row['customer_id']; ?>" hidden>
+                        
+                        <label class="flex self-center gap-1 mt-2 text-xl font-semibold text-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-7">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                            </svg>
+                            Active
+                        </label>
+                        <div class="flex mt-4 text-lg gap-28">
+                            <div class="flex flex-col gap-2">
+                                <h1 class="pl-1 font-semibold">Customer Name</h1>
+                                <input type="text" name="customer_name" value="<?php echo $row['customer_name']; ?>" class="rounded-md text-base pl-1 h-8 w-[320px]" required>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="pl-1 font-semibold">User name</h1>
+                                <input type="text" name="username" value="<?php echo $row['username']; ?>" class="rounded-lg text-base h-8 w-[280px] pl-2 disabled:bg-slate-50" disabled>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="pl-1 font-semibold">Email Address</h1>
+                                <input type="email" name="customer_email" value="<?php echo $row['customer_email']; ?>" class="rounded-lg text-base h-8 w-[280px] pl-2" required>
+                            </div>
+                        </div>
+
+                        <div class="flex mt-10 text-lg gap-28">
+                            <div class="flex flex-col gap-2">
+                                <h1 class="pl-1 font-semibold">Customer Address</h1>
+                                <input type="text" name="customer_address" value="<?php echo $row['customer_address']; ?>" class="w-[320px] h-8 pl-2 text-base rounded-lg" required>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h1 class="pl-1 font-semibold">Phone Number</h1>
+                                <input type="text" maxlength="12" name="customer_phone" value="<?php echo "+".$row['customer_telno']; ?>" class="rounded-lg text-base h-8 w-[280px] pl-2" required>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <?php
+                
+                ?>
+
+                <div class="flex gap-4 mt-7">
+                    <button type="submit" name="update_profile_btn" class="px-3 py-1 w-[110px] text-white font-medium bg-purple-700 rounded-lg hover:bg-purple-500">Update</button>
+                    <button type="reset" class="px-3 py-1 text-white w-[90px] rounded-lg bg-slate-400 font-medium hover:bg-slate-300">Clear</button>
+                </div>
+            </form>
+
+            <!-- password change form -->
+            <form action="" method="post" class="flex flex-col mt-2">
+                <h1 class="text-2xl font-bold">Password Change</h1><hr class="w-[90%]">
+                <div class="flex flex-col gap-6 mt-5 text-lg">
+                <input type="text" name="user_id" value="<?php echo $row['customer_id']; ?>" hidden readonly>
+                    <div class="flex flex-col gap-2">
+                        <h1 class="font-semibold">Old Password</h1>
+                        <input type="text" name="old_password" class="rounded-lg text-base h-8 w-[280px] pl-2"  required>
+                    </div>
+                    <div class="flex gap-32">
+                        <div class="flex flex-col gap-2">
+                            <h1 class="font-semibold">New Password</h1>
+                            <div class="relative flex items-center">
+                                <input type="password" id="password1" name="new_password" class="rounded-lg w-[280px] text-base h-8 pl-2" required>
+                                <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg1">
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h1 class="font-semibold">Confirm Password</h1>
+                            <div class="relative flex items-center">
+                                <input type="password" id="password" name="confirm_password" class="rounded-lg w-[280px] text-base h-8 pl-2" required>
+                                <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button type="submit" name="customer_password_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg h-9 hover:bg-purple-500">Update</button>
+                        <button type="reset" class="px-3 py-1 text-white rounded-lg h-9 hover:bg-slate-300 bg-slate-400">Cancel</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- change profile image and preview image js code -->
+    <script>
+        function previewImage(event) {
+            const image = document.getElementById('user_profile');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+
+    <!-- show massage -->
+    <script>
+    var message ="<?php echo isset($_SESSION['customer_profile_update']) ? $_SESSION['customer_profile_update'] : ''; ?>"; //send customer_profile_update include massage  varible message, but if not status then print ''.
+    if (message != "") {
+        if(message.includes('success')) {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            iconColor: "#69f44a",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            },
+            });
+            Toast.fire({
+            icon: "success",
+            title: message,
+            });
+        } else {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            iconColor: "#f84444",
+            background: "#fcf2f2",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            },
+            });
+            Toast.fire({
+            icon: "error",
+            title: message,
+            });
+        }
+        // remove after once message is shown
+        <?php unset($_SESSION['customer_profile_update']); ?>
+    } 
+    </script>
+
+    <!-- password visibility -->
+    <script>
+    // toggle password visibility script
+    let toggleImg =document.getElementById('toggleImg');
+    var password = document.getElementById('password');
+    var toggleImg1 =document.getElementById('toggleImg1');
+    var password1 = document.getElementById('password1');
+
+    toggleImg.addEventListener('click', function() {
+        if (password.type === 'password') {
+            password.type = 'text';
+            toggleImg.src = 'images/eye-open.png';
+            toggleImg.style.height = '14px';
+        } else {
+            password.type = 'password';
+            toggleImg.src = 'images/eye-close.png';
+            toggleImg.style.height = '16px';
+        }
+    });
+
+    toggleImg1.addEventListener('click', function() {
+        if (password1.type === 'password') {
+            password1.type = 'text';
+            toggleImg1.src = 'images/eye-open.png';
+            toggleImg1.style.height = '14px';
+        } else {
+            password1.type = 'password';
+            toggleImg1.src = 'images/eye-close.png';
+            toggleImg1.style.height = '16px';
+        }
+    });
+    </script>
+
+
+</body>
+</html>

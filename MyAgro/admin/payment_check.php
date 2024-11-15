@@ -22,7 +22,7 @@ if(!isset($_SESSION['login_staff_user'])){
 </head>
 <body class="bg-[#350dc3] text-white">
 
-<div class="flex w-full h-full">
+<div class="flex w-full h-screen">
 
     <!-- load staff menu bar here -->
     <div class="load_data_container w-[20%]"></div> 
@@ -81,13 +81,13 @@ if(!isset($_SESSION['login_staff_user'])){
                                             <td><?= $row['payment_date']; ?></td>
                                             <td><?= $row['trans_amount']; ?></td>
                                             <td class="flex justify-center gap-2">
-                                                <button type="button" value=<?= $row['payment_id'] ?> id="approve_payment" class="h-fit bg-green-400 border-slate-400 rounded-md p-1 text-sm border-2 hover:bg-green-600 hover:text-white">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 font-bold">
+                                                <button type="button" value=<?= $row['payment_id'] ?> id="approve_payment" class="p-1 text-sm bg-green-400 border-2 rounded-md h-fit border-slate-400 hover:bg-green-600 hover:text-white">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="font-bold size-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                     </svg>
                                                 </button>
-                                                <button type="button" value=<?= $row['payment_id'] ?> id="reject_payment" class="h-fit bg-red-500 border-slate-400 rounded-md p-1 border-2 text-sm hover:bg-red-600 hover:text-white">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 font-bold">
+                                                <button type="button" value=<?= $row['payment_id'] ?> id="reject_payment" class="p-1 text-sm bg-red-500 border-2 rounded-md h-fit border-slate-400 hover:bg-red-600 hover:text-white">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="font-bold size-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                     </svg>
                                                 </button>
@@ -119,12 +119,12 @@ if(!isset($_SESSION['login_staff_user'])){
                                             <td><?= $row['payment_date']; ?></td>
                                             <td><?= $row['trans_amount']; ?></td>
                                             <td class="flex justify-center gap-2 ">
-                                                <button type="button" value=<?= $row['payment_id'] ?> id="approve_payment" class="h-fit bg-green-400 border-slate-400 font-bold rounded-md p-1 text-sm border-2 hover:bg-green-600 hover:text-white">
+                                                <button type="button" value=<?= $row['payment_id'] ?> id="approve_payment" class="p-1 text-sm font-bold bg-green-400 border-2 rounded-md h-fit border-slate-400 hover:bg-green-600 hover:text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 ">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                     </svg>
                                                 </button>
-                                                <button type="button" value=<?= $row['payment_id'] ?> id="reject_payment" class="h-fit bg-red-500 border-slate-400 rounded-md p-1 border-2 text-sm hover:bg-red-600 hover:text-white">
+                                                <button type="button" value=<?= $row['payment_id'] ?> id="reject_payment" class="p-1 text-sm bg-red-500 border-2 rounded-md h-fit border-slate-400 hover:bg-red-600 hover:text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                     </svg>
@@ -186,12 +186,12 @@ if(!isset($_SESSION['login_staff_user'])){
                                             <!-- get image from array -->
                                             <td><?php echo '<img src="/Agricultural-Support-Service-System/MyAgro/admin/images/payment/'.$row['voucher'].'" width="50px" height="50px" class="payment_doc">'; ?></td>
                                             <td class="flex justify-center h-[68px] gap-2">
-                                                <button type="button" value=<?= $row['voucher_id'] ?> id="approve_payment" class="h-fit bg-green-400 border-slate-400 font-bold rounded-md p-1 text-sm border-2 hover:bg-green-600 hover:text-white">
+                                                <button type="button" value=<?= $row['voucher_id'] ?> id="approve_payment" class="p-1 text-sm font-bold bg-green-400 border-2 rounded-md h-fit border-slate-400 hover:bg-green-600 hover:text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                                     </svg>
                                                 </button>
-                                                <button type="button" value=<?= $row['voucher_id'] ?> id="reject_payment" class="h-fit bg-red-500 border-slate-400 rounded-md p-1 border-2 text-sm hover:bg-red-600 hover:text-white">
+                                                <button type="button" value=<?= $row['voucher_id'] ?> id="reject_payment" class="p-1 text-sm bg-red-500 border-2 rounded-md h-fit border-slate-400 hover:bg-red-600 hover:text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                     </svg>

@@ -296,7 +296,7 @@
                 position: "top-end",
                 showConfirmButton: false,
                 iconColor: "#69f44a",
-                timer: 4000,
+                timer: 2000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.onmouseenter = Swal.stopTimer;
@@ -314,7 +314,7 @@
                 showConfirmButton: false,
                 iconColor: "#f84444",
                 background: "#fcf2f2",
-                timer: 4000,
+                timer: 2000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.onmouseenter = Swal.stopTimer;

@@ -1,11 +1,12 @@
 <?php
     session_start();
-// if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_SESSION['login_type'])){
-//     header('Location: login.php');
-//     exit();
-// }
+if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_SESSION['login_type'])){
+    header('Location: login.php');
+    exit();
+}
 date_default_timezone_set('Asia/Colombo');
 use Stripe\Exception\ApiErrorException;
+use Symfony\Component\VarExporter\Internal\Values;
 
 // set session variable 
 $product_id = $_SESSION['agro_id'];
@@ -18,7 +19,7 @@ $shop_name = $_SESSION['shop_name'] ;
 $agro_location = $_SESSION['agro_location'];
 $quantity = $_SESSION['order_quantity'];
 $total_price = $_SESSION['total_price'];
-$half_price = $_SESSION['half_price'];
+// $half_price = $_SESSION['half_price'];
 $product_currency = $_SESSION['agro_currency'];
 $provider_id = $_SESSION['provider_id'];
 $provider_name = $_SESSION['provider_name'];
@@ -142,8 +143,8 @@ if(!empty($_GET['session_id'])) {
                            
                         }else{
                             
-                            // header('Location: cancel.php');
-                            // exit();   
+                            header('Location: cancel.php');
+                            exit();   
                         }
 
 
@@ -164,8 +165,8 @@ if(!empty($_GET['session_id'])) {
                            
                         }else{
                             
-                            // header('Location: cancel.php');
-                            // exit();   
+                            header('Location: cancel.php');
+                            exit();   
                         }
 
                     }else if($user_type == 'farmer') {
@@ -185,8 +186,8 @@ if(!empty($_GET['session_id'])) {
                            
                         }else{
                             
-                            // header('Location: cancel.php');
-                            // exit();   
+                            header('Location: cancel.php');
+                            exit();   
                         }
                         
                     }
@@ -247,15 +248,18 @@ if(!empty($_GET['session_id'])) {
     <title>Stripe Example</title>
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- pdf convert script code -->
     <script src="javascript/script.js"></script>
+    
     <!-- pdf convert CDN Link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.js"></script>
     
 </head>
 <body>
-    <div id="invoice" class="flex items-center justify-center h-full">
+    <div id="invoice" class="flex items-center justify-center h-full mt-5 ">
 
-        <div class="flex flex-col items-center w-2/3 p-5 mt-1 border shadow-2xl bg-slate-100 rounded-3xl">
+        <div class="flex flex-col items-center w-2/3 p-5 border shadow-2xl bg-slate-100 rounded-3xl">
 
         <?php if(!empty($payment_id)) { ?>
  
@@ -282,11 +286,24 @@ if(!empty($_GET['session_id'])) {
             <!-- Product Information -->
             <div class="flex flex-col w-full gap-2 p-2 mt-3 border-2 rounded-xl">
                 <h4 class="text-lg font-bold text-[#46d82f]">Product Information</h4>
-                <p class="flex justify-between"><b>Product Category</b> <?php echo $product_category; ?> </p>
+                <p class="flex justify-between"><b>Product Category</b> <?php echo ucfirst($product_category); ?> </p>
                 <p class="flex justify-between"><b>Product Name</b> <label class="pl-6"><?php echo $product_name; ?></label></p>
                 <p class="flex justify-between"><b>Product Price</b> <?php echo "Rs. ".$product_price; ?></p>
-                <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity." Kg"; ?> </p>
-                <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity." Kg"; ?> </p>
+                <?php 
+                    if($product_category == 'Chemical'){
+                        ?>
+                        <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity; ?> </p>
+                        <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity; ?> </p>
+                        <?php
+                    }else if($product_category == 'Fertilizer'){
+                        ?>
+                        <input type="text" value="<?php echo $product_category; ?>">
+                        <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity." Kg"; ?> </p>
+                        <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity." Kg"; ?> </p>
+                        <?php
+                    }
+                ?>
+                
                 <p class="flex justify-between"><b>Purchased Location</b><label class="pl-6"><?php echo $agro_location; ?></label></p>
             </div>
 
@@ -314,11 +331,24 @@ if(!empty($_GET['session_id'])) {
 
         <?php } ?>
 
-            <a id="back_btn" style="display: block;" href="agrosell.php?type=<?php echo $_SESSION['agro_type']; ?>" class="px-4 py-2 mt-5 font-bold text-white rounded bg-lime-500 hover:bg-[#55fd3b]">Back to Product Page</a>
-    
-        </div>
-
+        
     </div>
+    
+</div>
+
+<div class="flex justify-center">
+    <?php
+        if($product_category == 'Chemical'){
+            ?>
+            <a id="back_btn" style="display: block;" href="chemicalsell.php?type=<?php echo $_SESSION['agro_type']; ?>" class="mb-5 text-center w-1/4 py-2 mt-5 font-bold text-white rounded-lg bg-lime-500 hover:bg-[#55fd3b]">Back to Product Page</a>
+            <?php
+        }else if($product_category == 'Fertilizer'){
+            ?>
+            <a id="back_btn" style="display: block;" href="agrosell.php?type=<?php echo $_SESSION['agro_type']; ?>" class="mb-5 text-center w-1/4 py-2 mt-5 font-bold text-white rounded-lg bg-lime-500 hover:bg-[#55fd3b]">Back to Product Page</a>
+            <?php
+        }
+    ?>
+</div>
 
     <?php 
 
@@ -328,7 +358,7 @@ if(!empty($_GET['session_id'])) {
         unset($_SESSION['paySuccess']);
     ?>
 
-        <div class="absolute top-4 right-4 w-fit">
+        <div class="absolute top-5 right-4 w-fit">
             <button id="download" class="flex gap-2 px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
