@@ -1,9 +1,7 @@
 <?php 
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +53,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     
                     ?>
                     <li>
-                        <button id="menubar_btn" class="relative flex justify-center items-center bottom-2 h-fit w-fit bg-[#CECECE] rounded-full">
+                        <button id="menubar_btn" class="relative cursor-pointer flex justify-center items-center bottom-2 h-fit w-fit bg-[#CECECE] rounded-full">
                             <?php
                                 $sql = "SELECT images FROM $usertype WHERE username = '$username'";
                                 $query_run = mysqli_query($conn, $sql);
@@ -106,8 +104,22 @@ if (session_status() == PHP_SESSION_NONE) {
                 <label class="pl-2">Username : <?php echo $username; ?></label>
             </div>
 
-            <div class="flex flex-col mt-5 gap-0.5 border-t-2 border-slate-300"> 
-                <a href="dashboard.php" class="pl-2 mt-1 rounded-md hover:bg-blue-300">Profile</a>
+            <div class="flex flex-col mt-5 gap-0.5 border-t-2 border-slate-300">
+                <?php
+                    if($usertype == 'supplier') {
+                        ?>
+                        <a href="supplier_dashboard.php" class="pl-2 mt-1 rounded-md hover:bg-blue-300">Profile</a>
+                        <?php
+                    }else if($usertype == 'farmer') {
+                        ?>
+                        <a href="farmer_dashboard.php" class="pl-2 mt-1 rounded-md hover:bg-blue-300">Profile</a>
+                        <?php
+                    }else{
+                        ?>
+                        <a href="customer_dashboard.php" class="pl-2 mt-1 rounded-md hover:bg-blue-300">Profile</a>
+                        <?php
+                    }
+                    ?>
                 <a href="login.php" class="pl-2 rounded-md hover:bg-blue-300">Switch Account</a>   
                 <a href="logout.php" class="pl-2 rounded-md hover:bg-blue-300">Log Out</a>
             </div>

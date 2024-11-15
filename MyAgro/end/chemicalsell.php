@@ -18,11 +18,11 @@
         <?php 
             $typ = $_GET['type'];
             $_SESSION['cate_type'] = $_GET['type'];
-            $_SESSION['category'] = "fertilizer";
+            $_SESSION['category'] = "chemical";
         ?>
 
         <h1><label class="font-semibold">You are here: </label><a href="typeagrochemical.php" class="font-medium hover:underline"> Select Category</a> 
-        <label for="" class="font-semibold"> > </label><a href="fertilizer_category.php" class="font-medium hover:underline"> Select Type</a> 
+        <label for="" class="font-semibold"> > </label><a href="chemical_category.php" class="font-medium hover:underline"> Select Type</a> 
         <label for="" class="font-semibold"> <?php echo '> '.$typ; ?> </label></h1>
         <hr class=" mt-1 border-1 border-[#C19A6B]">
     </div>
@@ -43,12 +43,12 @@
                     
                 ?>
 
-                <!-- Straight Fertilizer -->
-                <div id="Straight" class="flex flex-col px-2 py-1 font-medium w-[200px]" style="display: none;">
+                <!-- Organic Chemical -->
+                <div id="Organic" class="flex flex-col px-2 py-1 font-medium w-[200px]" style="display: none;">
 
-                    <label for="" class="mt-2">Straight Fertilizer Type</label>
-                    <select name="" id="Straight_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
-                        <option value="">Select Straight Type</option>
+                    <label for="" class="mt-2">Organic Type</label>
+                    <select name="" id="Organic_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
+                        <option value="">Select Organic Type</option>
                         
                         <?php
                         
@@ -73,12 +73,12 @@
                     
                 </div>
                 
-                <!-- Specialty Fertilizer -->
-                <div id="Specialty" class="flex flex-col px-2 py-1 font-medium w-[200px]"style="display: none;" >
+                <!-- Insecticides Chemical -->
+                <div id="Insecticides" class="flex flex-col px-2 py-1 font-medium w-[200px]"style="display: none;" >
 
-                    <label for="" class="mt-2">Specialty Fertilizer Type</label>
-                    <select name="" id="Specialty_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
-                        <option value="">Select Specialty Type</option>
+                    <label for="" class="mt-2">Insecticides Type</label>
+                    <select name="" id="Insecticides_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
+                        <option value="">Select Insecticides Type</option>
 
                         <?php
                         
@@ -102,12 +102,12 @@
 
                 </div>
                 
-                <!-- Garden Fertilizer -->
-                <div id="Garden" class="flex-col px-2 py-1 font-medium w-[200px]" style="display: none;">
+                <!-- Fungicides Chemical -->
+                <div id="Fungicides" class="flex-col px-2 py-1 font-medium w-[200px]" style="display: none;">
 
-                    <label for="" class="mt-2">Garden Fertilizer Type</label>
-                    <select name="" id="Garden_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
-                        <option value="">Select Garden Type</option>
+                    <label for="" class="mt-2">Fungicides Type</label>
+                    <select name="" id="Fungicides_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
+                        <option value="">Select Fungicides Type</option>
 
                         <?php
                         
@@ -131,12 +131,12 @@
                     
                 </div>
                 
-                <!-- Blended Fertilizer -->
-                <div id="Blended" class="flex flex-col px-2 py-1 font-medium w-[200px] " style="display: none;">
+                <!-- Weedicides Chemical -->
+                <div id="Weedicides" class="flex flex-col px-2 py-1 font-medium w-[200px] " style="display: none;">
 
-                    <label for="" class="mt-2">Blended Fertilizer Type</label>
-                    <select name="" id="Blended_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
-                        <option value="">Select Blended Type</option>
+                    <label for="" class="mt-2">Weedicides Type</label>
+                    <select name="" id="Weedicides_select" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
+                        <option value="">Select Weedicides Type</option>
                         
                         <?php
                         
@@ -158,6 +158,7 @@
                     </select>
                     
                 </div>
+                
             </div>
 
             <form action="" method="post" class=" rounded-2xl h-fit">
@@ -165,35 +166,35 @@
                 <!-- identify type -->
                 <?php
 
-                    if($_GET['type'] == 'Straight'){
+                    if($_GET['type'] == 'Organic'){
 
                         echo "<script>
-                            const Straight = document.getElementById('Straight');
-                            Straight.style.display = 'block';
+                            const Organic = document.getElementById('Organic');
+                            Organic.style.display = 'block';
                         </script>";
                     }
 
-                    if($_GET['type'] == 'Specialty'){
+                    if($_GET['type'] == 'Insecticides'){
 
                         echo "<script>
-                            const Specialty = document.getElementById('Specialty');
-                            Specialty.style.display = 'block';
+                            const Insecticides = document.getElementById('Insecticides');
+                            Insecticides.style.display = 'block';
                         </script>";
                     }
 
-                    if($_GET['type'] == 'Garden'){
+                    if($_GET['type'] == 'Fungicides'){
 
                         echo "<script>
-                            const garden = document.getElementById('Garden');
-                            garden.style.display = 'block';
+                            const Fungicides = document.getElementById('Fungicides');
+                            Fungicides.style.display = 'block';
                         </script>";
                     }
 
-                    if($_GET['type'] == 'Blended'){
+                    if($_GET['type'] == 'Weedicides'){
 
                         echo "<script>
-                            const Blended = document.getElementById('Blended');
-                            Blended.style.display = 'block';
+                            const Weedicides = document.getElementById('Weedicides');
+                            Weedicides.style.display = 'block';
                         </script>";
                     }
                 ?>
@@ -217,7 +218,7 @@
                         
                     ?>
 
-                    <input type="text" id ="category" name ="category" value="Fertilizer" hidden>
+                    <input type="text" id ="category" name ="category" value="chemical" hidden>
                     <input type="text" id="Fertilizer_category" name="Fertilizer_category" hidden>
                     <input type="text" id="type" name="type" hidden>
 
@@ -244,7 +245,7 @@
 
                         <?php
                         
-                            $query = "SELECT DISTINCT agro_area FROM agrochemical WHERE agro_district = '$selected_district' ORDER BY agro_area";
+                            $query = "SELECT DISTINCT agro_area FROM agrochemical WHERE agro_district = '$selected_district' AND agro_category = 'chemical'  ORDER BY agro_area";
                             $result = mysqli_query($conn, $query);
                             $areas = mysqli_fetch_all($result, MYSQLI_ASSOC);                            
                             
@@ -289,7 +290,8 @@
                     $query = "SELECT agro_id, agro_image, agro_name,total_quantity, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id "; 
 
                     // Create an array to hold the conditions
-
+                    $conditions = array();
+    
                     // Check if category is set and not empty
                     if (!empty(trim($_POST['category']))) {
                         $category = $_POST['category'];
@@ -356,12 +358,11 @@
                     if($result && $result->num_rows > 0) {
 
                         while($row = $result->fetch_assoc()) {
-
-                            
+                             
                             ?>
                                 <div id="<?php echo $row['agro_id']; ?>" class="flex flex-col items-center pt-3 font-semibold w-[290px] max-w-[310px] h-fit border-[3px] border-[#6efa2c] rounded-3xl shadow-2xl shadow-neutral-600">
                                     <form action="retail.php" method="post" class="flex flex-col items-center">
-                                        <input type="hidden" name="agro_category" value="fertilizer"/>
+                                        <input type="hidden" name="agro_category" value="chemical"/>
                                         <input type="hidden" name="agro_type" value="<?php echo $_GET['type']; ?>"/>
                                         <input type="hidden" name="agro_id" value="<?php echo $row['agro_id']; ?>"/>
                                         <div class="">
@@ -376,12 +377,12 @@
                                                 <label id="productLocation"><?php echo $row['shop_name']; ?></label>
                                             </div>
                                             <div> 
-                                                <label class="font-bold">Product Price : </label>
+                                                <label class="font-bold">Product  Price : </label>
                                                 <label>Rs.<label id="productPrice"><?php echo $row['agro_price']; ?></label></label> 
                                             </div>
-                                            <div>
+                                            <div hidden>
                                                 <label class="font-bold">Product Quantity :</label>
-                                                <label id="productQuantity"><?php echo $row['agro_quantity']; ?><label>Kg</label></label>
+                                                <label id="productQuantity"><?php echo $row['agro_quantity']; ?></label>
                                             </div>
                                             <div>
                                                 <label class="font-bold">Pick up location : </label>
@@ -402,13 +403,12 @@
                                 
     
                             <?php
-
                         }
     
                     } else {
                         ?>
                         <div class="flex flex-wrap justify-center w-[100%] items-center">
-                            <h1 class="relative text-4xl italic font-semibold text-center right-40">There is no fertilizer available</h1>
+                            <h1 class="relative text-4xl italic font-semibold text-center right-40">There is no agrochemical available</h1>
                         </div>
                         <?php
                     }
@@ -416,7 +416,7 @@
 
                 }else{
                     
-                    $category = "Fertilizer";
+                    $category = "chemical";
                     $type = $_GET['type'];
 
                     $query = "SELECT agro_id, agro_image,total_quantity, agro_name, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id WHERE agro_category = '$category' AND fertilizer_category = '$type' AND s.supplier_status = 0";
@@ -444,13 +444,15 @@
                                                 <label id="productLocation"><?php echo $row['shop_name']; ?></label>
                                             </div>
                                             <div> 
-                                                <label class="font-bold"> Price  1 product : </label>
+                                                <label class="font-bold">Product Price : </label>
                                                 <label>Rs.<label id="productPrice"><?php echo $row['agro_price']; ?></label></label> 
                                             </div>
-                                            <div>
-                                                <label class="font-bold">Quantity 1 product  :</label>
-                                                <label id="productQuantity"><?php echo $row['agro_quantity']; ?><label>Kg</label></label>
+                                            
+                                            <div hidden>
+                                                <label class="font-bold">Product Quantity :</label>
+                                                <label id="productQuantity"><?php echo $row['agro_quantity']; ?></label>
                                             </div>
+
                                             <div>
                                                 <label class="font-bold">Pick up location : </label>
                                                 <label id="productLocation"><?php echo $row['agro_location']; ?></label>
@@ -474,7 +476,7 @@
                     } else {
                         ?>
                         <div class="flex flex-wrap justify-center w-[100%] items-center">
-                            <h1 class="relative text-4xl italic font-semibold text-center right-40">There is no fertilizer available</h1>
+                            <h1 class="relative text-4xl italic font-semibold text-center right-40">There is no agrochemical available</h1>
                         </div>
                         <?php
                     }
@@ -491,7 +493,7 @@
     <!-- sweetalert cdn -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <!-- change ferilizer category save form input filed for submit -->
+    <!-- change chmecial category save form input filed for submit -->
     <script>
         
         type =document.getElementById("type");
@@ -499,58 +501,58 @@
 
         district =document.getElementById("district");
         district.addEventListener("change",function(){
-            header("Location: agrosell.php");
+            header("Location: chemicalsell.php");
             exit;
         })
 
-        if(window.location.href.includes("type=Straight")){
+        if(window.location.href.includes("type=Insecticides")){
 
-            straight_select =document.getElementById("Straight_select");
+            Insecticides_select =document.getElementById("Insecticides_select");
 
-            Fertilizer_category.value = 'Straight';
-            type.value = straight_select.value;
+            Fertilizer_category.value = 'Insecticides';
+            type.value = Insecticides_select.value;
             
-            straight_select.addEventListener("change",function(){
-                type.value = straight_select.value;
+            Insecticides_select.addEventListener("change",function(){
+                type.value = Insecticides_select.value;
             })
 
         }
 
-        if(window.location.href.includes("type=Garden")){
+        if(window.location.href.includes("type=Fungicides")){
 
-            garden_select =document.getElementById("Garden_select");
+            Fungicides_select =document.getElementById("Fungicides_select");
 
-            Fertilizer_category.value = 'Garden';
-            type.value = garden_select.value;
+            Fertilizer_category.value = 'Fungicides';
+            type.value = Fungicides_select.value;
 
-            garden_select.addEventListener("change",function(){
-                type.value = garden_select.value;
+            Fungicides_select.addEventListener("change",function(){
+                type.value = Fungicides_select.value;
             })
 
         }
 
-        if(window.location.href.includes("type=Specialty")){
+        if(window.location.href.includes("type=Weedicides")){
 
-            Specialty_select =document.getElementById("Specialty_select");
+            Weedicides_select =document.getElementById("Weedicides_select");
 
-            Fertilizer_category.value = 'Specialty';
-            type.value = Specialty_select.value;
+            Fertilizer_category.value = 'Weedicides';
+            type.value = Weedicides_select.value;
 
-            Specialty_select.addEventListener("change",function(){
-                type.value = Specialty_select.value;
+            Weedicides_select.addEventListener("change",function(){
+                type.value = Weedicides_select.value;
             })
 
         }
 
-        if(window.location.href.includes("type=Blended")){
+        if(window.location.href.includes("type=Organic")){
 
-            Blended_select =document.getElementById("Blended_select");
+            Organic_select =document.getElementById("Organic_select");
 
-            Fertilizer_category.value = 'Blended';
-            type.value = Blended_select.value;
+            Fertilizer_category.value = 'Organic';
+            type.value = Organic_select.value;
 
-            Blended_select.addEventListener("change",function(){
-                type.value = Blended_select.value;
+            Organic_select.addEventListener("change",function(){
+                type.value = Organic_select.value;
             })
 
         }
@@ -561,6 +563,7 @@
     <script>
         document.getElementById('district').addEventListener('change', function() {
             var district = this.value;
+            // var category = '';  delete here some code chekc agrosell.php
 
             // Send AJAX request to fetch areas based on the selected district
             fetch('fetch_areas.php', {
@@ -568,7 +571,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: 'district=' + district
+                body: 'district=' + district 
             })
             .then(response => response.json())
             .then(data => {

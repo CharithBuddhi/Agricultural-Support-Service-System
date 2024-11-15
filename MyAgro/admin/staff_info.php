@@ -17,7 +17,9 @@ if(!isset($_SESSION['login_admin_user'])){
     <title>Staff Info</title>
 </head>
 <body class="bg-[#350dc3] text-white">
+
     <div class="w-screen h-screen">
+        
         <div class="flex w-full h-full">
 
             <!-- Dashboard Menu bar load here-->
@@ -27,42 +29,42 @@ if(!isset($_SESSION['login_admin_user'])){
                 
                 <!-- Staff Registration Info -->
                 <fieldset class="mt-10 ml-4 rounded-2xl p-5 border-2 h-fit border-white w-[75%]">
-                    <legend class="text-xl font-bold font-serif">Staff Registration Info</legend>
-                    <form action="insert.php" method="post" class="flex gap-5 grid grid-cols-2 justify-between">
+                    <legend class="font-serif text-xl font-bold">Staff Registration Info</legend>
+                    <form action="insert.php" method="post" class="flex grid justify-between grid-cols-2 gap-5">
 
                         <div class="flex flex-col w-[300px]">
-                            <label for="" class="text-lg font-serif">Name</label>
-                            <input type="text" name="name" id="name" class="p-1 text-black h-8 border-1 border-slate-300 rounded-lg"required>
+                            <label for="" class="font-serif text-lg">Name</label>
+                            <input type="text" name="name" id="name" class="h-8 p-1 text-black rounded-lg border-1 border-slate-300"required>
                         </div>
 
                         <div class="flex flex-col w-[300px]">
-                            <label for="" class="text-lg font-serif">Email</label>
-                            <input type="email" name="email" id="email" class="p-1 text-black h-8 border-1 border-slate-300 rounded-lg"required>
+                            <label for="" class="font-serif text-lg">Email</label>
+                            <input type="email" name="email" id="email" class="h-8 p-1 text-black rounded-lg border-1 border-slate-300"required>
                         </div>
 
                         <div class="flex flex-col w-[300px]">
-                            <label for="" class="text-lg  font-serif">Username</label>
-                            <input type="text" name="username" pattern="[0-9]*" id="username" class="p-1 text-black h-8 border-1 border-slate-300 rounded-lg"required>
+                            <label for="" class="font-serif text-lg">Username</label>
+                            <input type="text" name="username" pattern="[0-9]*" id="username" class="h-8 p-1 text-black rounded-lg border-1 border-slate-300"required>
                         </div>
 
                         <div class="flex flex-col w-[300px]">
-                            <label for="" class="text-lg font-serif">Password</label>
-                            <select name="password" id="password" class="p-1 text-black h-8 border-1 border-slate-300 rounded-lg"required>
+                            <label for="" class="font-serif text-lg">Password</label>
+                            <select name="password" id="password" class="h-8 p-1 text-black rounded-lg border-1 border-slate-300"required>
                                 <option value="00000">000000</option>
                             </select>
                         </div>
 
                         <div class="flex flex-col w-[300px]">
-                            <label for="" class="text-lg font-serif">Role</label>
-                            <select name="role" id="role" class="p-1 text-black h-8 border-1 border-slate-300 rounded-lg"required>
+                            <label for="" class="font-serif text-lg">Role</label>
+                            <select name="role" id="role" class="h-8 p-1 text-black rounded-lg border-1 border-slate-300"required>
                                 <option value="assistant">Assistant</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
 
-                        <div class="flex border-1 border-red-300 justify-center ml-4 mt-8 gap-5">
-                            <button type="reset" name="clear" id="clear" class="rounded-lg p-1 bg-slate-500 hover:bg-slate-700 h-8 w-28">Clear</button>
-                            <button type="submit" name="registar_staff" id="registar_staff" class="rounded-lg p-1 bg-blue-500 hover:bg-blue-700 h-8 w-28">Submit</button>
+                        <div class="flex justify-center gap-5 mt-8 ml-4 border-red-300 border-1">
+                            <button type="reset" name="clear" id="clear" class="h-8 p-1 rounded-lg bg-slate-500 hover:bg-slate-700 w-28">Clear</button>
+                            <button type="submit" name="registar_staff" id="registar_staff" class="h-8 p-1 bg-blue-500 rounded-lg hover:bg-blue-700 w-28">Submit</button>
                         </div>
                         
                     </form>
@@ -70,13 +72,13 @@ if(!isset($_SESSION['login_admin_user'])){
 
                 <!-- Set Up Froget Password -->
                 <fieldset class="mt-8 ml-4 p-4 rounded-2xl border-2 h-fit border-white w-[50%]">
-                    <legend class="text-xl font-bold font-serif">Set Up Froget Password</legend>
+                    <legend class="font-serif text-xl font-bold">Set Up Froget Password</legend>
                     <form action="update.php" method="post" class="flex gap-3">
                         <div class="flex flex-col w-[300px]">
-                            <label for="" class="text-lg font-serif">Enter staff username</label>
-                            <input type="text" pattern="[0-9]*" placeholder="45" name="username" id="username" class="p-1 text-black h-8 border-1 border-slate-300 rounded-lg" required>
+                            <label for="" class="font-serif text-lg">Enter staff username</label>
+                            <input type="text" pattern="[0-9]*" placeholder="45" name="username" id="username" class="h-8 p-1 text-black rounded-lg border-1 border-slate-300" required>
                         </div>
-                        <button type="submit" name="froget_password_update" id="froget_password_update" class="text-center mt-7 h-8 border-1 border-slate-300 rounded-lg bg-blue-500 hover:bg-blue-700 w-28">Update</button>
+                        <button type="submit" name="froget_password_update" id="froget_password_update" class="h-8 text-center bg-blue-500 rounded-lg mt-7 border-1 border-slate-300 hover:bg-blue-700 w-28">Update</button>
                     </form>
                 </fieldset>
 
@@ -88,11 +90,11 @@ if(!isset($_SESSION['login_admin_user'])){
 
                             <div class="gap-1">
                                 <div class="flex">
-                                    <h1 class="mt-5 text-xl font-serif">Staff Details</h1>
+                                    <h1 class="mt-5 font-serif text-xl">Staff Details</h1>
                                 </div>  
                                 <form action="" method="post" class="flex mt-1">
                                     <div class="flex gap-2">
-                                        <input type="text" class="border-1 rounded-md font-sans w-96 h-8 p-1 text-black" name="search_staff" value="<?php if(isset($_POST['search_staff'])){ echo $_POST['search_staff']; } ?>" placeholder="use for search username">
+                                        <input type="text" class="h-8 p-1 font-sans text-black rounded-md border-1 w-96" name="search_staff" value="<?php if(isset($_POST['search_staff'])){ echo $_POST['search_staff']; } ?>" placeholder="use for search username">
                                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-center h-8 w-[100px] rounded-lg">Search</button>
                                     </div>  
                                 </form>                                           
@@ -100,9 +102,9 @@ if(!isset($_SESSION['login_admin_user'])){
                 
                             <div class="mt-3">
                                 <div class="card-body table-responsive" id="staff_table" style="max-height: 250px; overflow-y: auto;">
-                                    <table class="table-auto text-center font-sans text-white table-hover justify-between w-full">
+                                    <table class="justify-between w-full font-sans text-center text-white table-auto table-hover">
                                         <thead>
-                                            <tr class="bg-white  text-black h-10 text-center">
+                                            <tr class="h-10 text-center text-black bg-white">
                                                 <th>User Name</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
@@ -146,7 +148,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                             
                                                             ?>
 
-                                                                <tr class="border-b-2 border-slate-300 h-10 text-center">
+                                                                <tr class="h-10 text-center border-b-2 border-slate-300">
                                                                     <td id="staff_username"><?= $row['staff_userName']; ?></td>
                                                                     <td id="staff_name"><?= $row['staff_name']; ?></td>
                                                                     <td><?= $row['staff_email']; ?></td>
@@ -156,23 +158,23 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                     <?php
                                                                         if($row['staff_id'] == $_SESSION['login_staff_id']) {
                                                                             ?>
-                                                                            <td class="flex gap-1 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                            <td class="flex items-center justify-center gap-1 mt-1">
+                                                                                <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                 <label class="text-green-500">Active</label>
                                                                             </td>
                                                                             <?php
                                                                         }else{
                                                                             if($row['staff_id'] == $_SESSION['login_admin_id']) {
                                                                                 ?>
-                                                                                <td class="flex gap-1 mt-1 items-center justify-center">
-                                                                                    <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                                <td class="flex items-center justify-center gap-1 mt-1">
+                                                                                    <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                     <label class="text-green-500">Active</label>
                                                                                 </td>
                                                                                 <?php
                                                                             }else{
                                                                                 ?>
-                                                                                <td class="flex gap-1 mt-1 items-center justify-center">
-                                                                                    <i class="fa-solid fa-circle-exclamation text-red-500"></i>
+                                                                                <td class="flex items-center justify-center gap-1 mt-1">
+                                                                                    <i class="text-red-500 fa-solid fa-circle-exclamation"></i>
                                                                                     <label class="text-red-500">Inactive</label>
                                                                                 </td>
                                                                             <?php
@@ -180,7 +182,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                             
                                                                         }
                                                                     ?>
-                                                                    <td class="justify-center mt-1 items-center gap-3">
+                                                                    <td class="items-center justify-center gap-3 mt-1">
                                                                         <button type="button" id="reply_btn" value="<?= $row['staff_id']; ?>" class="openModalBtn h-fit">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class= "size-6 hover:text-blue-500">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -230,7 +232,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                             
                                                             ?>
 
-                                                                <tr class="border-b-2 border-slate-300 h-10 text-center">
+                                                                <tr class="h-10 text-center border-b-2 border-slate-300">
                                                                     <td id="staff_username"><?= $row['staff_userName']; ?></td>
                                                                     <td id="staff_name"><?= $row['staff_name']; ?></td>
                                                                     <td><?= $row['staff_email']; ?></td>
@@ -241,23 +243,23 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                         $type = $row['staff_id'];
                                                                         if($row['staff_userName'] == $_SESSION['login_staff_id'][$type]) {
                                                                             ?>
-                                                                            <td class="flex gap-1 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                            <td class="flex items-center justify-center gap-1 mt-1">
+                                                                                <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                 <label class="text-green-500">Active</label>
                                                                             </td>
                                                                             <?php
                                                                         }else{
                                                                             if($row['staff_userName'] == $_SESSION['login_admin_id'][$type]) {
                                                                                 ?>
-                                                                                <td class="flex gap-1 mt-1 items-center justify-center">
-                                                                                    <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                                <td class="flex items-center justify-center gap-1 mt-1">
+                                                                                    <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                     <label class="text-green-500">Active</label>
                                                                                 </td>
                                                                                 <?php
                                                                             }else{
                                                                                 ?>
-                                                                                <td class="flex gap-1 mt-1 items-center justify-center">
-                                                                                    <i class="fa-solid fa-circle-exclamation text-red-500"></i>
+                                                                                <td class="flex items-center justify-center gap-1 mt-1">
+                                                                                    <i class="text-red-500 fa-solid fa-circle-exclamation"></i>
                                                                                     <label class="text-red-500">Inactive</label>
                                                                                 </td>
                                                                             <?php
@@ -265,7 +267,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                             
                                                                         }
                                                                     ?>
-                                                                    <td class="justify-center mt-1 items-center gap-3">
+                                                                    <td class="items-center justify-center gap-3 mt-1">
                                                                         <button type="button" id="openModalBtn" value="<?= $row['staff_id']; ?>" class="openModalBtn h-fit">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class= "size-6 hover:text-blue-500">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -309,7 +311,7 @@ if(!isset($_SESSION['login_admin_user'])){
     </div>
 
     <!--  create Modal staff update information using tailwind css-->
-    <div id="staff_modal" class="bg-black bg-opacity-50 fixed inset-0 flex items-center justify-center" style="display: none;">
+    <div id="staff_modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display: none;">
         <div class="p-4 rounded-xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border shadow-2xl border-slate-500 bg-[#fefefe] text-black w-[420px]">
 
             <!-- Modal Header -->
@@ -343,9 +345,9 @@ if(!isset($_SESSION['login_admin_user'])){
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="mt-4 gap-2 flex text-center justify-end">
-                    <button type="button" id="close" class="close w-24 h-9 rounded-lg bg-slate-400 hover:bg-slate-500 transition">Close</button>
-                    <button type="submit" name="staff_detail_update" id="staff_detail_update"  class="w-24 h-9 rounded-lg bg-blue-500 hover:bg-blue-600 transition">Update</button>
+                <div class="flex justify-end gap-2 mt-4 text-center">
+                    <button type="button" id="close" class="w-24 transition rounded-lg close h-9 bg-slate-400 hover:bg-slate-500">Close</button>
+                    <button type="submit" name="staff_detail_update" id="staff_detail_update"  class="w-24 transition bg-blue-500 rounded-lg h-9 hover:bg-blue-600">Update</button>
                 </div>
             </form>
         </div>
@@ -408,7 +410,7 @@ if(!isset($_SESSION['login_admin_user'])){
     })
     </script>
 
-    <!-- response message display -->
+    <!-- output message display -->
     <script>
         var message ="<?php echo isset($_SESSION['staff_reg_msg']) ? $_SESSION['staff_reg_msg'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
 

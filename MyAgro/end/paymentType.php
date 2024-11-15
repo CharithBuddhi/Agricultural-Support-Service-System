@@ -1,6 +1,3 @@
-<?php 
-// require_once('transaction.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +15,14 @@
     <?php 
         
         if(isset($_POST['confirm_order'])){
+
+            $_SESSION['agro_type'] = $_POST['agro_type'];
+
             ?>
 
             <!-- payment form -->
-            <form action="" method="post">
+            <form action="cdm.php" method="post" id="payment-form">
+                
                 <input type="hidden" name="agro_id" value="<?= $_POST['agro_id']; ?>" >
                 <input type="hidden" name="agro_category" value="<?= $_POST['agro_category']; ?>">
                 <input type="hidden" name="agro_type" value="<?= $_POST['agro_type']; ?>">
@@ -35,8 +36,7 @@
                 <input type="hidden" name="order_quantity" value="<?= $_POST['quantity']; ?>">
 
                 <input type="hidden"  name="send_total" value="<?= $_POST['send_total']; ?>">
-                <input type="hidden"  name="send_half" value="<?= $_POST['send_half']; ?>">
-
+                
                 <input type="hidden" name="supplier_id" value="<?= $_POST['supplier_id']; ?>">
                 <input type="hidden" name="supplier_name" value="<?= $_POST['supplier_name']; ?>">
                 <input type="hidden" name="supplier_phone" value="<?= $_POST['supplier_phone']; ?>">
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="flex flex-col gap-2 text-xl">
-                        <a href="CDM.php"><img src="images/CDM.jpg" alt="Cash Deposit Machine" class="cursor-pointer w-[400px] h-[300px] rounded-3xl"></a>
+                        <button type="submit" id="CDM" name="CDM"><img src="images/CDM.jpg" alt="Cash Deposit Machine" class="cursor-pointer w-[400px] h-[300px] rounded-3xl"></button>
                         <label class="text-lg font-bold">CDM  Payment</label>
                         <h1 class="mt-3">Pay your payment through a CDM machine</h1>
                     </div>
@@ -131,12 +131,7 @@
                     order_quantity: document.querySelector('input[name="order_quantity"]').value,
                     
                     total_price: document.querySelector('input[name="send_total"]').value,
-                    half_price: document.querySelector('input[name="send_half"]').value,
-
-                    // customer_name: "Charitha",
-                    // customer_email: "XHl7t@example.com",
-                    // customer_phone: "+94 717235416",
-                    // customer_address: "No 56, Galla Road, Colombo",
+                    // half_price: document.querySelector('input[name="send_half"]').value,
 
                     provider_id: document.querySelector('input[name="supplier_id"]').value,
                     provider_name: document.querySelector('input[name="supplier_name"]').value,
@@ -171,6 +166,15 @@
             }, 4000);
         }
 
+    </script>
+
+    <!-- Set form action and send it to cdm.php file after click cdm button -->
+    <script>
+        const payment_form = document.getElementById('payment-form');
+        const CDM = document.getElementById('CDM');
+        CDM.addEventListener('click', () => {
+            payment_form.submit();
+        });
     </script>
 
 </body>
