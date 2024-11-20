@@ -44,7 +44,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $order_quantity = $request->order_quantity;
 
     $total_price = $request->total_price;
-    // $half_price = $request->half_price;
 
     $provider_id = $request->provider_id;
     $provider_name = $request->provider_name;
@@ -62,7 +61,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $_SESSION['agro_location'] = $agro_location;
     $_SESSION['order_quantity'] = $order_quantity;
     $_SESSION['total_price'] = $total_price;
-    // $_SESSION['half_price'] = $half_price;
     $_SESSION['agro_currency'] = $product_currency;
     $_SESSION['provider_id'] = $provider_id;
     $_SESSION['provider_name'] = $provider_name;
@@ -87,7 +85,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
             $checkout_session = \Stripe\Checkout\Session::create([
                 "mode" => "payment",
                 "success_url" => STRIPE_SUCCESS_URL.'?session_id={CHECKOUT_SESSION_ID}',
-                "cancel_url" => STRIPE_CANCEL_URL.'?type='.$agro_type,
+                "cancel_url" => STRIPE_CANCEL_URL.'?type='.$agro_type.'&qun='.$order_quantity.'&id='.$product_id,
                 "locale" => "auto",
                 "line_items" => [
                     [

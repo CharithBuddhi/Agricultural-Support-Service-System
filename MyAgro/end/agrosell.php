@@ -9,7 +9,33 @@
 </head>
 <body>
     <!-- navigation bar -->
-    <?php require('header.php'); ?>
+    <?php  
+        include('db_connect.php');
+        
+        if(isset($_GET['qun'])){
+            
+            $typ = $_GET['type'];
+            $agro_id = $_GET['id'];
+            $qun = $_GET['qun'];
+
+            $SELECT = "SELECT total_quantity FROM `agrochemical` WHERE `agro_id` = '$agro_id'";
+            $result1 = $conn->query($SELECT);
+            $row = $result1->fetch_assoc();
+            $db_quantity = $row['total_quantity'];
+
+            $total_quantity = $db_quantity + $qun;
+            $sql = "UPDATE `agrochemical` SET `total_quantity`='$total_quantity' WHERE `agro_id` = '$agro_id'";            
+            $result = $conn->query($sql);
+            
+            if($result){
+                header("Location: agrosell.php?type=$typ");
+                exit();
+            }
+
+        }
+        require('header.php');
+
+    ?>
     
     <!-- selling section -->
     <h1 class="flex justify-center mt-2 mb-3 font-serif text-3xl italic font-bold">Agrochemicals and Fertilizers</h1>
@@ -294,6 +320,7 @@
                     if (!empty(trim($_POST['category']))) {
                         $category = $_POST['category'];
                         $conditions[] = "agro_category = '$category'";
+                        $conditions[] = "total_quantity >= 1";
                         $conditions[] = "s.supplier_status = 0";
                     }
     
@@ -419,7 +446,7 @@
                     $category = "Fertilizer";
                     $type = $_GET['type'];
 
-                    $query = "SELECT agro_id, agro_image,total_quantity, agro_name, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id WHERE agro_category = '$category' AND fertilizer_category = '$type' AND s.supplier_status = 0";
+                    $query = "SELECT agro_id, agro_image,total_quantity, agro_name, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id WHERE agro_category = '$category' AND fertilizer_category = '$type' AND total_quantity > 0 AND s.supplier_status = 0 ";
                     $result = mysqli_query($conn, $query);
     
                     if($result && $result->num_rows > 0) {

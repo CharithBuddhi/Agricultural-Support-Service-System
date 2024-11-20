@@ -13,7 +13,7 @@ if (isset($_POST['rate_provider'])) {
     $description = $_POST['description'];
     $order_id  = $_POST['order_id'];
 
-    $customer_id = $_SESSION['login_id'];
+    $customer_name = $_SESSION['login_user'];
     $customer_type = $_SESSION['login_type'];
 
     $provider_id = $_POST['provider_id_rate'];
@@ -32,9 +32,9 @@ if (isset($_POST['rate_provider'])) {
      
     $product_id = $_POST['product_id_rate'];
 
-    $sql1 = "INSERT INTO rating_provider (rate_value, description, provider, provider_type, customer_id, customer_type, product_id, product_category) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql1 = "INSERT INTO rating_provider (rate_value, description, provider, provider_type, customer_name, customer_type, product_id, product_category) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt1 = $conn->prepare($sql1);
-    $stmt1->bind_param("isssisis", $rate_value, $description, $provider_id, $provider_type, $customer_id, $customer_type, $product_id, $product_category);
+    $stmt1->bind_param("isssssis", $rate_value, $description, $provider_id, $provider_type, $customer_name, $customer_type, $product_id, $product_category);
     $result1 = $stmt1->execute();
 
     if ($result1) {
@@ -91,7 +91,7 @@ if (isset($_POST['rate_provider'])) {
                     <?php 
                         include('db_connect.php');
                         $user_id = $_SESSION['login_id'];
-                        $sql = "SELECT * FROM transaction WHERE customer_id = $user_id ORDER BY FIELD(payment_status, 'Pending or succeeded', 'Completed', 'Canceled'), Reference_id DESC";
+                        $sql = "SELECT * FROM transaction WHERE customer_id = $user_id ORDER BY FIELD(payment_status, 'Pending', 'Rejected', 'Process', 'succeeded', 'Completed', 'Canceled'), Reference_id DESC";
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
@@ -174,7 +174,7 @@ if (isset($_POST['rate_provider'])) {
 
                             <label id="payment_status" hidden><?php echo $row['payment_status']; ?></label>
                             <?php 
-                                if(($row['payment_status'] == "Pending") || ($row['payment_status'] == "succeeded")){
+                                if(($row['payment_status'] == "Pending")){
                                     ?>
                                     <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-yellow-500 rounded-lg w-fit">Pending</p>
                                     <?php
@@ -185,6 +185,18 @@ if (isset($_POST['rate_provider'])) {
                                 }else if($row['payment_status'] == "Canceled"){
                                     ?>
                                     <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-red-500 rounded-lg w-fit">Cancelled</p>
+                                    <?php
+                                }else if($row['payment_status'] == "Process"){
+                                    ?>
+                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-orange-400 rounded-lg w-fit">Process</p>
+                                    <?php
+                                }else if($row['payment_status'] == "Rejected"){
+                                    ?>
+                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-orange-600 rounded-lg w-fit">Rejected</p>
+                                    <?php
+                                }else if($row['payment_status'] == "succeeded"){
+                                    ?>
+                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-lime-400 rounded-lg w-fit">Prepared</p>
                                     <?php
                                 }
                             ?>

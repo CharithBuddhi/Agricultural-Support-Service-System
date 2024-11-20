@@ -9,7 +9,30 @@
 </head>
 <body>
     <!-- navigation bar -->
-    <?php require('header.php'); ?>
+    <?php 
+        include('db_connect.php');
+        if(isset($_GET['qun'])){
+            
+            $typ = $_GET['type'];
+            $agro_id = $_GET['id'];
+            $qun = $_GET['qun'];
+
+            $SELECT = "SELECT total_quantity FROM `agrochemical` WHERE `agro_id` = '$agro_id'";
+            $result1 = $conn->query($SELECT);
+            $row = $result1->fetch_assoc();
+            $db_quantity = $row['total_quantity'];
+
+            $total_quantity = $db_quantity + $qun;
+            $sql = "UPDATE `agrochemical` SET `total_quantity`='$total_quantity' WHERE `agro_id` = '$agro_id'";            
+            $result = $conn->query($sql);
+            
+            if($result){
+                header("Location: chemicalsell.php?type=$typ");
+                exit();
+            }
+        }
+        require('header.php'); 
+    ?>
     
     <!-- selling section -->
     <h1 class="flex justify-center mt-2 mb-3 font-serif text-3xl italic font-bold">Agrochemicals and Fertilizers</h1>
