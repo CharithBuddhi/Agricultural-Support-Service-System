@@ -121,7 +121,7 @@ if(!empty($_GET['session_id'])) {
                     //Transaction details
                     $transaction_id = $payment_intent->id;
                     $paid_amount = $payment_intent->amount;
-                    $paid_amount = ($paid_amount/ 100);
+                    $paid_amount = round(($paid_amount/ 100), 2);
                     $paid_currency = $payment_intent->currency;
                     $payment_status = $payment_intent->status;
 
@@ -249,9 +249,6 @@ if(!empty($_GET['session_id'])) {
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- pdf convert script code -->
-    <script src="javascript/script.js"></script>
-    
     <!-- pdf convert CDN Link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.js"></script>
     
@@ -297,7 +294,6 @@ if(!empty($_GET['session_id'])) {
                         <?php
                     }else if($product_category == 'Fertilizer'){
                         ?>
-                        <input type="text" value="<?php echo $product_category; ?>">
                         <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity." Kg"; ?> </p>
                         <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity." Kg"; ?> </p>
                         <?php
@@ -368,6 +364,23 @@ if(!empty($_GET['session_id'])) {
         </div>
         
     <?php } ?>
+    
+    <!-- generate pdf -->
+    <script>
+        window.onload = function () {
+        document.getElementById("download").addEventListener("click", function () {
+            const invoice = document.getElementById("invoice");
+            var opt = {
+            margin: 0,
+            filename: "MyAgro Invoice.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+            };
+            html2pdf().from(invoice).set(opt).save();
+        });
+        };
+    </script>
 
     
 

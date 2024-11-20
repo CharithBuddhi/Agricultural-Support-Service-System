@@ -17,6 +17,14 @@
         if(isset($_POST['confirm_order'])){
 
             $_SESSION['agro_type'] = $_POST['agro_type'];
+            $order_quantity = $_POST['quantity'];
+            $total_quantity_product = $_POST['total_quantity_product'];
+            $agro_id = $_POST['agro_id'];
+
+            $total_quantity = $total_quantity_product - $order_quantity;
+
+            $sql = "UPDATE `agrochemical` SET `total_quantity`='$total_quantity' WHERE `agro_id` = '$agro_id'";            
+            $result = $conn->query($sql);
 
             ?>
 
@@ -26,7 +34,7 @@
                 <input type="hidden" name="agro_id" value="<?= $_POST['agro_id']; ?>" >
                 <input type="hidden" name="agro_category" value="<?= $_POST['agro_category']; ?>">
                 <input type="hidden" name="agro_type" value="<?= $_POST['agro_type']; ?>">
-                
+
                 <input type="hidden" name="agro_name" value="<?= $_POST['agro_name']; ?>">
                 <input type="hidden" name="agro_price" value="<?= $_POST['agro_price']; ?>">
                 <input type="hidden" name="agro_quantity" value="<?= $_POST['agro_quantity']; ?>">
@@ -60,14 +68,14 @@
                             <img src="images/payment Online.jpg" alt="online payment image" class="cursor-pointer w-[400px] h-[300px] rounded-3xl"></button>
                         </button>               
                         <label class="text-lg font-bold">Online Payment</label>
-                        <h1 class="mt-3 text-xl font-normal">Pay your payment directly online</h1>
+                        <h1 class="mt-3 text-xl font-normal">Pay directly online</h1>
 
                     </div>
 
                     <div class="flex flex-col gap-2 text-xl">
-                        <button type="submit" id="CDM" name="CDM"><img src="images/CDM.jpg" alt="Cash Deposit Machine" class="cursor-pointer w-[400px] h-[300px] rounded-3xl"></button>
-                        <label class="text-lg font-bold">CDM  Payment</label>
-                        <h1 class="mt-3">Pay your payment through a CDM machine</h1>
+                        <button type="submit" id="CDM" name="CDM"><img src="images/CDM_payment.jpg" alt="Cash Deposit Machine" class="cursor-pointer w-[400px] h-[300px] rounded-3xl"></button>
+                        <label class="text-lg font-bold">Cash Deposit Manualy</label>
+                        <h1 class="mt-3">Pay through a Cash Deposit voucher</h1>
                     </div>
                     
                 </div>
@@ -131,7 +139,6 @@
                     order_quantity: document.querySelector('input[name="order_quantity"]').value,
                     
                     total_price: document.querySelector('input[name="send_total"]').value,
-                    // half_price: document.querySelector('input[name="send_half"]').value,
 
                     provider_id: document.querySelector('input[name="supplier_id"]').value,
                     provider_name: document.querySelector('input[name="supplier_name"]').value,

@@ -24,6 +24,7 @@
             $payment_status = 'Canceled';
             $product_id = $_POST['agro_id'];
             $product_category = $_POST['agro_category'];
+
             $product_name = $_POST['agro_name'];
             $product_price = $_POST['agro_price'];
             $product_quantity = $_POST['agro_quantity'];
@@ -141,11 +142,11 @@
         
                                 <h1 class="text-lg font-bold text-[#46d82f]">Voucher Filling Information</h1>
                                 <div class="flex justify-between">
-                                    <h1><B>Private Registration(PR) ID :</B></h1>         <!--private registration id-->
+                                    <h1><B>Reg ID :</B></h1>         <!--private registration id-->
                                     <label><?php echo $PR_ID; ?></label>
                                 </div>
                                 <div class="flex justify-between">
-                                    <h1><B>Reference Number(RN) :</B></h1>
+                                    <h1><B>Reference(RP) ID:</B></h1>
                                     <label><?php echo $ref; ?></label>
                                 </div>
                                 <div class="flex justify-between">
@@ -174,13 +175,23 @@
                 </div>
 
                 <div class="flex justify-center gap-10">
-                    <a id="back_btn" style="display: block;" href="agrosell.php?type=<?php echo $_SESSION['agro_type']; ?>" class="w-1/6 py-2 mt-5 mb-5 font-bold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-800">Cancel</a>
+                    <?php 
+                        if($product_category == 'chemical'){ 
+                            ?>
+                            <a href="chemicalsell.php?type=<?php echo $_SESSION['agro_type']; ?>&qun=<?php echo $quantity; ?>&id=<?php echo $product_id; ?>" class="w-1/6 py-2 mt-5 mb-5 font-bold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-800">Cancel</a>
+                            <?php
+                        }else if($product_category == 'fertilizer'){
+                            ?>
+                            <a href="agrosell.php?type=<?php echo $_SESSION['agro_type']; ?>&qun=<?php echo $quantity; ?>&id=<?php echo $product_id; ?>" class="w-1/6 py-2 mt-5 mb-5 font-bold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-800">Cancel</a>
+                            <?php
+                        }
+                    ?>
                     <button name="confirm_btn" id="confirm_btn" class="mb-5 text-center w-1/6 py-2 mt-5 font-bold text-white rounded-lg bg-lime-500 hover:bg-[#55fd3b]">Confirm Payment</a>
                 </div>
         
                 <div class="flex flex-col items-center">
                     <p class="text-lg font-bold text-red-600">You need to paid the above mention amount before 18 hours, if not your order cancel automatically.</p>
-                    <p class="text-lg font-bold text-red-600">After paid the amount recipt should be upload using order hisory CDM payment section.</p>
+                    <p class="text-lg font-bold text-red-600">After paid the amount recipt should be upload using your dashboard Payment Records section.</p>
                 </div>
 
                 <?php

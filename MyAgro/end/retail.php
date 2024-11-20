@@ -72,6 +72,7 @@ date_default_timezone_set("Asia/colombo");
                             <label><?php echo $data['agro_category']; ?></label>
                             <input type="hidden" name="agro_category" value="<?php echo $data['agro_category']; ?>">
                             <input type="hidden" name="agro_type" value="<?php echo $_POST['agro_type']; ?>">
+                            <input type="hidden" name="total_quantity_product" value="<?php echo $data['total_quantity']; ?>">
 
                         </div>
                         
@@ -125,7 +126,7 @@ date_default_timezone_set("Asia/colombo");
                             <input type="hidden" name="quantity" value="<?php echo $_POST['quantity']; ?>">
                         </div>
 
-                        <div class="flex gap-2 ">
+                        <div class="flex gap-2">
                             <label>Total price : </label>
                             <label>Rs.</label><label id="total" class="text-base font-semibold text-justify"></label>
                             <input type="hidden" id="send_total" name="send_total" value="">
@@ -133,7 +134,16 @@ date_default_timezone_set("Asia/colombo");
 
                         <div class="flex gap-2 ">
                             <label>Supplier Name : </label>
-                            <label><?php echo $data['supplier_name']; ?></label>
+                            <?php 
+                                $find_type = $data['agro_category'];
+                                if(($find_type == "fertilizer") || ($find_type == "chemical")){
+                                    
+                                    $provider_type = "supplier";
+                                }else{
+                                    $provider_type = "farmer";
+                                }
+                            ?>
+                            <u><a href="rating_view.php?id=<?php echo $data['supplier_id'];?>&type=<?php echo $provider_type; ?>"><?php echo $data['supplier_name']; ?></a></u>
                             <input type="hidden" name="supplier_id" value="<?php echo $data['supplier_id']; ?>">
                             <input type="hidden" name="supplier_name" value="<?php echo $data['supplier_name']; ?>">
                         </div>
@@ -148,7 +158,54 @@ date_default_timezone_set("Asia/colombo");
                             <label>Supplier Email : </label>
                             <label><?php echo $data['supplier_email']; ?></label>
                             <input type="hidden" name="supplier_email" value="<?php echo $data['supplier_email']; ?>">
-                        </div><br>
+                        </div>
+
+                        <div class="flex gap-1">
+                            <label class="">Supplier Rate : </label>
+                            <?php
+                                $provider = $data['supplier_id'];
+                                $find_type = $data['agro_category'];
+                                if(($find_type == "fertilizer") || ($find_type == "chemical")){
+                                    
+                                    $provider_type = "supplier";
+                                }else{
+                                    $provider_type = "farmer";
+                                }
+                                $query = "SELECT * FROM rating_provider WHERE provider = $provider AND provider_type = '$provider_type' ";
+                                $result = mysqli_query($conn, $query);
+                                $number_of_rows = mysqli_num_rows($result);
+                                if(mysqli_num_rows($result) > 0){
+
+                                    $rate_values = array(); 
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        $rate_values[] = $row['rate_value'];
+                                    }
+                                    
+                                    // Calculate the average rate value
+                                    $total_rate = array_sum($rate_values); 
+                                    $average_rate = $total_rate / $number_of_rows;
+
+                                    // 1-5 round the average rating
+                                    $rating = round($average_rate);
+                                    
+                                    for($i = 1; $i <= $rating; $i++){
+                                    ?>
+                                        <a href="rating_view.php?id=<?php echo $data['supplier_id'];?>&type=<?php echo $provider_type; ?>">
+                                        <label id="rate_<?php echo $i; ?>" class="relative text-2xl text-yellow-400 cursor-pointer bottom-1">&#9733;</label>
+                                        </a>
+                                    <?php
+                                    } 
+                                    for($i = $rating + 1; $i <= 5; $i++){
+                                    ?>  
+                                        <a href="rating_view.php?id=<?php echo $data['supplier_id'];?>&type=<?php echo $provider_type; ?>">
+                                        <label id="rate_<?php echo $i; ?>" class="relative text-2xl text-gray-400 cursor-pointer bottom-1">&#9733;</label>
+                                        </a>
+                                    <?php
+                                    }
+
+                                }
+                            ?>
+                        </div>
 
                         <div class="flex gap-4">
                             <?php 
@@ -200,19 +257,15 @@ date_default_timezone_set("Asia/colombo");
 
         var total = document.getElementById('total');
         const send_total = document.getElementById('send_total');
-        // var half = document.getElementById('half');
-        // const send_half = document.getElementById('send_half');
         var quantity = parseFloat(document.getElementById('quantity').innerHTML);
         var price = document.getElementById('price').innerHTML;
         var oneQuantity = <?php echo $data['agro_quantity']; ?>;
 
         var payQuantity = quantity / oneQuantity;
         var total_price = (price * payQuantity).toFixed(2);
-        // var half_price = (total_price/2).toFixed(2);
         total.innerHTML = total_price;
         send_total.value = total_price;
-        // send_half.value = half_price;
-        // half.innerHTML = half_price;
+
         
     </script>
     
