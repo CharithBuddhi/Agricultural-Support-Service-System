@@ -13,13 +13,12 @@ if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_
     <title>User Rating</title>
 </head>
 <body>
-    <?php require('header.php'); ?>
+    <?php require('user_header.php'); ?>
     
     <div class="w-screen h-screen">
 
-        <div class="flex flex-col items-center h-full">
-
-            <h1 class="mt-5 mb-5 text-3xl font-bold">User Rating</h1>
+        <h1 class="h-8 ml-8 font-serif text-3xl font-bold mt-7 w-fi">Rating Details</h1>
+        <div class="flex flex-col items-center h-full mt-4">
 
             <?php 
                 require('db_connect.php');
@@ -61,7 +60,7 @@ if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_
                     <?php
                     }
                 ?>
-                    <p class="mt-2">User Name: 
+                    <p class="mt-2">Your Name: 
                        <label class="text-lg font-bold"><?php echo ucfirst($username); ?></label>
                     </p>
                     
@@ -69,6 +68,7 @@ if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_
                 }
             ?>
             
+            <h1 class="h-6 mt-4 mb-3 ml-8 text-2xl font-bold w-fi">Customer Rating</h1>
             <div class="flex justify-center w-full">
 
                 <div class="flex flex-wrap justify-center w-full gap-8 mt-5 pl-14 pr-14">

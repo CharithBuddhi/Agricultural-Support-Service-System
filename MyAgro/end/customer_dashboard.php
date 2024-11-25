@@ -45,16 +45,10 @@ if(isset($_POST['update_profile_btn'])){
                 
                 $image_destination = "D:\\a XAmpp projec\\htdocs\\Agricultural-Support-Service-System\\MyAgro\\end\\images\\user\\" . $profile_picture;   
 
-
-                $filePath = 'images/user/' . $db_Profile_image;
-    
-                // Delete the file from the server
-                if(file_exists($filePath)){ 
-    
-                    unlink($filePath);
+                if($db_Profile_image == ""){
 
                     if(move_uploaded_file($image_temp_name,$image_destination)){
-
+    
                         $UPDATE = "UPDATE customer SET customer_name = ?, customer_address = ?, customer_email = ?, customer_telno = ?, images = ? WHERE customer_id = ?";
                         $stmt = $conn->prepare($UPDATE);
                         $stmt->bind_param("sssisi", $yourname, $address, $email, $phone, $profile_picture, $id);
@@ -71,12 +65,42 @@ if(isset($_POST['update_profile_btn'])){
                         header("Location: customer_dashboard.php");
                         exit();
                     }
-    
+                    
                 }else{
-                    $_SESSION['customer_profile_update'] = "Your previous profile image missing!";
-                    header("Location: customer_dashboard.php");
-                    exit();
+
+                    $filePath = 'images/user/' . $db_Profile_image;
+        
+                    // Delete the file from the server
+                    if(file_exists($filePath)){ 
+        
+                        unlink($filePath);
+    
+                        if(move_uploaded_file($image_temp_name,$image_destination)){
+    
+                            $UPDATE = "UPDATE customer SET customer_name = ?, customer_address = ?, customer_email = ?, customer_telno = ?, images = ? WHERE customer_id = ?";
+                            $stmt = $conn->prepare($UPDATE);
+                            $stmt->bind_param("sssisi", $yourname, $address, $email, $phone, $profile_picture, $id);
+                            $_SESSION['customer_profile_update'] = "Your details Update successfully!";
+                            $stmt->execute();
+                            $stmt->close();
+                            $conn->close();
+                            header("Location: customer_dashboard.php");
+                            exit();
+                            
+                        }else{
+                            echo "Failed to upload file. Error: " . $_FILES['profile_picture']['error'];
+                            $_SESSION['customer_profile_update'] = "Your upload has been failed!";
+                            header("Location: customer_dashboard.php");
+                            exit();
+                        }
+        
+                    }else{
+                        $_SESSION['customer_profile_update'] = "Your previous profile image missing!";
+                        header("Location: customer_dashboard.php");
+                        exit();
+                    }
                 }
+
 
             }else{
                 $UPDATE = "UPDATE customer SET customer_name = ?, customer_address = ?, customer_email = ?, customer_telno = ? WHERE customer_id = ?";
@@ -172,7 +196,8 @@ if(isset($_POST['customer_password_update_btn'])){
                     $customer_id = $_SESSION['login_id'];
                     $sql = "SELECT * FROM customer WHERE customer_id = '$customer_id' LIMIT 1";
                     $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_assoc($result); 
+                    $row = mysqli_fetch_assoc($result);
+                    $_SESSION['profile_image'] = $row['images']; 
                     ?>
 
                     <div class="flex flex-col mt-5">
@@ -180,7 +205,16 @@ if(isset($_POST['customer_password_update_btn'])){
                         <!-- change profile image -->
                         <div class="flex flex-col self-center mt-5">
                             <label for="profile_picture_input" class="cursor-pointer">
+                                
+                                <div id="user_profile_name" class="flex items-center justify-center w-40 h-40 font-serif text-6xl font-semibold text-green-400 border-2 rounded-full bg-slate-200 border-slate-300" >
+                                    <?php  
+                                    $name=$row['username'] ; 
+                                    echo strtoupper($name[0]);
+                                    ?>
+                                </div>
+
                                 <img id="user_profile" name="user_profile" src="images/user/<?php echo $row['images']; ?>" class="self-center w-40 h-40 border-2 rounded-full border-slate-300" alt="user_profile">
+
                             </label>
                             <input type="file" id="profile_picture_input" name="profile_picture" class="bg-red-500" accept="image/*" onchange="previewImage(event)" hidden>
                         </div>
@@ -272,10 +306,32 @@ if(isset($_POST['customer_password_update_btn'])){
 
     <!-- change profile image and preview image js code -->
     <script>
+        const user_profile_name = document.getElementById('user_profile_name');
+        const image = document.getElementById('user_profile');
+
+        <?php 
+            if($_SESSION['profile_image'] == Null) {
+                ?>
+                user_profile_name.style.display = "block";
+                user_profile_name.style.display = "flex";
+                user_profile_name.style.justifyContent = "center";
+                user_profile_name.style.alignItems = "center";
+                image.style.display = "none";
+                <?php
+            }else if($_SESSION['profile_image'] != Null) {
+                ?>
+                user_profile_name.style.display = "none";
+                image.style.display = "block";
+                <?php
+            }
+        ?>
+
         function previewImage(event) {
-            const image = document.getElementById('user_profile');
+            user_profile_name.style.display = "none";
+            image.style.display = "block";
             image.src = URL.createObjectURL(event.target.files[0]);
         }
+
     </script>
 
     <!-- show massage -->

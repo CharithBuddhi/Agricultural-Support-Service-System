@@ -53,7 +53,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     
                     ?>
                     <li>
-                        <button id="menubar_btn" class="relative cursor-pointer flex justify-center items-center bottom-2 h-fit w-fit bg-[#CECECE] rounded-full">
+                        <button id="menubar_btn" class="relative flex items-center justify-center rounded-full cursor-pointer bottom-2 h-fit w-fit bg-slate-200">
                             <?php
                                 $sql = "SELECT images FROM $usertype WHERE username = '$username'";
                                 $query_run = mysqli_query($conn, $sql);
@@ -97,7 +97,17 @@ if (session_status() == PHP_SESSION_NONE) {
 
             <!-- Modal Body -->
             <div class="flex flex-col items-center justify-center">
-                <img src="images/user/<?php echo $image; ?>" alt="" class="w-24 h-24 border-2 rounded-full border-slate-300">
+            <?php
+                    if($image != NULL) {
+                        ?>
+                        <img src="images/user/<?php echo $image; ?>" alt="image" class="w-24 h-24 border-2 rounded-full border-slate-300">
+                        <?php
+                    }else{
+                        ?>
+                        <h1 class=" flex justify-center items-center font-serif bg-slate-200 text-[#73F80B] rounded-full text-5xl font-bold w-24 h-24 text-center "><?php echo strtoupper($username[0]); ?></h1>
+                    <?php
+                    } 
+                ?>
             </div>
             <div class="flex flex-col mt-5">
                 <label class="pl-2">Type : <?php echo $usertype; ?></label>

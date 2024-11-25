@@ -14,6 +14,7 @@
     include('db_connect.php');
 
     require('header.php');
+    require('cancel_cdm_order.php');
     
     ?>
     
