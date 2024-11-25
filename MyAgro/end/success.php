@@ -11,6 +11,11 @@ use Symfony\Component\VarExporter\Internal\Values;
 // set session variable 
 $product_id = $_SESSION['agro_id'];
 $product_category = $_SESSION['agro_category'];
+if($product_category == "chemical" || $product_category == "fertilizer"){
+    $provider_type = "supplier";  
+}else if($product_category == "vegetable" || $product_category == "Fruits"){
+    $provider_type = "farmer";
+}
 $agro_type = $_SESSION['agro_type'];
 $product_name = $_SESSION['agro_name'];
 $product_price = $_SESSION['agro_price'];
@@ -140,6 +145,7 @@ if(!empty($_GET['session_id'])) {
 
                             $customer_name = $customer_details['customer_name'];
                             $customer_email = $customer_details['customer_email'];
+                            $customer_type = 'customer';
                            
                         }else{
                             
@@ -162,6 +168,7 @@ if(!empty($_GET['session_id'])) {
 
                             $customer_name = $customer_details['supplier_name'];
                             $customer_email = $customer_details['supplier_email'];
+                            $customer_type = 'supplier';
                            
                         }else{
                             
@@ -183,6 +190,7 @@ if(!empty($_GET['session_id'])) {
 
                             $customer_name = $customer_details['farmer_name'];
                             $customer_email = $customer_details['farmer_email'];
+                            $customer_type = 'farmer';
                            
                         }else{
                             
@@ -200,25 +208,69 @@ if(!empty($_GET['session_id'])) {
                     $result = $stmt->get_result();
                     $prevRow = $result->fetch_assoc();
 
+                    // if id exists then go to displya data usng that payment id. not insert data
                     if(!empty($prevRow)) {
                         $payment_id = $prevRow['Reference_id ']; 
 
                     }else{
 
                         $created_at = date("Y-m-d H:i:s");
-                        $sql = "INSERT INTO transaction (customer_id, customer_name, customer_email, provider_id, provider_name, provider_phone, provider_email, item_category, item_name, item_id, item_price, item_quantity, item_location, order_quantity, paid_amount, total_amount, paid_currency, txn_id, payment_status, stripe_id, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
+                        $sql = "INSERT INTO transaction (customer_id, 
+                                                        customer_name,
+                                                        customer_email,
+                                                        customer_type,
+                                                        provider_id, 
+                                                        provider_name, 
+                                                        provider_phone, 
+                                                        provider_email,
+                                                        provider_type, 
+                                                        item_category, 
+                                                        item_name, 
+                                                        item_id, 
+                                                        item_price, 
+                                                        item_quantity, 
+                                                        item_location, 
+                                                        order_quantity, 
+                                                        paid_amount, 
+                                                        total_amount, 
+                                                        paid_currency, 
+                                                        txn_id, 
+                                                        payment_status, 
+                                                        stripe_id, 
+                                                        created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("ississsssiddsdddssss", $customer_id, $customer_name, $customer_email, $provider_id, $provider_name, $provider_phone, $provider_email, $product_category, $product_name, $product_id, $product_price, $product_quantity, $agro_location, $quantity, $paid_amount, $total_price, $paid_currency, $transaction_id, $payment_status, $session_id );
+                        $stmt->bind_param("isssissssssiddsdddssss", $customer_id, 
+                                                                        $customer_name, 
+                                                                        $customer_email, 
+                                                                        $customer_type, 
+                                                                        $provider_id, 
+                                                                        $provider_name, 
+                                                                        $provider_phone, 
+                                                                        $provider_email, 
+                                                                        $provider_type, 
+                                                                        $product_category, 
+                                                                        $product_name, 
+                                                                        $product_id, 
+                                                                        $product_price, 
+                                                                        $product_quantity, 
+                                                                        $agro_location, 
+                                                                        $quantity, 
+                                                                        $paid_amount, 
+                                                                        $total_price, 
+                                                                        $paid_currency, 
+                                                                        $transaction_id, 
+                                                                        $payment_status, 
+                                                                        $session_id );
                         $insert = $stmt->execute();
 
                         if($insert){
                             $payment_id = $stmt -> insert_id;
                         }
 
+                        $status = 'Success';
+                        $statusMsg = 'Your Payment has been successfully completed.';
                     }
 
-                    $status = 'Success';
-                    $statusMsg = 'Your Payment has been successfully completed.';
 
                 }else{
 

@@ -27,15 +27,15 @@
 
             <div class="w-full mt-8 ">
 
-                <h1 class="h-8 mb-2 ml-6 font-serif text-3xl font-bold w-fit">Transactions History</h1>
+                <h1 class="h-8 mb-2 ml-6 font-serif text-3xl font-bold w-fit">Paid Transactions</h1>
                 <!-- pending payment table -->
                 <div class="flex flex-col mt-10 ">
                     
                     <h1 class="ml-10 text-2xl font-medium">Pending Payments</h1>
                     <!-- <hr class="ml-10  mt-1 mb-3 border border-slate-300 w-[70%]"> -->
 
-                    <div class="mt-2 ml-10" id="staff_table" style="max-height: 250px; overflow-y: auto;">
-                        <table class="justify-between w-5/6 font-sans text-center text-white table-auto table-hover">
+                    <div class="mt-2 ml-10 mr-10" id="staff_table" style="max-height: 250px; overflow-y: auto;">
+                        <table class="justify-between w-full font-sans text-center text-white table-auto table-hover">
                             <thead>
                                 <tr class="h-10 text-center bg-slate-800 ">
                                     <th>Reg ID</th>
@@ -149,8 +149,8 @@
                     
                     <h1 class="ml-10 text-2xl font-medium">Complete Payments</h1>
 
-                    <div class="mt-2 ml-10" id="staff_table" style="max-height: 250px; overflow-y: auto;">
-                        <table class="justify-between w-5/6 font-sans text-center text-white table-auto table-hover">
+                    <div class="mt-2 ml-10 mr-10" id="staff_table" style="max-height: 250px; overflow-y: auto;">
+                        <table class="justify-between w-full font-sans text-center text-white table-auto table-hover">
                             <thead>
                                 <tr class="h-10 text-center bg-slate-800 ">
                                     <th>RP ID</th>
@@ -214,7 +214,7 @@
                                     }else{
                                         ?>
                                         <tr>
-                                            <td colspan="7">You have no completed record</td>
+                                            <td class="h-10 text-center text-black border-b-2 border-slate-300" colspan="9">You have no completed record</td>
                                         </tr>
                                         <?php
                                     }
@@ -235,8 +235,8 @@
                     
                     <h1 class="ml-10 text-2xl font-medium">Canceled payments</h1>
 
-                    <div class="mt-2 ml-10" id="staff_table" style="max-height: 250px; overflow-y: auto;">
-                        <table class="justify-between w-5/6 font-sans text-center text-white table-auto table-hover">
+                    <div class="mt-2 ml-10 mr-10" id="staff_table" style="max-height: 250px; overflow-y: auto;">
+                        <table class="justify-between w-full font-sans text-center text-white table-auto table-hover">
                             <thead>
                                 <tr class="h-10 text-center bg-slate-800 ">
                                     <th>RP ID</th>
@@ -300,7 +300,7 @@
                                     }else{
                                         ?>
                                         <tr>
-                                            <td colspan="7">You have no cancaled record</td>
+                                            <td class="h-10 text-center text-black border-b-2 border-slate-300" colspan="9">You have no cancaled record</td>
                                         </tr>
                                         <?php
                                     }

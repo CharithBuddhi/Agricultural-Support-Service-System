@@ -15,9 +15,10 @@
 
                 $username = $_SESSION['login_user'];
                 $usertype = $_SESSION['login_type'];
+                $user_id = $_SESSION['login_id'];
                 
                 ?>
-                <button id="menubar_btn" class="relative flex justify-center items-center bottom-2 h-fit w-fit bg-[#CECECE] rounded-full">
+                <button id="menubar_btn" class="relative flex items-center justify-center rounded-full bottom-2 h-fit w-fit bg-slate-200">
                     <?php
                         $sql = "SELECT images FROM $usertype WHERE username = '$username'";
                         $query_run = mysqli_query($conn, $sql);
@@ -31,7 +32,7 @@
 
                         }else{
                             ?>
-                            <h1 class=" flex justify-center items-center text-[#73F80B] text-xl font-bold w-8 h-8 text-center "><?php echo strtoupper($username[0]); ?></h1>
+                            <h1 class=" flex justify-center font-serif items-center text-[#73F80B] text-xl font-bold w-8 h-8 text-center "><?php echo strtoupper($username[0]); ?></h1>
                         <?php
                         } 
                     ?>  
@@ -47,7 +48,17 @@
 
             <!-- Modal Body -->
             <div class="flex flex-col items-center justify-center">
-                <img src="images/user/<?php echo $image; ?>" alt="" class="w-24 h-24 border-2 rounded-full border-slate-300">
+                <?php
+                    if($image != NULL) {
+                        ?>
+                        <img src="images/user/<?php echo $image; ?>" alt="image" class="w-24 h-24 border-2 rounded-full border-slate-300">
+                        <?php
+                    }else{
+                        ?>
+                        <h1 class=" flex justify-center items-center font-serif bg-slate-200 text-[#73F80B] rounded-full text-5xl font-bold w-24 h-24 text-center "><?php echo strtoupper($username[0]); ?></h1>
+                    <?php
+                    } 
+                ?>
             </div>
             <div class="flex flex-col mt-5">
                 <label class="pl-2">Type : <?php echo ucfirst($usertype); ?></label>
@@ -59,7 +70,13 @@
                 <?php
                     if($usertype == 'supplier') {
                         ?>
-                        <a href="supplier_dashboard.php" class="pl-2 rounded-md hover:bg-blue-300">Profile</a>
+                        <a href="supplier_dashboard.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Profile</a>
+                        <a href="own_rating.php?id=<?php echo $user_id;?>&type=<?php echo $usertype; ?>" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Rating</a>
+                        <a href="product_manage.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Products Manage</a>
+                        <a href="customer_order.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Customer Orders</a>
+                        <a href="order_history.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Your Orders</a>
+                        <a href="recived_payment.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Recived Transactions</a>
+                        <a href="payment_dashboard.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Paid Transactions</a>
                         <?php
                     }else if($usertype == 'farmer') {
                         ?>

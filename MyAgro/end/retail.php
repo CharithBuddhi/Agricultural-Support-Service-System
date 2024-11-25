@@ -203,6 +203,10 @@ date_default_timezone_set("Asia/colombo");
                                     <?php
                                     }
 
+                                }else{
+                                    ?>
+                                        <label class="relative">Not any rating yet</label>
+                                    <?php
                                 }
                             ?>
                         </div>
@@ -266,7 +270,6 @@ date_default_timezone_set("Asia/colombo");
         total.innerHTML = total_price;
         send_total.value = total_price;
 
-        
     </script>
     
 </body>
