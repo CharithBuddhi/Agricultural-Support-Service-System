@@ -57,7 +57,7 @@ if(!isset($_SESSION['login_staff_user'])){
                         <th scope="col">Provider</th>
                         <th scope="col">Customer</th>
                         <th scope="col">Pay Type</th>
-                        <th scope="col">Total Amount</th> 
+                        <th scope="col">Amount</th> 
                         <th scope="col">Date</th>
                         <th scope="col">Action</th>
                     <tr>   
@@ -113,7 +113,7 @@ if(!isset($_SESSION['login_staff_user'])){
                             if(mysqli_num_rows($query_run) >  0) {
                                 while($row = mysqli_fetch_array($query_run)) {
                                     ?>
-                                        <tr class="h-fit">
+                                        <tr class="">
                                             <td class="font-bold" id="db_customer_id"><?= $row['customer_id']; ?></td>
                                             <td id ="db_RP_ID" class="font-bold"><?= $row['Reference_id']; ?></td>
                                             <td id="db_item_id" hidden><?= $row['item_id']; ?></td>

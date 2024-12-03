@@ -310,7 +310,7 @@
 
                     // filter data and show filtered data
                     
-                    $query = "SELECT agro_id, agro_image, agro_name,total_quantity, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id "; 
+                    $query = "SELECT agro_id, agro_image, meassure, agro_name,total_quantity, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id "; 
 
                     // Create an array to hold the conditions
                     $conditions = array();
@@ -403,9 +403,10 @@
                                                 <label class="font-bold">Product  Price : </label>
                                                 <label>Rs.<label id="productPrice"><?php echo $row['agro_price']; ?></label></label> 
                                             </div>
-                                            <div hidden>
+                                            <div>
                                                 <label class="font-bold">Product Quantity :</label>
                                                 <label id="productQuantity"><?php echo $row['agro_quantity']; ?></label>
+                                                <label id="meassure"><?php echo $row['meassure']; ?></label>
                                             </div>
                                             <div>
                                                 <label class="font-bold">Pick up location : </label>
@@ -442,7 +443,7 @@
                     $category = "chemical";
                     $type = $_GET['type'];
 
-                    $query = "SELECT agro_id, agro_image,total_quantity, agro_name, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id WHERE agro_category = '$category' AND fertilizer_category = '$type' AND s.supplier_status = 0";
+                    $query = "SELECT agro_id, agro_image,total_quantity, meassure, agro_name, agro_price, agro_quantity, agro_location, shop_name, s.supplier_status FROM agrochemical JOIN supplier s ON agrochemical.supplier_id = s.supplier_id WHERE agro_category = '$category' AND fertilizer_category = '$type' AND s.supplier_status = 0";
                     $result = mysqli_query($conn, $query);
     
                     if($result && $result->num_rows > 0) {
@@ -471,9 +472,10 @@
                                                 <label>Rs.<label id="productPrice"><?php echo $row['agro_price']; ?></label></label> 
                                             </div>
                                             
-                                            <div hidden>
+                                            <div>
                                                 <label class="font-bold">Product Quantity :</label>
                                                 <label id="productQuantity"><?php echo $row['agro_quantity']; ?></label>
+                                                <label id="meassure"><?php echo $row['meassure']; ?></label>
                                             </div>
 
                                             <div>

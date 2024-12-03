@@ -25,6 +25,10 @@ if(!isset($_SESSION['login_staff_user'])){
             <!-- Main Dashboard -->
             <div class="flex flex-col w-4/5 gap-5">
 
+                <button class="absolute w-32 transition rounded-lg left-[290px] top-2 h-9 bg-blue-400 hover:bg-blue-500">
+                    <a href="cancel_cdm_order.php">Refresh System</a>
+                </button>
+
                 <!-- search bar -->
                 <div class="flex justify-end mt-2">
                     <input type="text" name="search" id="search" placeholder="search...." class="w-3/5 p-2 border-2 rounded-lg h-9 border-slate-100">

@@ -140,6 +140,7 @@ if(!isset($_SESSION['login_staff_user'])){
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Delete function run here -->
 <script src="js/custom.js"></script>
 
 <!-- load side menu bar  -->
@@ -150,9 +151,9 @@ if(!isset($_SESSION['login_staff_user'])){
 </script>
 
 <!-- get value from table row and display inside reply form -->
- <!-- This javascript code can't save message.js file. 
-    becuase here has insdie getElementById('name') '' automaticaly change "". 
-    so then this code not work correctly. so use code in this file -->
+<!-- This javascript code can't save message.js file. 
+becuase here has insdie getElementById('name') '' automaticaly change "". 
+so then this code not work correctly. so use code in this file -->
       
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -189,46 +190,46 @@ if(!isset($_SESSION['login_staff_user'])){
 var message =
   "<?php echo isset($_SESSION['status']) ? $_SESSION['status'] : ''; ?>"; //send status include massage  varible message, but if not status then print ''.
 
-if (message != "") {
-    if(message.includes('success')) {
-        const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        iconColor: "#69f44a",
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        },
-        });
-        Toast.fire({
-        icon: "success",
-        title: message,
-        });
-    } else {
-        const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        iconColor: "#f84444",
-        background: "#fae1e1",
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        },
-        });
-        Toast.fire({
-        icon: "error",
-        title: message,
-        });
-    }
-    // remove after once message is shown
-    <?php unset($_SESSION['status']); ?>
-}   
+    if (message != "") {
+        if(message.includes('success')) {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            iconColor: "#69f44a",
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            },
+            });
+            Toast.fire({
+            icon: "success",
+            title: message,
+            });
+        } else {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            iconColor: "#f84444",
+            background: "#fae1e1",
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            },
+            });
+            Toast.fire({
+            icon: "error",
+            title: message,
+            });
+        }
+        // remove after once message is shown
+        <?php unset($_SESSION['status']); ?>
+    }   
 </script>
 
 </body>

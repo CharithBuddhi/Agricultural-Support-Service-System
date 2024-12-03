@@ -14,34 +14,25 @@
 <body>
 
     <?php 
-        if(isset($_POST['agro_id']) && isset($_POST['agro_category']) && isset($_POST['agro_type']) && isset($_POST['agro_name']) && 
-        isset($_POST['agro_price']) && isset($_POST['agro_quantity']) && isset($_POST['shop_name']) && isset($_POST['agro_location']) && 
-        isset($_POST['order_quantity']) && isset($_POST['send_total']) &&isset($_POST['supplier_id']) &&isset($_POST['supplier_name']) &&
-        isset($_POST['supplier_phone']) && isset($_POST['supplier_email'])) {  
-
-            $_SESSION['agro_type'] = $_POST['agro_type'];
+        if(isset($_POST['CDM_sub'])) {  
 
             $payment_status = 'Canceled';
-            $product_id = $_POST['agro_id'];
-            $product_category = $_POST['agro_category'];
-
-            if($product_category == "chemical" || $product_category == "fertilizer"){
-                $provider_type = "supplier";  
-            }else if($product_category == "vegetable" || $product_category == "fruits"){
-                $provider_type = "farmer";
-            }
-
-            $product_name = $_POST['agro_name'];
-            $product_price = $_POST['agro_price'];
-            $product_quantity = $_POST['agro_quantity'];
-            $meassure = $_POST['meassure'];
-            $agro_location = $_POST['agro_location'];
+            $product_id = $_POST['vegfruitle_id'];
+            $product_category = $_POST['vegetable_category'];
+            $provider_type = "farmer";
+            $product_name = $_POST['vegetable_name'];
+            $product_varitey = $_POST['vegfruitle_verity'];
+            $product_price = $_POST['vegfruit_price'];
+            $meassure = "Kg";
+            $agro_location = $_POST['vegfruit_location'];
             $quantity = $_POST['order_quantity'];
             $total_price = $_POST['send_total'];
-            $provider_id = $_POST['supplier_id'];
-            $provider_name = $_POST['supplier_name'];
-            $provider_phone = $_POST['supplier_phone'];
-            $provider_email = $_POST['supplier_email'];
+            $product_quantity = 1.00;
+
+            $provider_id = $_POST['farmer_id'];
+            $provider_name = $_POST['farmer_username'];
+            $provider_phone = $_POST['farmer_phone'];
+            $provider_email = $_POST['farmer_email'];
             
 
             require('db_connect.php');
@@ -89,7 +80,10 @@
 
                     $sql = "INSERT INTO transaction (customer_id, customer_name, customer_email, customer_type, provider_id, provider_name, provider_phone, provider_email, provider_type, item_category, item_name, item_id, item_price, item_quantity, meassure, item_location, order_quantity, total_amount, txn_id, payment_status, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("isssissssssiddssddss", $PR_ID, $name, $Email, $usertype, $provider_id, $provider_name, $provider_phone, $provider_email, $provider_type, $product_category, $product_name, $product_id, $product_price, $product_quantity, $meassure, $agro_location, $quantity, $total_price, $transaction_id, $payment_status );
+                    $stmt->bind_param("isssissssssiddssddss", $PR_ID, $name, $Email, $usertype, 
+                                                $provider_id, $provider_name, $provider_phone, $provider_email, $provider_type, 
+                                                $product_category, $product_varitey, $product_id, $product_price, 
+                                                $product_quantity, $meassure, $agro_location, $quantity, $total_price, $transaction_id, $payment_status );
                     $insert = $stmt->execute();
 
                     if($insert){
@@ -158,7 +152,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <h1><B>Purchase Product Name :</B></h1>
-                                    <label><?php echo ucfirst($_POST['agro_name']); ?></label>
+                                    <label><?php echo ucfirst($_POST['vegfruitle_verity']); ?></label>
                                 </div>
                                 <div class="flex justify-between">
                                     <h1><B>Your Name :</B></h1>
@@ -182,17 +176,7 @@
                 </div>
 
                 <div class="flex justify-center gap-10">
-                    <?php 
-                        if($product_category == 'chemical'){ 
-                            ?>
-                            <a href="chemicalsell.php?type=<?php echo $_SESSION['agro_type']; ?>&qun=<?php echo $quantity; ?>&id=<?php echo $product_id; ?>" class="w-1/6 py-2 mt-5 mb-5 font-bold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-800">Cancel</a>
-                            <?php
-                        }else if($product_category == 'fertilizer'){
-                            ?>
-                            <a href="agrosell.php?type=<?php echo $_SESSION['agro_type']; ?>&qun=<?php echo $quantity; ?>&id=<?php echo $product_id; ?>" class="w-1/6 py-2 mt-5 mb-5 font-bold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-800">Cancel</a>
-                            <?php
-                        }
-                    ?>
+                    <a href="productSell.php?qun=<?php echo $quantity; ?>&id=<?php echo $product_id; ?>" class="w-1/6 py-2 mt-5 mb-5 font-bold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-800">Cancel</a>
                     <button name="confirm_btn" id="confirm_btn" class="mb-5 text-center w-1/6 py-2 mt-5 font-bold text-white rounded-lg bg-lime-500 hover:bg-[#55fd3b]">Confirm Payment</a>
                 </div>
         
@@ -250,7 +234,7 @@
 
     <!-- show output message -->
     <script>
-        var message ="<?php echo isset($_SESSION['cdm_message']) ? $_SESSION['cdm_message'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
+        var message ="<?php echo isset($_SESSION['cdm_vege_message']) ? $_SESSION['cdm_vege_message'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
         if (message != "") {
             if(message.includes('success')) {
                 const Toast = Swal.mixin({
@@ -289,7 +273,7 @@
                 });
             }
             // remove after once message is shown
-            <?php unset($_SESSION['cdm_message']); ?>
+            <?php unset($_SESSION['cdm_vege_message']); ?>
         } 
     </script>
     

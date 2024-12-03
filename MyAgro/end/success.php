@@ -9,27 +9,63 @@ use Stripe\Exception\ApiErrorException;
 use Symfony\Component\VarExporter\Internal\Values;
 
 // set session variable 
-$product_id = $_SESSION['agro_id'];
 $product_category = $_SESSION['agro_category'];
+
+// create varaible outside of the if statment. this for access variable globly
+// $provider_type = '';
+// $product_id = '';
+// $agro_type = '';
+// $product_name = '';
+// $product_price = '';
+// $product_quantity = '';
+// $agro_location = '';
+// $quantity = '';
+// $total_price = '';
+// $meassure = '';
+// $product_currency = '';
+// $provider_id = '';
+// $provider_name = '';
+// $provider_phone = '';
+// $provider_email = '';
+
+// assign above variable to value inside the if statment
 if($product_category == "chemical" || $product_category == "fertilizer"){
+    
     $provider_type = "supplier";  
-}else if($product_category == "vegetable" || $product_category == "Fruits"){
+    $product_id = $_SESSION['agro_id'];
+    $agro_type = $_SESSION['agro_type'];
+    $product_name = $_SESSION['agro_name'];
+    $product_price = $_SESSION['agro_price'];
+    $product_quantity = $_SESSION['agro_quantity'];
+    $shop_name = $_SESSION['shop_name'] ;
+    $agro_location = $_SESSION['agro_location'];
+    $quantity = $_SESSION['order_quantity'];
+    $total_price = $_SESSION['total_price'];
+    $meassure = $_SESSION['meassure'];
+    $product_currency = $_SESSION['agro_currency'];
+    $provider_id = $_SESSION['provider_id'];
+    $provider_name = $_SESSION['provider_name'];
+    $provider_phone = $_SESSION['provider_phone'];
+    $provider_email = $_SESSION['provider_email'];
+
+}else if($product_category == "vegetable" || $product_category == "fruit"){
+
     $provider_type = "farmer";
+    $product_id = $_SESSION['vegfruitle_id'];
+    $agro_type = $_SESSION['vegetable_name'];
+    $product_name = $_SESSION['vegfruitle_verity'];
+    $product_price = $_SESSION['vegfruit_price'];
+    $product_quantity = 1;
+    $agro_location = $_SESSION['vegfruit_location'];
+    $quantity = $_SESSION['order_quantity'];
+    $total_price = $_SESSION['total_price'];
+    $meassure = $_SESSION['meassure'];
+    $product_currency = $_SESSION['vegetable_currency'];
+    $provider_id = $_SESSION['provider_id'];
+    $provider_name = $_SESSION['provider_name'];
+    $provider_phone = $_SESSION['provider_phone'];
+    $provider_email = $_SESSION['provider_email'];
 }
-$agro_type = $_SESSION['agro_type'];
-$product_name = $_SESSION['agro_name'];
-$product_price = $_SESSION['agro_price'];
-$product_quantity = $_SESSION['agro_quantity'];
-$shop_name = $_SESSION['shop_name'] ;
-$agro_location = $_SESSION['agro_location'];
-$quantity = $_SESSION['order_quantity'];
-$total_price = $_SESSION['total_price'];
-// $half_price = $_SESSION['half_price'];
-$product_currency = $_SESSION['agro_currency'];
-$provider_id = $_SESSION['provider_id'];
-$provider_name = $_SESSION['provider_name'];
-$provider_phone = $_SESSION['provider_phone'];
-$provider_email = $_SESSION['provider_email'];
 
 // script API key configaration
 define("STRIPE_API_KEY", "sk_test_51QEPjARxjCPZ5J0VC4cI1kRBJxWrnywFuSbgi4eN5WRF6GrGblP6RrOD24VRIjRSrOCik9LTT6WUXFvGrp7UOldx00DAGfDisH");
@@ -71,6 +107,7 @@ if(!empty($_GET['session_id'])) {
         $product_name = ucfirst($transaction['item_name']);
         $product_price = $transaction['item_price'];
         $product_quantity = $transaction['item_quantity'];
+        $$meassure = $transaction['meassure'];
         $quantity = $transaction['order_quantity'];
         $agro_location = $transaction['item_location'];
 
@@ -228,7 +265,8 @@ if(!empty($_GET['session_id'])) {
                                                         item_name, 
                                                         item_id, 
                                                         item_price, 
-                                                        item_quantity, 
+                                                        item_quantity,
+                                                        meassure, 
                                                         item_location, 
                                                         order_quantity, 
                                                         paid_amount, 
@@ -237,9 +275,9 @@ if(!empty($_GET['session_id'])) {
                                                         txn_id, 
                                                         payment_status, 
                                                         stripe_id, 
-                                                        created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
+                                                        created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("isssissssssiddsdddssss", $customer_id, 
+                        $stmt->bind_param("isssissssssiddssdddssss", $customer_id, 
                                                                         $customer_name, 
                                                                         $customer_email, 
                                                                         $customer_type, 
@@ -252,7 +290,8 @@ if(!empty($_GET['session_id'])) {
                                                                         $product_name, 
                                                                         $product_id, 
                                                                         $product_price, 
-                                                                        $product_quantity, 
+                                                                        $product_quantity,
+                                                                        $meassure, 
                                                                         $agro_location, 
                                                                         $quantity, 
                                                                         $paid_amount, 
@@ -338,20 +377,9 @@ if(!empty($_GET['session_id'])) {
                 <p class="flex justify-between"><b>Product Category</b> <?php echo ucfirst($product_category); ?> </p>
                 <p class="flex justify-between"><b>Product Name</b> <label class="pl-6"><?php echo $product_name; ?></label></p>
                 <p class="flex justify-between"><b>Product Price</b> <?php echo "Rs. ".$product_price; ?></p>
-                <?php 
-                    if($product_category == 'Chemical'){
-                        ?>
-                        <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity; ?> </p>
-                        <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity; ?> </p>
-                        <?php
-                    }else if($product_category == 'Fertilizer'){
-                        ?>
-                        <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity." Kg"; ?> </p>
-                        <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity." Kg"; ?> </p>
-                        <?php
-                    }
-                ?>
-                
+                <p class="flex justify-between"><b>Product Quantity</b> <?php echo $product_quantity."".$meassure; ?> </p>
+                <p class="flex justify-between"><b>Purchased Quantity</b> <?php echo $quantity."".$meassure; ?> </p>
+
                 <p class="flex justify-between"><b>Purchased Location</b><label class="pl-6"><?php echo $agro_location; ?></label></p>
             </div>
 
@@ -393,6 +421,10 @@ if(!empty($_GET['session_id'])) {
         }else if($product_category == 'Fertilizer'){
             ?>
             <a id="back_btn" style="display: block;" href="agrosell.php?type=<?php echo $_SESSION['agro_type']; ?>" class="mb-5 text-center w-1/4 py-2 mt-5 font-bold text-white rounded-lg bg-lime-500 hover:bg-[#55fd3b]">Back to Product Page</a>
+            <?php
+        }else if($product_category == "Vegetable" || $product_category == "Fruit"){
+            ?>
+            <a id="back_btn" style="display: block;" href="productSell.php" class="mb-5 text-center w-1/4 py-2 mt-5 font-bold text-white rounded-lg bg-lime-500 hover:bg-[#55fd3b]">Back to Product Page</a>
             <?php
         }
     ?>

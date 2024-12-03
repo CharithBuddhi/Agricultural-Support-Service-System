@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +14,7 @@
         
         if(isset($_GET['qun'])){
             
+            $typ = $_GET['type'];
             $vegfruitle_id  = $_GET['id'];
             $qun = $_GET['qun'];
 
@@ -28,14 +28,12 @@
             $result = $conn->query($sql);
             
             if($result){
-                header("Location: productSell.php");
+                header("Location: agrosell.php?type=$typ");
                 exit();
             }
 
         }
         require('header.php');
-
-        $_SESSION['category'] = "vegetable";
 
     ?>
     
@@ -52,7 +50,7 @@
                 
                 <label for="" class="mb-3 ml-2 font-serif text-2xl">Filter Section</label>
                
-                <div id="Blended" class="flex flex-col px-2 py-1 font-medium w-[200px] ">
+                <div id="" class="flex flex-col px-2 py-1 font-medium w-[200px] ">
                     <label for="" class="mt-2">Product Category</label>
                     <select name="Select_Category" id="Product_Category" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
                         <option value="">Select Category</option>
@@ -73,32 +71,23 @@
                     </select>
                 </div>
 
-                <div id="Blended" class="flex flex-col px-2 py-1 font-medium w-[200px] ">
+                <div id="" class="flex flex-col px-2 py-1 font-medium w-[200px] ">
                     <label for="" class="mt-2">Product Name</label>
                     <select name="Select_Name" id="Select_Name" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
                         <option value="" selected>Select Name</option>
-                        <!-- set after submit dispaly product name -->
-                        <?php
-
-                            $selected_name = isset($_POST['Select_Name']) ? $_POST['Select_Name'] : ''; 
-                            if(isset($_POST['Select_Name'])){
-                                echo '<option value="'.$selected_name.'" selected>'.$selected_name.'</option>';
-                            }
-
-                        ?>
                     </select>
                 </div>
 
-                <div id="Blended" class="flex flex-col px-2 py-1 font-medium w-[200px] ">
+                <div id="" class="flex flex-col px-2 py-1 font-medium w-[200px] ">
                     <label for="" class="mt-2">Product Variety</label>
                     <select name="Select_Variety" id="Select_Variety" class="w-[200px] font-serif border h-7 border-blue-500 rounded-md">
                         <option value="" selected>Select Variety</option>
                         <!-- set after submit dispaly product variety -->
                         <?php
-                            $selected_variety = isset($_POST['Select_Variety']) ? $_POST['Select_Variety'] : '';
-                            if(isset($_POST['Select_Variety'])){
-                                echo '<option value="'.$selected_variety.'" selected>'.$selected_variety.'</option>';
-                            }
+                            // $selected_variety = isset($_POST['Select_Variety']) ? $_POST['Select_Variety'] : '';
+                            // if(isset($_POST['Select_Variety'])){
+                            //     echo '<option value="'.$selected_variety.'" selected>'.$selected_variety.'</option>';
+                            // }
                         ?>
                     </select>
                 </div>
@@ -438,7 +427,7 @@
                     if (currentQuantity < totalQuantity) {  
                         quantityInput.value = (currentQuantity + 0.25)+' Kg';
                     } else {
-                        quantityInput.value = totalQuantity + ' Kg';
+                        quantityInput.value = totalQuantity + ' kg';
                     }
                 });
             });
@@ -501,6 +490,33 @@
                     }
                 });
             });
+
+            // Fetch crop varieties based on change crop name
+            
+                
+            var origin = $('#Product_Category').val();
+            var name = $('#Select_Name').val();
+
+            if(name == '') {
+                
+                $('#Select_Name').html('<option value="">Select Name</option>');
+
+            }else if(name != ''){
+
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_varieties_vegefrut_table', name: name , origin: origin },
+                    success: function(data) {
+                        
+                        // getting out put displya this id element
+                        $('#Select_Name').html(data);
+                    }
+                });
+            }
+
+            
+            
         });
     </script>
 

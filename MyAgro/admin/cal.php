@@ -14,6 +14,7 @@ if(isset($_POST['calculate'])){
         // get data from form
         $id = $_POST['price_id'];
         $search = $_POST['search'];
+        $crop = $_POST['crop'];
         $crop_name = $_POST['crop_name'];
         $crop_variety = $_POST['crop_variety'];
         $period = $_POST['period'];
@@ -33,11 +34,12 @@ if(isset($_POST['calculate'])){
         $benefit = $_POST['benefit'];
         $taxt = $_POST['taxt'];
 
+
         require('db_conn.php');
 
     
 
-        // check if harvest month already added
+        // check if control price already added
         $run = "SELECT * FROM `controlprice` WHERE crop_name = '$crop_name' AND varieties_name = '$crop_variety'";
         $result = mysqli_query($conn,$run);
         $row = mysqli_num_rows($result);
@@ -128,10 +130,10 @@ if(isset($_POST['calculate'])){
         
                             // send final calculation output to conterol_price.php
                             if ($id == ""){
-                                header('Location: conterol_price.php?&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety);
+                                header('Location: conterol_price.php?&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&crops='.$crop);
                                 exit;
                             }else{
-                                header('Location: conterol_price.php?id='.$id.'&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&search='.$search);
+                                header('Location: conterol_price.php?id='.$id.'&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&search='.$search.'&crops='.$crop);
                                 exit;
                             }
         

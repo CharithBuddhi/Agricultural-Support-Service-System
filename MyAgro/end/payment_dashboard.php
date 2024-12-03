@@ -53,8 +53,9 @@
                                 <?php
                                     require('db_connect.php');                      
                                     $reg_id = $_SESSION['login_id'];
+                                    $cus_type = $_SESSION['login_type'];
 
-                                    $query = "SELECT * FROM `transaction` WHERE (`payment_status` = 'Pending' OR `payment_status` = 'Process' OR `payment_status` = 'Rejected') AND `customer_id` = ?";
+                                    $query = "SELECT * FROM `transaction` WHERE (`payment_status` = 'Pending' OR `payment_status` = 'Process' OR `payment_status` = 'Rejected') AND `customer_id` = ? AND `customer_type` = ?";
 
                                     $stmt = $conn->prepare($query);
                                     
@@ -63,7 +64,7 @@
                                         die('Prepare error: ' . $conn->error);
                                     }
                                     
-                                    $stmt->bind_param("i", $reg_id);
+                                    $stmt->bind_param("is", $reg_id, $cus_type);
                                     $stmt->execute();
 
                                     // Get result set from the statement
@@ -81,8 +82,8 @@
                                                     <td id="RP_ID"><?= $row['Reference_id']; ?></td>
                                                     <td id="provider_name"><?= $row['provider_name']; ?></td>
                                                     <td >CDM</td>
-                                                    <td id="amount_due"><?= $row['total_amount']; ?></td>
-                                                    <td id="total_amount"><?= $row['total_amount']; ?></td>
+                                                    <td ><label>Rs. </label><label id="amount_due"><?= $row['total_amount']; ?></label></td>
+                                                    <td ><label>Rs. </label><label id="total_amount"><?= $row['total_amount']; ?></label></td>
                                                     <td id="customer_name" hidden><?= $row['customer_name']; ?></td>
                                                     <td id="created"><?= $row['created']; ?></td>
                                                     <?php 
@@ -166,8 +167,9 @@
                                 <?php
                                     require('db_connect.php');                      
                                     $customer_id = $_SESSION['login_id'];
+                                    $cus_type = $_SESSION['login_type'];
 
-                                    $query = "SELECT * FROM `transaction` WHERE `payment_status` = 'succeeded' AND `customer_id` = '$customer_id'";
+                                    $query = "SELECT * FROM `transaction` WHERE `payment_status` = 'succeeded' AND `customer_id` = '$customer_id' AND `customer_type` = '$cus_type'";
 
                                     // prepare statment
                                     $stmt = $conn->prepare($query);
@@ -201,8 +203,8 @@
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td ><?= $row['paid_amount']; ?></td>
-                                                    <td ><?= $row['total_amount']; ?></td>
+                                                    <td ><?= "Rs. ".$row['paid_amount']; ?></td>
+                                                    <td ><?= "Rs. ".$row['total_amount']; ?></td>
                                                     <td ><?= $row['created']; ?></td>
                                                     <td class="items-center justify-center p-1 text-white"><label class="pl-1 pr-1 pb-0.5 bg-green-500 rounded-md">Complete</label></td>
                                                 </tr>
@@ -252,8 +254,9 @@
                                 <?php
                                     require('db_connect.php');                      
                                     $customer_id = $_SESSION['login_id'];
+                                    $cus_type = $_SESSION['login_type'];
 
-                                    $query = "SELECT * FROM `transaction` WHERE `payment_status` = 'Canceled' AND `customer_id` = '$customer_id'";
+                                    $query = "SELECT * FROM `transaction` WHERE `payment_status` = 'Canceled' AND `customer_id` = '$customer_id' AND `customer_type` = '$cus_type'";
 
                                     // prepare statment
                                     $stmt = $conn->prepare($query);
@@ -288,7 +291,7 @@
                                                          ?>
                                                     </td>
                                                     <td ><?= $row['item_name']; ?></td>
-                                                    <td ><?= $row['total_amount']; ?></td>
+                                                    <td ><?= "Rs. ".$row['total_amount']; ?></td>
                                                     <td ><?= $row['created']; ?></td>
                                                     <td class="items-center justify-center p-1 text-white"><label class="pl-1 pr-1 pb-0.5 bg-red-500 rounded-md">Canceled</label></td>
                                                 </tr>

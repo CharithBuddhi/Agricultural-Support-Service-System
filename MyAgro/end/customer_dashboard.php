@@ -260,7 +260,7 @@ if(isset($_POST['customer_password_update_btn'])){
                 ?>
 
                 <div class="flex gap-4 mt-7">
-                    <button type="submit" name="update_profile_btn" class="px-3 py-1 w-[110px] text-white font-medium bg-purple-700 rounded-lg hover:bg-purple-500">Update</button>
+                    <button type="submit" name="update_profile_btn" class="px-3 py-1 w-[110px] text-white font-medium bg-blue-700 rounded-lg hover:bg-blue-500">Update</button>
                     <button type="reset" class="px-3 py-1 text-white w-[90px] rounded-lg bg-slate-400 font-medium hover:bg-slate-300">Clear</button>
                 </div>
             </form>
@@ -291,7 +291,7 @@ if(isset($_POST['customer_password_update_btn'])){
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <button type="submit" name="customer_password_update_btn" class="px-3 py-1 text-white bg-purple-700 rounded-lg h-9 hover:bg-purple-500">Update</button>
+                        <button type="submit" name="customer_password_update_btn" class="px-3 py-1 text-white bg-blue-700 rounded-lg h-9 hover:bg-blue-500">Update</button>
                         <button type="reset" class="px-3 py-1 text-white rounded-lg h-9 hover:bg-slate-300 bg-slate-400">Cancel</button>
                     </div>
                 </div>
