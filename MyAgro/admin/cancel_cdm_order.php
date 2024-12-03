@@ -1,11 +1,22 @@
 <?php
 
-    require('db_connect.php');
-    $SELECT = "SELECT * FROM `transaction` WHERE `payment_status` = 'Rejected'  OR `payment_status` = 'Pending' AND `created` < DATE_SUB(NOW(), INTERVAL 10 MINUTE)";
-    $result = $conn->query($SELECT);
-    if ($result->num_rows > 0) { 
+    include('db_conn.php');
+    // using IN check multiple values for payment_status
+    // DATE_SUB(date, INTERVAL value unit)   unit: such as MINUTE, HOUR, DAY, etc. INTERVAL == duration of time
+    // here decrease 10 minutes from current time then check that decrease time more then create time.
 
-        while($row = $result->fetch_assoc()) {
+    $SELECT = "SELECT * FROM `transaction` WHERE `payment_status` IN ('Rejected', 'Pending') AND `created` < DATE_SUB(NOW(), INTERVAL 2 MINUTE)";
+    $result = $conn->query($SELECT);
+    
+    // Check if the query execution was successful
+    if ($result === false) {
+
+        die("Query failed: " . $conn->error);
+    }
+    
+    // Check if the query returned any rows
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
 
             $order_id = $row['Reference_id'];
             $order_quantity = $row['order_quantity'];
@@ -26,8 +37,11 @@
                 $sql1 = "UPDATE `transaction` SET `payment_status` = 'Canceled' , `update_time` = NOW() WHERE `Reference_id` = '$order_id'";
                 $stmt = $conn->prepare($sql1);
                 $stmt->execute();
-           
-            }elseif($item_category == "vegetable" || $item_category == "fruit"){
+
+                header("Location: staff.php");
+                exit();
+        
+            }else if($item_category == "vegetable" || $item_category == "fruit"){
 
                 $SELECT = "SELECT total_quantity FROM `vegetablefruit` WHERE `agro_id` = '$item_id'";
                 $result1 = $conn->query($SELECT);
@@ -42,8 +56,16 @@
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
 
-            }     
-       }
-   }
+                header("Location: staff.php");
+                exit();
+
+            }
+
+        }
+    }else {
+        header("Location: staff.php");
+        exit();
+    }
+    
 
 ?>

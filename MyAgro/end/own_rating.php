@@ -23,8 +23,8 @@ if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_
             <?php 
                 require('db_connect.php');
 
-                $provider = $_GET['id'];
-                $provider_type = $_GET['type'];
+                $provider = $_SESSION['login_id'];
+                $provider_type = $_SESSION['login_type'];
 
                 if($provider_type == "supplier"){
 
@@ -68,56 +68,70 @@ if(!isset($_SESSION['login_id']) && !isset($_SESSION['login_user']) && !isset($_
                 }
             ?>
             
-            <h1 class="h-6 mt-4 mb-3 ml-8 text-2xl font-bold w-fi">Customer Rating</h1>
-            <div class="flex justify-center w-full">
+            <?php 
+                $provider = $_SESSION['login_id'];
+                $provider_type = $_SESSION['login_type'];
 
-                <div class="flex flex-wrap justify-center w-full gap-8 mt-5 pl-14 pr-14">
+                $query = "SELECT * FROM rating_provider WHERE provider = '$provider' AND provider_type = '$provider_type' ";
+                
+                $result = mysqli_query($conn, $query);
 
-                    <?php 
-                        
-                        $query = "SELECT * FROM rating_provider WHERE provider = '$provider' AND provider_type = '$provider_type' ";
-                        $result = mysqli_query($conn, $query);
-                        if($result){
-                            while($row = mysqli_fetch_assoc($result)){
-                                $rate_value = $row['rate_value'];
-                                $customer_name = ucfirst($row['customer_name']);
-                                $description = $row['description'];
-                            ?>
-                                <div class="flex flex-col flex-wrap w-[400px] border-2 border-slate-300 rounded-lg p-2">
-                                    <!-- Rating star colors here -->
-                                    <div class="flex gap-1">
-                                        <?php
-                                            for($i = 1; $i <= $rate_value; $i++){
-                                        ?>
-                                            <span id="rate_<?php echo $i; ?>" class="text-4xl text-yellow-400 cursor-pointer">&#9733;</span>
-                                        <?php
-                                        } 
-                                            for($i = $rate_value + 1; $i <= 5; $i++){
-                                        ?>  
-                                            <span id="rate_<?php echo $i; ?>" class="text-4xl text-gray-400 cursor-pointer">&#9733;</span>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-
-                                    <p class="pl-1 font-bold"><?php echo $customer_name; ?></p>
-                                    
-                                    <label class="pl-1"><?php echo $description; ?></label>
-
-                                </div>
-
-                            <?php
-                            }
-                        }else{
-                            ?>
-                                <h1 class="w-full mt-2 text-4xl font-semibold text-center text-black">This user has no rating</h1>
-                            <?php
-                        }
+                if($result->num_rows > 0){ 
                     ?>
+                    <h1 class="h-6 mt-4 mb-3 ml-8 text-2xl font-bold w-fi">Customer Rating</h1>
+                    <div class="flex justify-center w-full">
 
-                </div>
+                        <div class="flex flex-wrap justify-center w-full gap-8 mt-5 pl-14 pr-14">
+                        
+                                <?php
+                                    
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        $rate_value = $row['rate_value'];
+                                        $customer_name = ucfirst($row['customer_name']);
+                                        $description = $row['description'];
+                                        
+                                        ?>
 
-            </div>
+                                            <div class="flex flex-col flex-wrap w-[400px] border-2 border-slate-300 rounded-lg p-2">
+                                                <!-- Rating star colors here -->
+                                                <div class="flex gap-1">
+                                                    <?php
+                                                        for($i = 1; $i <= $rate_value; $i++){
+                                                    ?>
+                                                        <span id="rate_<?php echo $i; ?>" class="text-4xl text-yellow-400 cursor-pointer">&#9733;</span>
+                                                    <?php
+                                                    } 
+                                                        for($i = $rate_value + 1; $i <= 5; $i++){
+                                                    ?>  
+                                                        <span id="rate_<?php echo $i; ?>" class="text-4xl text-gray-400 cursor-pointer">&#9733;</span>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
+
+                                                <p class="pl-1 font-bold"><?php echo $customer_name; ?></p>
+                                                
+                                                <label class="pl-1"><?php echo $description; ?></label>
+
+                                            </div>
+
+                                        <?php
+                                    }
+                                    
+                                ?>
+
+                        </div>
+
+                    </div>
+
+                    <?php
+                    
+                }else{
+                    ?>
+                        <h1 class="mt-24 text-4xl font-semibold text-center">You haven't been rated yet!</h1>
+                    <?php
+                } 
+            ?>
 
         </div>
 

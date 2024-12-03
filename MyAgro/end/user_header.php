@@ -6,7 +6,7 @@
     <title>Customer Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="">
+<body class="select-none">
 
     <div class="fixed top-4 right-2">
         
@@ -43,7 +43,7 @@
     </div>
 
     <!--user menu bar -->
-    <div id="menubar" class="fixed inset-0 " style="display: none;"> 
+    <div id="menubar" class="fixed inset-0 z-[10000]" style="display: none;"> 
         <div class="p-4 rounded-xl fixed border shadow-2xl border-slate-300 bg-[#fefefe] text-black top-12 right-3 w-[250px]">
 
             <!-- Modal Body -->
@@ -71,7 +71,7 @@
                     if($usertype == 'supplier') {
                         ?>
                         <a href="supplier_dashboard.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Profile</a>
-                        <a href="own_rating.php?id=<?php echo $user_id;?>&type=<?php echo $usertype; ?>" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Rating</a>
+                        <a href="own_rating.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Rating</a>
                         <a href="product_manage.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Products Manage</a>
                         <a href="customer_order.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Customer Orders</a>
                         <a href="order_history.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Your Orders</a>
@@ -81,8 +81,12 @@
                     }else if($usertype == 'farmer') {
                         ?>
                         <a href="farmer_dashboard.php" class="pl-2 rounded-md hover:bg-blue-300">Profile</a>
-                        <a href="order_history.php" class="pl-2 rounded-md hover:bg-blue-300">Order History</a>
-                        <a href="customer_dashboard.php" class="pl-2 rounded-md hover:bg-blue-300">Payment Records</a>
+                        <a href="own_rating.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Rating</a>
+                        <a href="vegetable_manage.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Products Manage</a>
+                        <a href="customer_order.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Customer Orders</a>
+                        <a href="order_history.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Your Orders</a>
+                        <a href="recived_payment.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Recived Transactions</a>
+                        <a href="payment_dashboard.php" class="pt-1 pb-1 pl-2 rounded-md hover:bg-blue-300">Paid Transactions</a>
                         <?php
                     }else{
                         ?>

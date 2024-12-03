@@ -5,12 +5,8 @@ session_start();
 define("STRIPE_API_KEY", "sk_test_51QEPjARxjCPZ5J0VC4cI1kRBJxWrnywFuSbgi4eN5WRF6GrGblP6RrOD24VRIjRSrOCik9LTT6WUXFvGrp7UOldx00DAGfDisH");
 define("STRIPE_PUBLISHABLE_KEY", "pk_test_51QEPjARxjCPZ5J0VljXbUGrY0NuzDKvFyrUvZkcFNpND9W1c94R1NUEZgkWLsTloAKXtSGBDJvS6oln1PnrVXyNJ00USpCJ7sH");
 define("STRIPE_SUCCESS_URL", "http://localhost/Agricultural-Support-Service-System/MyAgro/end/success.php");
+define("STRIPE_CANCEL_URL", "http://localhost/Agricultural-Support-Service-System/MyAgro/end/productSell.php");
 
-if($_SESSION['category'] == "chemical"){
-    define("STRIPE_CANCEL_URL", "http://localhost/Agricultural-Support-Service-System/MyAgro/end/chemicalsell.php");
-}elseif($_SESSION['category'] == "fertilizer"){
-    define("STRIPE_CANCEL_URL", "http://localhost/Agricultural-Support-Service-System/MyAgro/end/agrosell.php");
-}
 
 require __DIR__ . "/vendor/autoload.php";
 
@@ -26,44 +22,46 @@ $response = array(
 );
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
+
+
+    
     $input = file_get_contents("php://input");
     $request = json_decode($input);
 
     //product dtails
-    $product_id = $request->agro_id;
-    $product_category = $request->agro_category;
-    $agro_type = $request->agro_type;
-    
-    $product_name = $request->agro_name;
-    $product_price = $request->agro_price;
-    $product_quantity = $request->agro_quantity;
-    $meassure = $request->meassure;
-    $product_currency = "LKR";
-    
-    $shop_name = $request->shop_name;
-    $agro_location = $request->agro_location;
-    $order_quantity = $request->order_quantity;
+    $product_id = $request->vegfruitle_id;
+    $product_category = $request->vegetable_category;
+    $vegfruitle_verity = $request->vegfruitle_verity;
 
+    $product_name = $request->vegetable_name;
+    $product_price = $request->vegfruit_price;
+    $product_quantity = 0.25;
+    $product_currency = "LKR";
+
+    $vegfruit_location = $request->vegfruit_location;
+    $order_quantity = $request->order_quantity;
     $total_price = $request->total_price;
+
+    // $order_quantity = str_replace("Kg", "", $order_quantity);
+
+    $order_quantity_convert = floatval($order_quantity);
 
     $provider_id = $request->provider_id;
     $provider_name = $request->provider_name;
     $provider_phone = $request->provider_phone;
     $provider_email = $request->provider_email;
-    
+
     // set session variable 
-    $_SESSION['agro_id'] = $product_id;
+    $_SESSION['vegfruitle_id'] = $product_id;
     $_SESSION['agro_category'] = $product_category;
-    $_SESSION['agro_type'] = $agro_type;
-    $_SESSION['agro_name'] = $product_name;
-    $_SESSION['agro_price'] = $product_price;
-    $_SESSION['agro_quantity'] = $product_quantity;
-    $_SESSION['meassure'] = $meassure;
-    $_SESSION['shop_name'] = $shop_name;
-    $_SESSION['agro_location'] = $agro_location;
-    $_SESSION['order_quantity'] = $order_quantity;
+    $_SESSION['vegfruitle_verity'] = $vegfruitle_verity;
+    $_SESSION['vegetable_name'] = $product_name;
+    $_SESSION['vegfruit_price'] = $product_price;
+    $_SESSION['vegetable_currency'] = $product_currency;
+    $_SESSION['vegfruit_location'] = $vegfruit_location;
+    $_SESSION['order_quantity'] = $order_quantity_convert;
     $_SESSION['total_price'] = $total_price;
-    $_SESSION['agro_currency'] = $product_currency;
+    $_SESSION['meassure'] = "Kg";
     $_SESSION['provider_id'] = $provider_id;
     $_SESSION['provider_name'] = $provider_name;
     $_SESSION['provider_phone'] = $provider_phone;
@@ -78,16 +76,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     // Check if `createCheckoutSession` is set
     if(!empty($request->createCheckoutSession)) {
 
-        $amount = round(($product_price * 100),2);
-        $order_packet_amount = ($order_quantity/$product_quantity);
-
+        
+        $amount = round((($product_price/4) * 100),2);
+        $order_packet_amount = $order_quantity_convert / $product_quantity;
+        
+        // echo $vegfruitle_verity;
         try {
 
             // Create a checkout session using the price object
             $checkout_session = \Stripe\Checkout\Session::create([
                 "mode" => "payment",
                 "success_url" => STRIPE_SUCCESS_URL.'?session_id={CHECKOUT_SESSION_ID}',
-                "cancel_url" => STRIPE_CANCEL_URL.'?type='.$agro_type.'&qun='.$order_quantity.'&id='.$product_id,
+                "cancel_url" => STRIPE_CANCEL_URL.'?qun='.$order_quantity_convert.'&id='.$product_id,
                 "locale" => "auto",
                 "line_items" => [
                     [
@@ -96,8 +96,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
                             "currency" => $product_currency,
                             "unit_amount" => $amount,
                             "product_data" => [
-                                "name" => $product_name,
-                                "description" => $product_name." is the type of ".$agro_type." ".$product_category,
+                                "name" => $vegfruitle_verity,
+                                "description" => $vegfruitle_verity." is the type of ".$product_name." ".$product_category,
                             ]
                         ]
                         
@@ -113,6 +113,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
         } catch (Exception $e) {
             $response['error']['message'] = 'Checkout session creation failed: ' . $e->getMessage();
         }
+
     } else {
         $response['error']['message'] = 'Checkout session not initiated.';
     }

@@ -44,8 +44,8 @@ if(!isset($_SESSION['login_staff_user'])){
 
             switch($user_type){
                 case "farmer":
-                    $send = "INSERT INTO farmer(`farmer_name`, `username`, `password`, `farmer_nic`, `farmer_email`, `farmer_address`, `farmer_phone`, `farmer_proof`, `response`) 
-                    VALUES ('$name','$username',' $password','$nic','$email','$address','$tel_no','$proof','$response')";
+                    $send = "INSERT INTO farmer(`farmer_name`, `username`, `password`, `farmer_nic`, `farmer_email`, `farmer_address`, `farmer_phone`, `farmer_proof`, `create_time`, `response`) 
+                    VALUES ('$name','$username',' $password','$nic','$email','$address','$tel_no','$proof', NOW(), '$response')";
 
                     $result = mysqli_query($conn,$send);
 
@@ -57,8 +57,8 @@ if(!isset($_SESSION['login_staff_user'])){
                     break;
 
                 case "supplier":
-                    $send = "INSERT INTO supplier( `supplier_name`, `username`, `password`, `supplier_nic`, `supplier_shop_name`, `supplier_email`, `supplier_address`, `supplier_phone`, `supplier_proof`, `response`)
-                    VALUES ('$name','$username','$password','$nic','$shop_name','$email','$address','$tel_no','$proof','$response')";
+                    $send = "INSERT INTO supplier( `supplier_name`, `username`, `password`, `supplier_nic`, `supplier_shop_name`, `supplier_email`, `supplier_address`, `supplier_phone`, `supplier_proof`, `create_time`, `response`)
+                    VALUES ('$name','$username','$password','$nic','$shop_name','$email','$address','$tel_no','$proof', NOW(), '$response')";
 
                     $result = mysqli_query($conn,$send);
 

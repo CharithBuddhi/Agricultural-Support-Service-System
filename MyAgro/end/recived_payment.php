@@ -81,20 +81,8 @@
                                                     <td id="RP_ID"><?= $row['customer_id']; ?></td>
                                                     <td ><?= $row['customer_name']; ?></td>
                                                     <td ><?= $row['item_name']; ?></td>
-                                                    <td >
-                                                        <?php if($row['item_category'] == 'fertilizer'){ 
-                                                            echo $row['item_quantity']." Kg";
-                                                         }else{ 
-                                                            echo $row['item_quantity']." Litre";
-                                                         } ?>
-                                                    </td>
-                                                    <td >
-                                                    <?php if($row['item_category'] == 'fertilizer'){ 
-                                                            echo $row['order_quantity']." Kg";
-                                                         }else{ 
-                                                            echo $row['order_quantity']." Litre";
-                                                         } ?>
-                                                    </td>
+                                                    <td ><?= $row['item_quantity'].$row['meassure']; ?></td>
+                                                    <td ><?= $row['order_quantity'].$row['meassure']; ?></td>
                                                     <td ><?= "Rs. ".$row['total_amount']; ?></td>
                                                     <td ><?= $row['created']; ?></td>
                                                     <?php 
@@ -188,20 +176,8 @@
                                                     <td id="RP_ID"><?= $row['customer_id']; ?></td>
                                                     <td ><?= $row['customer_name']; ?></td>
                                                     <td ><?= $row['item_name']; ?></td>
-                                                    <td >
-                                                        <?php if($row['item_category'] == 'fertilizer'){ 
-                                                            echo $row['item_quantity']." Kg";
-                                                         }else{ 
-                                                            echo $row['item_quantity']." Litre";
-                                                         } ?>
-                                                    </td>
-                                                    <td >
-                                                    <?php if($row['item_category'] == 'fertilizer'){ 
-                                                            echo $row['order_quantity']." Kg";
-                                                         }else{ 
-                                                            echo $row['order_quantity']." Litre";
-                                                         } ?>
-                                                    </td>
+                                                    <td ><?= $row['item_quantity'].$row['meassure']; ?></td>
+                                                    <td ><?= $row['order_quantity'].$row['meassure']; ?></td>
                                                     <td ><?= "Rs. ".$row['total_amount']; ?></td>
                                                     <td ><?= $row['created']; ?></td>
                                                     <td class="items-center justify-center p-1 text-white"><label class="pl-1 pr-1 pb-0.5 bg-green-500 rounded-md">Success</label></td>
@@ -280,20 +256,8 @@
                                                     <td id="RP_ID"><?= $row['customer_id']; ?></td>
                                                     <td ><?= $row['customer_name']; ?></td>
                                                     <td ><?= $row['item_name']; ?></td>
-                                                    <td >
-                                                        <?php if($row['item_category'] == 'fertilizer'){ 
-                                                            echo $row['item_quantity']." Kg";
-                                                         }else{ 
-                                                            echo $row['item_quantity']." Litre";
-                                                         } ?>
-                                                    </td>
-                                                    <td >
-                                                    <?php if($row['item_category'] == 'fertilizer'){ 
-                                                            echo $row['order_quantity']." Kg";
-                                                         }else{ 
-                                                            echo $row['order_quantity']." Litre";
-                                                         } ?>
-                                                    </td>
+                                                    <td ><?= $row['item_quantity'].$row['meassure']; ?></td>
+                                                    <td ><?= $row['order_quantity'].$row['meassure']; ?></td>
                                                     <td ><?= "Rs. ".$row['total_amount']; ?></td>
                                                     <td ><?= $row['created']; ?></td>
                                                     <td class="items-center justify-center p-1 text-white"><label class="pl-1 pr-1 pb-0.5 bg-red-500 rounded-md">Canceled</label></td>

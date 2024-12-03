@@ -451,14 +451,20 @@
         $result = mysqli_query($conn, $sqln);
 
         if ($result) {
-            $type = $_SESSION['agro_type'];
-            $_SESSION['home_message'] = "Your order placed successfull";
             if($_SESSION['category'] == "chemical"){
+                $type = $_SESSION['agro_type'];
+                $_SESSION['home_message'] = "Your order placed successfull";
                 header("Location: chemicalsell.php?type=$type");
                 exit(0);
             }elseif($_SESSION['category'] == "fertilizer"){
+                $type = $_SESSION['agro_type'];
+                $_SESSION['home_message'] = "Your order placed successfull";
                 header("Location: agrosell.php?type=$type");
                 exit(0);    
+            }else if($_SESSION['category'] == "vegetable"){
+                $_SESSION['vegetable_sell'] = "Your order placed successfull";
+                header("Location: productSell.php");
+                exit(0);
             }
         } else {
             $_SESSION['cdm_message'] = "Your order placed failed";

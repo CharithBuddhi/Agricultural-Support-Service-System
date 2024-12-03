@@ -14,79 +14,7 @@
 
     <?php 
         
-        if(isset($_POST['confirm_order'])){
-
-            $_SESSION['agro_type'] = $_POST['agro_type'];
-            $order_quantity = $_POST['quantity'];
-            $total_quantity_product = $_POST['total_quantity_product'];
-            $agro_id = $_POST['agro_id'];
-
-            $total_quantity = $total_quantity_product - $order_quantity;
-
-            $sql = "UPDATE `agrochemical` SET `total_quantity`='$total_quantity' WHERE `agro_id` = '$agro_id'";            
-            $result = $conn->query($sql);
-
-            ?>
-
-            <!-- payment form -->
-            <form action="cdm.php" method="post" id="payment-form">
-                
-                <input type="hidden" name="agro_id" value="<?= $_POST['agro_id']; ?>" >
-                <input type="hidden" name="agro_category" value="<?= $_POST['agro_category']; ?>">
-                <input type="hidden" name="agro_type" value="<?= $_POST['agro_type']; ?>">
-
-                <input type="hidden" name="agro_name" value="<?= $_POST['agro_name']; ?>">
-                <input type="hidden" name="agro_price" value="<?= $_POST['agro_price']; ?>">
-                <input type="hidden" name="agro_quantity" value="<?= $_POST['agro_quantity']; ?>">
-
-                <input type="hidden" name="meassure" value="<?= $_POST['meassure']; ?>">
-
-                <input type="hidden" name="shop_name" value="<?= $_POST['shop_name']; ?>">
-                <input type="hidden" name="agro_location" value="<?= $_POST['agro_location']; ?>">
-                <input type="hidden" name="order_quantity" value="<?= $_POST['quantity']; ?>">
-
-                <input type="hidden"  name="send_total" value="<?= $_POST['send_total']; ?>">
-                
-                <input type="hidden" name="supplier_id" value="<?= $_POST['supplier_id']; ?>">
-                <input type="hidden" name="supplier_name" value="<?= $_POST['supplier_name']; ?>">
-                <input type="hidden" name="supplier_phone" value="<?= $_POST['supplier_phone']; ?>">
-                <input type="hidden" name="supplier_email" value="<?= $_POST['supplier_email']; ?>">
-
-            </form>
-            
-            <!--select payment type -->
-            <div class="flex flex-col gap-5 font-serif text-center">
-                <!-- display erro massgae -->
-                <div id="paymentResponse" class="hidden"></div>
-
-                <h1 class="mt-12 font-serif text-3xl italic font-bold">Payment</h1>  
-                <p class="text-2xl">Select the type you want to payment</p>
-                
-                <div class="flex justify-center gap-8 mt-10">
-
-                    <div action="" method="post" class="flex flex-col gap-2">
-                    
-                        <button type="submit" id="payButton" name="Online Payment">
-                            <img src="images/payment Online.jpg" alt="online payment image" class="cursor-pointer w-[400px] h-[300px] rounded-3xl"></button>
-                        </button>               
-                        <label class="text-lg font-bold">Online Payment</label>
-                        <h1 class="mt-3 text-xl font-normal">Pay directly online</h1>
-
-                    </div>
-
-                    <div class="flex flex-col gap-2 text-xl">
-                        <button type="submit" id="CDM" name="CDM"><img src="images/CDM_payment.jpg" alt="Cash Deposit Machine" class=" CDM cursor-pointer w-[400px] h-[300px] rounded-3xl"></button>
-                        <label class="text-lg font-bold">Cash Deposit Manualy</label>
-                        <h1 class="mt-3">Pay through a Cash Deposit voucher</h1>
-                    </div>
-                    
-                </div>
-
-            </div>
-            
-            <?php   
-
-        }else if(isset($_POST['vegetable_confirm_order'])){
+        if(isset($_POST['vegetable_confirm_order'])){
             
             $_SESSION['select_payment_function'] = "vegetable";
             $order_quantity = (float) $_POST['quantity'];
@@ -101,7 +29,7 @@
             ?>
 
             <!-- payment form -->
-            <form action="cdm.php" method="post" id="payment_form_vegetable">
+            <form action="cdm_vegetable.php" method="post" id="payment_form_vegetable">
                 
                 <input type="hidden" name="vegfruitle_id" value="<?= $_POST['vegfruitle_id']; ?>" >
                 <input type="hidden" name="vegetable_category" value="<?= $_POST['vegetable_category']; ?>">
@@ -111,7 +39,7 @@
                 <input type="hidden" name="vegfruit_price" value="<?= $_POST['vegfruit_price']; ?>">
 
                 <input type="hidden" name="vegfruit_location" value="<?= $_POST['vegfruit_location']; ?>">
-                <input type="hidden" name="order_quantity" value="<?= $_POST['quantity']; ?>">
+                <input type="hidden" name="order_quantity" value="<?= (float) $_POST['quantity']; ?>">
 
                 <input type="hidden"  name="send_total" value="<?= $_POST['send_total']; ?>">
                 
@@ -120,6 +48,7 @@
                 <input type="hidden" name="farmer_phone" value="<?= $_POST['farmer_phone']; ?>">
                 <input type="hidden" name="farmer_email" value="<?= $_POST['farmer_email']; ?>">
 
+                <button type="submit" id="CDM_sub" name="CDM_sub" class="hidden"></button>
             </form>
             
             <!--select payment type -->
@@ -161,10 +90,10 @@
         const stripe = Stripe('pk_test_51QEPjARxjCPZ5J0VljXbUGrY0NuzDKvFyrUvZkcFNpND9W1c94R1NUEZgkWLsTloAKXtSGBDJvS6oln1PnrVXyNJ00USpCJ7sH');
             
             // Select payment button
-            const payBtn = document.querySelector('#payButton');
+            const payButton_vegetable = document.querySelector('#payButton_vegetable');
 
             //payment request
-            payBtn.addEventListener('click', () => {
+            payButton_vegetable.addEventListener('click', () => {
                 
                 // setLoading(true);
 
@@ -187,7 +116,7 @@
 
             // Create checkout session
             const createChekoutSession = function (Stripe){
-                return fetch('orderProcessing.php', {
+                return fetch('orderProcessing_vegetable.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -196,26 +125,21 @@
 
                         createCheckoutSession:1,
 
-                        agro_id: document.querySelector('input[name="agro_id"]').value,
-                        agro_category: document.querySelector('input[name="agro_category"]').value,
-                        agro_type: document.querySelector('input[name="agro_type"]').value,
+                        vegfruitle_id: document.querySelector('input[name="vegfruitle_id"]').value,
+                        vegetable_category: document.querySelector('input[name="vegetable_category"]').value,
+                        vegetable_name: document.querySelector('input[name="vegetable_name"]').value,
 
-                        agro_name: document.querySelector('input[name="agro_name"]').value,
-                        agro_price: document.querySelector('input[name="agro_price"]').value,
-                        agro_quantity: document.querySelector('input[name="agro_quantity"]').value,
+                        vegfruitle_verity: document.querySelector('input[name="vegfruitle_verity"]').value,
+                        vegfruit_price: document.querySelector('input[name="vegfruit_price"]').value,
+                        vegfruit_location: document.querySelector('input[name="vegfruit_location"]').value,
 
-                        meassure: document.querySelector('input[name="meassure"]').value,
-
-                        shop_name: document.querySelector('input[name="shop_name"]').value,
-                        agro_location: document.querySelector('input[name="agro_location"]').value,
                         order_quantity: document.querySelector('input[name="order_quantity"]').value,
-                        
-                        total_price: document.querySelector('input[name="send_total"]').value,
+                        total_price: document.querySelector('input[name="send_total"]').value,                      
 
-                        provider_id: document.querySelector('input[name="supplier_id"]').value,
-                        provider_name: document.querySelector('input[name="supplier_name"]').value,
-                        provider_phone: document.querySelector('input[name="supplier_phone"]').value,
-                        provider_email: document.querySelector('input[name="supplier_email"]').value
+                        provider_id: document.querySelector('input[name="farmer_id"]').value,
+                        provider_name: document.querySelector('input[name="farmer_username"]').value,
+                        provider_phone: document.querySelector('input[name="farmer_phone"]').value,
+                        provider_email: document.querySelector('input[name="farmer_email"]').value
 
                     }),
                     
@@ -249,12 +173,15 @@
 
     <!-- Set form action and send it to cdm.php file after click cdm button -->
     <script>
-        const payment_form = document.getElementById('payment-form');
-        const CDM = document.getElementById('CDM');
-        CDM.addEventListener('click', () => {
-            payment_form.submit();
+        const payment_form = document.getElementById('payment_form_vegetable');
+        const CDM_vegetable = document.getElementById('CDM_vegetable');
+        const CDM_sub = document.getElementById('CDM_sub');
+        CDM_vegetable.addEventListener('click', () => {
+            CDM_sub.click();
         });
     </script>
 
 </body>
 </html>
+            
+            

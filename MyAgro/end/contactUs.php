@@ -11,7 +11,7 @@
 </head>
 <body >
     <?php require('header.php'); ?>
-    <div class="flex items-center justify-center w-full min-h-screen overflow-hidden bg-cover bg-no-repeat bg-[url('images/contact.jpg')]">
+    <div class="flex items-center justify-center w-full min-h-screen overflow-hidden bg-cover z-30 bg-no-repeat bg-[url('images/contact.jpg')]">
         <div class="overflow-hidden ">
             <div class="relative flex flex-col w-full max-w-4xl gap-10 p-8 text-white shadow-lg md:pt-10 md:pb-10 md:space-y-0 md:flex-row md:space-x-6 bg-cyan-700 rounded-xl">
                 <div class="flex flex-col justify-between gap-8 ">

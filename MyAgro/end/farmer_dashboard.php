@@ -10,32 +10,32 @@ require('db_connect.php');
 if(isset($_POST['update_profile_btn'])){
 
     $profile_picture = $_FILES['profile_picture']['name'];
-    $query = "SELECT * FROM supplier WHERE supplier_id = '$_SESSION[login_id]' LIMIT 1";
+    $query = "SELECT * FROM farmer WHERE farmer_id = '$_SESSION[login_id]' LIMIT 1";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
-    $supplier_name = $row['supplier_name'];
-    $supplier_email = $row['supplier_email'];
-    $supplier_address = $row['supplier_address'];
-    $supplier_phone = $row['supplier_phone'];
+    $farmer_name = $row['farmer_name'];
+    $farmer_email = $row['farmer_email'];
+    $farmer_address = $row['farmer_address'];
+    $farmer_phone = $row['farmer_phone'];
     $bank_name = $row['bank_name'];
     $account_name = $row['account_name'];
     $account_no = $row['account_no'];
     $branch_name = $row['branch_name'];
     $db_Profile_image = $row['images'];
 
-    if($supplier_name == $_POST['supplier_name'] && $supplier_email == $_POST['supplier_email'] && $supplier_address == $_POST['supplier_address'] && $supplier_phone == $_POST['supplier_phone'] && $bank_name == $_POST['bank_name'] && $account_name == $_POST['account_name'] && $account_no == $_POST['account_no'] && $branch_name == $_POST['branch_name'] && $profile_picture == ""){
-        $_SESSION['supplier_profile_update'] = "You are not change your details";
-        header("Location: supplier_dashboard.php");
+    if($farmer_name == $_POST['farmer_name'] && $farmer_email == $_POST['farmer_email'] && $farmer_address == $_POST['farmer_address'] && $farmer_phone == $_POST['farmer_phone'] && $bank_name == $_POST['bank_name'] && $account_name == $_POST['account_name'] && $account_no == $_POST['account_no'] && $branch_name == $_POST['branch_name'] && $profile_picture == ""){
+        $_SESSION['farmer_profile_update'] = "You are not change your details";
+        header("Location: farmer_dashboard.php");
         exit(0);
         
-    }else if(!($supplier_name == $_POST['supplier_name']) || !($supplier_email == $_POST['supplier_email']) || !($supplier_address == $_POST['supplier_address']) || !($supplier_phone == $_POST['supplier_phone']) || !($bank_name == $_POST['bank_name']) || !($account_name == $_POST['account_name']) || !($account_no == $_POST['account_no']) || !($branch_name == $_POST['branch_name']) || !($profile_picture == "")){
+    }else if(($farmer_name != $_POST['farmer_name']) || ($farmer_email != $_POST['farmer_email']) || ($farmer_address != $_POST['farmer_address']) || ($farmer_phone != $_POST['farmer_phone']) || ($bank_name != $_POST['bank_name']) || ($account_name != $_POST['account_name']) || ($account_no != $_POST['account_no']) || ($branch_name != $_POST['branch_name']) || ($profile_picture != "")){
         
         $id = $_SESSION['login_id'];
-        $yourname = $_POST['supplier_name'];
-        $address = $_POST['supplier_address'];
-        $email = $_POST['supplier_email'];
-        $phone = $_POST['supplier_phone'];
+        $yourname = $_POST['farmer_name'];
+        $address = $_POST['farmer_address'];
+        $email = $_POST['farmer_email'];
+        $phone = $_POST['farmer_phone'];
         $bank_name = $_POST['bank_name'];
         $account_name = $_POST['account_name'];
         $account_no = $_POST['account_no'];
@@ -57,20 +57,20 @@ if(isset($_POST['update_profile_btn'])){
 
                     if(move_uploaded_file($image_temp_name,$image_destination)){
     
-                        $UPDATE = "UPDATE supplier SET supplier_name = ?, supplier_email = ?, supplier_address = ?, supplier_phone = ?, bank_name = ?, account_name = ?, account_no = ?, branch_name = ?, images = ? WHERE supplier_id = ?";
+                        $UPDATE = "UPDATE farmer SET farmer_name = ?, farmer_email = ?, farmer_address = ?, farmer_phone = ?, bank_name = ?, account_name = ?, account_no = ?, branch_name = ?, images = ?, update_time = NOW() WHERE farmer_id = ?";
                         $stmt = $conn->prepare($UPDATE);
                         $stmt->bind_param("sssisssssi", $yourname, $email, $address, $phone, $bank_name, $account_name, $account_no, $branch_name, $profile_picture, $id);
-                        $_SESSION['supplier_profile_update'] = "Your informations update successfully!";
+                        $_SESSION['farmer_profile_update'] = "Your informations update successfully!";
                         $stmt->execute();
                         $stmt->close();
                         $conn->close();
-                        header("Location: supplier_dashboard.php");
+                        header("Location: farmer_dashboard.php");
                         exit();
                         
                     }else{
                         echo "Failed to upload file. Error: " . $_FILES['profile_picture']['error'];
-                        $_SESSION['supplier_profile_update'] = "Your upload has been failed!";
-                        header("Location: supplier_dashboard.php");
+                        $_SESSION['farmer_profile_update'] = "Your upload has been failed!";
+                        header("Location: farmer_dashboard.php");
                         exit();
                     }
                     
@@ -86,44 +86,45 @@ if(isset($_POST['update_profile_btn'])){
     
                         if(move_uploaded_file($image_temp_name,$image_destination)){
     
-                            $UPDATE = "UPDATE supplier SET supplier_name = ?, supplier_email = ?, supplier_address = ?, supplier_phone = ?, bank_name = ?, account_name = ?, account_no = ?, branch_name = ?, images = ? WHERE supplier_id = ?";
+                            $UPDATE = "UPDATE farmer SET farmer_name = ?, farmer_email = ?, farmer_address = ?, farmer_phone = ?, bank_name = ?, account_name = ?, account_no = ?, branch_name = ?, images = ?, update_time = NOW() WHERE farmer_id = ?";
                             $stmt = $conn->prepare($UPDATE);
                             $stmt->bind_param("sssisssssi", $yourname, $email, $address, $phone, $bank_name, $account_name, $account_no, $branch_name, $profile_picture, $id);
-                            $_SESSION['supplier_profile_update'] = "Your informations update successfully!";
+                            $_SESSION['farmer_profile_update'] = "Your informations update successfully!";
                             $stmt->execute();
                             $stmt->close();
                             $conn->close();
-                            header("Location: supplier_dashboard.php");
+                            header("Location: farmer_dashboard.php");
                             exit();
                             
                         }else{
                             echo "Failed to upload file. Error: " . $_FILES['profile_picture']['error'];
-                            $_SESSION['supplier_profile_update'] = "Your upload has been failed!";
-                            header("Location: supplier_dashboard.php");
+                            $_SESSION['farmer_profile_update'] = "Your upload has been failed!";
+                            header("Location: farmer_dashboard.php");
                             exit();
                         }
         
                     }else{
-                        $_SESSION['supplier_profile_update'] = "Your previous profile image missing!";
-                        header("Location: supplier_dashboard.php");
+                        $_SESSION['farmer_profile_update'] = "Your previous profile image missing!";
+                        header("Location: farmer_dashboard.php");
                         exit();
                     }
                 }
 
             }else{
-                $UPDATE = "UPDATE supplier SET supplier_name = ?, supplier_email = ?, supplier_address = ?, supplier_phone = ?, bank_name = ?, account_name = ?, account_no = ?, branch_name = ? WHERE supplier_id = ?";
+                
+                $UPDATE = "UPDATE farmer SET farmer_name = ?, farmer_email = ?, farmer_address = ?, farmer_phone = ?, bank_name = ?, account_name = ?, account_no = ?, branch_name = ?, update_time = NOW() WHERE farmer_id = ?";
                 $stmt = $conn->prepare($UPDATE);
                 $stmt->bind_param("sssissssi", $yourname, $email, $address, $phone, $bank_name, $account_name, $account_no, $branch_name, $id);
-                $_SESSION['supplier_profile_update'] = "Your details Update successfully!";
+                $_SESSION['farmer_profile_update'] = "Your details Update successfully!";
                 $stmt->execute();
                 $stmt->close();
                 $conn->close();
-                header("Location: supplier_dashboard.php");
+                header("Location: farmer_dashboard.php");
                 exit();
             }
         }else{
-            $_SESSION['supplier_profile_update'] = "Please fill your basic information";
-            header("Location: supplier_dashboard.php");
+            $_SESSION['farmer_profile_update'] = "Please fill your basic information";
+            header("Location: farmer_dashboard.php");
             exit();  
         }
 
@@ -131,15 +132,15 @@ if(isset($_POST['update_profile_btn'])){
 
 }
 
-// supplier_password_update_btn in profile
-if(isset($_POST['supplier_password_update_btn'])){
+// farmer_password_update_btn in profile
+if(isset($_POST['farmer_password_update_btn'])){
 
     $id = $_POST['user_id'];
     $old_password= $_POST['old_password'];
     $new_password= $_POST['new_password'];
     $confirm_password= $_POST['confirm_password'];
 
-    $check = "SELECT `password` FROM `supplier` WHERE supplier_id  = '$id'";
+    $check = "SELECT `password` FROM `farmer` WHERE farmer_id  = '$id'";
     $result = mysqli_query($conn, $check);
     $row = mysqli_fetch_assoc($result);
     $password = $row['password'];
@@ -147,33 +148,33 @@ if(isset($_POST['supplier_password_update_btn'])){
     if($old_password==$password){
 
         if($old_password==$new_password){
-            $_SESSION['supplier_profile_update'] = 'You are not change your password';
-            header("Location: supplier_dashboard.php");
+            $_SESSION['farmer_profile_update'] = 'You are not change your password';
+            header("Location: farmer_dashboard.php");
             exit(0);
 
         }else if($new_password!=$confirm_password){
-            $_SESSION['supplier_profile_update'] = 'New password and confirm password not matched';
-            header("Location: supplier_dashboard.php");
+            $_SESSION['farmer_profile_update'] = 'New password and confirm password not matched';
+            header("Location: farmer_dashboard.php");
             exit(0);
 
         }else if($new_password==$confirm_password){
-            $sql = "UPDATE `supplier` SET `password`='$confirm_password' WHERE supplier_id  = '$id'";
+            $sql = "UPDATE `farmer` SET `password`='$confirm_password' WHERE farmer_id  = '$id'";
             $result1 = mysqli_query($conn, $sql);
             if($result1){
-                $_SESSION['supplier_profile_update'] = 'Your password update successfully';
-                header("Location: supplier_dashboard.php");
+                $_SESSION['farmer_profile_update'] = 'Your password update successfully';
+                header("Location: farmer_dashboard.php");
                 exit(0);
             }
             else{
-                $_SESSION['supplier_profile_update'] = 'Password not update';
-                header("Location: supplier_dashboard.php");
+                $_SESSION['farmer_profile_update'] = 'Password not update';
+                header("Location: farmer_dashboard.php");
                 exit(0);
             }
         }
 
     }else{
-        $_SESSION['supplier_profile_update'] = 'Your Old password wrong';
-        header("Location: supplier_dashboard.php");
+        $_SESSION['farmer_profile_update'] = 'Your Old password wrong';
+        header("Location: farmer_dashboard.php");
         exit(0);
     }
 
@@ -202,8 +203,8 @@ if(isset($_POST['supplier_password_update_btn'])){
                 
                 <?php
 
-                    $supplier_id = $_SESSION['login_id'];
-                    $sql = "SELECT * FROM supplier WHERE supplier_id = '$supplier_id' LIMIT 1";
+                    $farmer_id = $_SESSION['login_id'];
+                    $sql = "SELECT * FROM farmer WHERE farmer_id = '$farmer_id' LIMIT 1";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
 
@@ -227,10 +228,10 @@ if(isset($_POST['supplier_password_update_btn'])){
                                 <img id="user_profile" name="user_profile" src="images/user/<?php echo $row['images']; ?>" class="self-center w-40 h-40 border-2 rounded-full border-slate-300" alt="user_profile" style="display: none;">
                             
                             </label>
-                            <input type="file" id="profile_picture_input" name="profile_picture" class="bg-red-500" accept="image/*" onchange="previewImage(event)" hidden>
+                            <input type="file" id="profile_picture_input" name="profile_picture" class="" accept="image/*" onchange="previewImage(event)" hidden>
                         </div>
 
-                        <input type="text" name="user_id" value="<?php echo $row['supplier_id']; ?>" hidden>
+                        <input type="text" name="user_id" value="<?php echo $row['farmer_id']; ?>" hidden>
                         
                         <label class="flex self-center gap-1 mt-2 text-xl font-semibold text-green-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-7">
@@ -247,33 +248,28 @@ if(isset($_POST['supplier_password_update_btn'])){
                             </div>
                             
                             <div class="flex flex-col gap-1 ml-10">
-                                <h1 class="pl-1 font-semibold">Supplier Name</h1>
-                                <input type="text" name="supplier_name" value="<?php echo $row['supplier_name']; ?>" class="rounded-md text-base border-2 pl-1 h-8 w-[300px]" required>
+                                <h1 class="pl-1 font-semibold">Farmer Name</h1>
+                                <input type="text" name="farmer_name" value="<?php echo $row['farmer_name']; ?>" class="rounded-md text-base border-2 pl-1 h-8 w-[300px]" required>
                             </div>
 
                             <div class="flex flex-col gap-1 ml-10">
-                                <h1 class="pl-1 font-semibold">Shop Name</h1>
-                                <input type="text" name="supplier_shop_name" value="<?php echo $row['supplier_shop_name']; ?>" class="rounded-lg text-base h-8 w-[280px] border-2 pl-2 disabled:bg-slate-50" disabled>
+                                <h1 class="pl-1 font-semibold">Farmer NIC</h1>
+                                <input type="text" name="farmer_nic" value="<?php echo $row['farmer_nic']; ?>" class="rounded-lg text-base h-8 w-[250px] border-2 pl-2 disabled:bg-slate-50" disabled>
                             </div>
 
                             <div class="flex flex-col gap-1 ml-10">
-                                <h1 class="pl-1 font-semibold">Supplier NIC</h1>
-                                <input type="text" name="supplier_nic" value="<?php echo $row['supplier_nic']; ?>" class="rounded-lg text-base h-8 w-[250px] border-2 pl-2 disabled:bg-slate-50" disabled>
-                            </div>
-
-                            <div class="flex flex-col gap-1 mt-5">
                                 <h1 class="pl-1 font-semibold">Email</h1>
-                                <input type="email" name="supplier_email" value="<?php echo $row['supplier_email']; ?>" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2" required>
+                                <input type="email" name="farmer_email" value="<?php echo $row['farmer_email']; ?>" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2" required>
+                            </div>
+                            
+                            <div class="flex flex-col gap-1 mt-5">
+                                <h1 class="pl-1 font-semibold">Phone Number</h1>
+                                <input type="text" maxlength="12" name="farmer_phone" value="<?php echo "+".$row['farmer_phone']; ?>" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2" required>
                             </div>
 
                             <div class="flex flex-col gap-1 mt-5 ml-10">
                                 <h1 class="pl-1 font-semibold">Address</h1>
-                                <input type="text" name="supplier_address" value="<?php echo $row['supplier_address']; ?>" class="w-[300px] border-2 h-8 pl-2 text-base rounded-lg" required>
-                            </div>
-
-                            <div class="flex flex-col gap-1 mt-5 ml-10">
-                                <h1 class="pl-1 font-semibold">Phone Number</h1>
-                                <input type="text" maxlength="12" name="supplier_phone" value="<?php echo "+".$row['supplier_phone']; ?>" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2" required>
+                                <input type="text" name="farmer_address" value="<?php echo $row['farmer_address']; ?>" class="w-[300px] border-2 h-8 pl-2 text-base rounded-lg" required>
                             </div>
 
                             <div class="flex flex-col gap-1 mt-5 ml-10">
@@ -281,19 +277,19 @@ if(isset($_POST['supplier_password_update_btn'])){
                                 <input type="text" name="bank_name" value="<?php echo $row['bank_name']; ?>" class="w-[250px] border-2 h-8 pl-2 text-base rounded-lg">
                             </div>
                             
-                            <div class="flex flex-col gap-1 mt-5">
+                            <div class="flex flex-col gap-1 mt-5 ml-10">
                                 <h1 class="pl-1 font-semibold">Branch Name</h1>
                                 <input type="text" name="branch_name" value="<?php echo $row['branch_name']; ?>" class="w-[280px] border-2 h-8 pl-2 text-base rounded-lg">
                             </div>
-
+                            
+                            <div class="flex flex-col gap-1 mt-5">
+                                <h1 class="pl-1 font-semibold">Account Number</h1>
+                                <input type="text" name="account_no" value="<?php echo $row['account_no']; ?>" class="w-[280px] border-2 h-8 pl-2 text-base rounded-lg">
+                            </div>
+                            
                             <div class="flex flex-col gap-1 mt-5 ml-10">
                                 <h1 class="pl-1 font-semibold">Acount Name</h1>
                                 <input type="text" name="account_name" value="<?php echo $row['account_name']; ?>" class="w-[300px] border-2 h-8 pl-2 text-base rounded-lg">
-                            </div>
-
-                            <div class="flex flex-col gap-1 mt-5 ml-10">
-                                <h1 class="pl-1 font-semibold">Account Number</h1>
-                                <input type="text" name="account_no" value="<?php echo $row['account_no']; ?>" class="w-[280px] border-2 h-8 pl-2 text-base rounded-lg">
                             </div>
 
                         </div>
@@ -318,7 +314,7 @@ if(isset($_POST['supplier_password_update_btn'])){
 
                 <div class="flex flex-col gap-4 mt-5 text-lg">
 
-                    <input type="text" name="user_id" value="<?php echo $row['supplier_id']; ?>" hidden readonly>
+                    <input type="text" name="user_id" value="<?php echo $row['farmer_id']; ?>" hidden readonly>
 
                     <div class="flex flex-col gap-2">
                         <h1 class="font-semibold">Old Password</h1>
@@ -343,7 +339,7 @@ if(isset($_POST['supplier_password_update_btn'])){
                     </div>
 
                     <div class="flex gap-4">
-                        <button type="submit" name="supplier_password_update_btn" class="px-3 py-1 text-white bg-blue-700 rounded-lg h-9 hover:bg-blue-500">Update</button>
+                        <button type="submit" name="farmer_password_update_btn" class="px-3 py-1 text-white bg-blue-700 rounded-lg h-9 hover:bg-blue-500">Update</button>
                         <button type="reset" class="px-3 py-1 text-white rounded-lg h-9 hover:bg-slate-300 bg-slate-400">Cancel</button>
                     </div>
 
@@ -390,7 +386,7 @@ if(isset($_POST['supplier_password_update_btn'])){
 
     <!-- show massage -->
     <script>
-        var message ="<?php echo isset($_SESSION['supplier_profile_update']) ? $_SESSION['supplier_profile_update'] : ''; ?>"; //send supplier_profile_update include massage  varible message, but if not status then print ''.
+        var message ="<?php echo isset($_SESSION['farmer_profile_update']) ? $_SESSION['farmer_profile_update'] : ''; ?>"; //send farmer_profile_update include massage  varible message, but if not status then print ''.
         if (message != "") {
             if(message.includes('success')) {
                 const Toast = Swal.mixin({
@@ -429,7 +425,7 @@ if(isset($_POST['supplier_password_update_btn'])){
                 });
             }
             // remove after once message is shown
-            <?php unset($_SESSION['supplier_profile_update']); ?>
+            <?php unset($_SESSION['farmer_profile_update']); ?>
         } 
     </script>
 

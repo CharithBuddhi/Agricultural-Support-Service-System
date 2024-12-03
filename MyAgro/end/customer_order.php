@@ -64,7 +64,19 @@ if (isset($_POST['complete_order'])) {
 
             <div class="w-full mt-8">
 
-                <h1 id="" class="h-8 mb-12 ml-10 font-serif text-3xl font-bold w-fit">Customer Orders</h1>
+                <h1 id="" class="h-8 mb-5 ml-10 font-serif text-3xl font-bold w-fit">Customer Orders</h1>
+
+                <!-- search bar -->
+                <form action="" method="POST" class="flex ml-10 text-black border mb-7 rounded-3xl w-96">
+                    <div class="">
+                        <input type="text" name="search_customer" value="<?php if(isset($_POST['search_customer'])){ echo $_POST['search_customer']; } ?>" class="h-10 p-2 outline-none rounded-3xl bg-[#eef1e3] w-[345px]" placeholder="Search for customer id" required>
+                        <button type="submit" name="search_customer_btn" class="relative top-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                    </div>  
+                </form>
 
                 <div class="flex flex-wrap mr-16">
 
@@ -72,112 +84,225 @@ if (isset($_POST['complete_order'])) {
                         include('db_connect.php');
                         $user_id = $_SESSION['login_id'];
                         $user_type = $_SESSION['login_type'];
-                        $sql = "SELECT * FROM transaction WHERE provider_id = '$user_id' AND provider_type = '$user_type' AND payment_status = 'succeeded'  ORDER BY  Reference_id ASC";
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
+
+                        if(isset($_POST['search_customer_btn'])){
+                            $search_customer = $_POST['search_customer'];
+                            $sql = "SELECT * FROM transaction WHERE provider_id = '$user_id' AND provider_type = '$user_type' AND payment_status = 'succeeded' AND customer_id = '$search_customer'  ORDER BY  Reference_id ASC";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
                             
-                            while($row = $result->fetch_assoc()) {
-                            ?> 
-
-                            <form class="flex flex-col ml-[50px] mb-12 gap-1 p-3 w-[340px] border-l-2 border-b-2 border-slate-200 rounded-lg shadow-2xl">
-                                
-                                <div class="flex flex-col items-center gap-1">
-                                    <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
-                                    <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
-                                    <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
-                                    <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
-                                    <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
-                                </div>
-
-                                <label id="rp_id" hidden><?php echo $row['Reference_id']; ?></label>
-
-                                <label id="location" hidden><?php echo $row['item_location']; ?></label>
-
-                                <label id="provider_id" hidden><?php echo $row['provider_id']; ?></label>
-
-                                <label id="provider_name" hidden><?php echo $row['provider_name']; ?></label>
-
-                                <label id="provider_phone" hidden><?php echo $row['provider_phone']; ?></label>
-
-                                <label id="provider_email" hidden><?php echo $row['provider_email']; ?></label>
-
-                                <label id="product_price" hidden><?php echo "Rs. ".$row['item_price']; ?></label>
-
-                                <p class="flex gap-1 mt-4">
-                                    <label class="font-medium">Order Quantity:</label>
-                                    <label id="order_quantity"><?php echo $row['order_quantity']; ?></label>
-                                    <?Php 
-                                    if($row['item_category'] == "fertilizer"){
-                                        ?>
-                                        <label>Kg</label>
-                                        <?php
-                                    }
-                                    ?>
-                                </p>
-
-                                <p>
-                                    <label class="font-medium">Paid Amount:</label>
-                                    <label hidden id="paid_amount"><?php echo $row['paid_amount']; ?></label>
-                                    <?php echo "Rs. ".$row['paid_amount'];?>
-                                </p>
-
-                                <p>
-                                    <label class="font-medium">Toatal Amount:</label>
-                                    <label id="total_amount"><?php echo "Rs. ".$row['total_amount']; ?></label>
-                                </p>
-
-                                <p>
-                                    <label class="font-medium">Order Date:</label>
-                                    <label id="order_date"><?php echo $row['created']; ?></label>
-                                </p>
-                                
-                                <p class="flex gap-1 mt-4">
-                                    <label class="pl-0.5 font-medium">Customer ID :</label>
-                                    <label id="customer_id"><?php echo $row['customer_id']; ?></label>
-                                </p>
-
-                                <p class="">
-                                    <label class="font-medium">Customer Name:</label> 
-                                    <label id="customer_name"><?php echo ucfirst($row['customer_name']); ?></label>
-                                </p>
-
-                                <p class="">
-                                    <label class="font-medium">Customer Email:</label> 
-                                    <label id="customer_email"><?php echo $row['customer_email']; ?></label>
-                                </p>
-
-                                <label id="payment_status" hidden>Purchased</label>
-                                <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-yellow-500 rounded-lg w-fit">Purchased</p>
-
-                                <div class="flex gap-2 mt-1">
-                                    <button type="button" id="Modal_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_Btn bg-slate-800">
-                                        View
-                                    </button>
-
-                                    <button type="button" id="Modal_view_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_view_Btn bg-slate-800">
-                                        Invoice
-                                        <i class="ml-1 fa-solid fa-file-pdf"></i>
-                                    </button>
+                                while($row = $result->fetch_assoc()) {
+                                ?> 
+    
+                                <form class="flex flex-col ml-[50px] mb-12 gap-1 p-3 w-[340px] border-l-2 border-b-2 border-slate-200 rounded-lg shadow-2xl">
                                     
-                                    <button type="button" id="Modal_complte_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_complte_Btn bg-slate-800">
-                                        Complete Order
-                                    </button>
-
-                                </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
+                                        <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
+                                        <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+                                        <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
+                                        <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
+                                    </div>
+    
+                                    <label id="rp_id" hidden><?php echo $row['Reference_id']; ?></label>
+    
+                                    <label id="location" hidden><?php echo $row['item_location']; ?></label>
+    
+                                    <label id="provider_id" hidden><?php echo $row['provider_id']; ?></label>
+    
+                                    <label id="provider_name" hidden><?php echo $row['provider_name']; ?></label>
+    
+                                    <label id="provider_phone" hidden><?php echo $row['provider_phone']; ?></label>
+    
+                                    <label id="provider_email" hidden><?php echo $row['provider_email']; ?></label>
+    
+                                    <label id="product_price" hidden><?php echo "Rs. ".$row['item_price']; ?></label>
+    
+                                    <p class="flex gap-1 mt-4">
+                                        <label class="font-medium">Order Quantity:</label>
+                                        <label id="order_quantity"><?php echo $row['order_quantity']; ?></label>
+                                        <?Php 
+                                        if($row['item_category'] == "fertilizer"){
+                                            ?>
+                                            <label>Kg</label>
+                                            <?php
+                                        }
+                                        ?>
+                                    </p>
+    
+                                    <p>
+                                        <label class="font-medium">Paid Amount:</label>
+                                        <label hidden id="paid_amount"><?php echo $row['paid_amount']; ?></label>
+                                        <?php echo "Rs. ".$row['paid_amount'];?>
+                                    </p>
+    
+                                    <p>
+                                        <label class="font-medium">Toatal Amount:</label>
+                                        <label id="total_amount"><?php echo "Rs. ".$row['total_amount']; ?></label>
+                                    </p>
+    
+                                    <p>
+                                        <label class="font-medium">Order Date:</label>
+                                        <label id="order_date"><?php echo $row['created']; ?></label>
+                                    </p>
+                                    
+                                    <p class="flex gap-1 mt-4">
+                                        <label class="pl-0.5 font-medium">Customer ID :</label>
+                                        <label id="customer_id"><?php echo $row['customer_id']; ?></label>
+                                    </p>
+    
+                                    <p class="">
+                                        <label class="font-medium">Customer Name:</label> 
+                                        <label id="customer_name"><?php echo ucfirst($row['customer_name']); ?></label>
+                                    </p>
+    
+                                    <p class="">
+                                        <label class="font-medium">Customer Email:</label> 
+                                        <label id="customer_email"><?php echo $row['customer_email']; ?></label>
+                                    </p>
+    
+                                    <label id="payment_status" hidden>Purchased</label>
+                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-yellow-500 rounded-lg w-fit">Purchased</p>
+    
+                                    <div class="flex gap-2 mt-1">
+                                        <button type="button" id="Modal_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_Btn bg-slate-800">
+                                            View
+                                        </button>
+    
+                                        <button type="button" id="Modal_view_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_view_Btn bg-slate-800">
+                                            Invoice
+                                            <i class="ml-1 fa-solid fa-file-pdf"></i>
+                                        </button>
+                                        
+                                        <button type="button" id="Modal_complte_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_complte_Btn bg-slate-800">
+                                            Complete Order
+                                        </button>
+    
+                                    </div>
+                                    
+                                </form>
+                            
+                                <?php
+    
+                                }
+    
+                            }else {
                                 
-                            </form>
-                        
-                            <?php
-
+                                ?>
+                                    <h1 class="w-full mt-20 text-4xl font-semibold text-center">You have no orders from this customer</h1>
+                                <?php
                             }
 
                         }else {
-                            
-                            ?>
-                                <h1 class="w-full mt-20 text-4xl font-semibold text-center">You have no orders yet</h1>
-                            <?php
-                        }
+                
+                            $sql = "SELECT * FROM transaction WHERE provider_id = '$user_id' AND provider_type = '$user_type' AND payment_status = 'succeeded'  ORDER BY  Reference_id ASC";
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                
+                                while($row = $result->fetch_assoc()) {
+                                ?> 
 
+                                <form class="flex flex-col ml-[50px] mb-12 gap-1 p-3 w-[340px] border-l-2 border-b-2 border-slate-200 rounded-lg shadow-2xl">
+                                    
+                                    <div class="flex flex-col items-center gap-1">
+                                        <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
+                                        <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
+                                        <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+                                        <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
+                                        <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
+                                    </div>
+
+                                    <label id="rp_id" hidden><?php echo $row['Reference_id']; ?></label>
+
+                                    <label id="location" hidden><?php echo $row['item_location']; ?></label>
+
+                                    <label id="provider_id" hidden><?php echo $row['provider_id']; ?></label>
+
+                                    <label id="provider_name" hidden><?php echo $row['provider_name']; ?></label>
+
+                                    <label id="provider_phone" hidden><?php echo $row['provider_phone']; ?></label>
+
+                                    <label id="provider_email" hidden><?php echo $row['provider_email']; ?></label>
+
+                                    <label id="product_price" hidden><?php echo "Rs. ".$row['item_price']; ?></label>
+
+                                    <p class="flex gap-1 mt-4">
+                                        <label class="font-medium">Order Quantity:</label>
+                                        <label id="order_quantity"><?php echo $row['order_quantity']; ?></label>
+                                        <?Php 
+                                        if($row['item_category'] == "fertilizer"){
+                                            ?>
+                                            <label>Kg</label>
+                                            <?php
+                                        }
+                                        ?>
+                                    </p>
+
+                                    <p>
+                                        <label class="font-medium">Paid Amount:</label>
+                                        <label hidden id="paid_amount"><?php echo $row['paid_amount']; ?></label>
+                                        <?php echo "Rs. ".$row['paid_amount'];?>
+                                    </p>
+
+                                    <p>
+                                        <label class="font-medium">Toatal Amount:</label>
+                                        <label id="total_amount"><?php echo "Rs. ".$row['total_amount']; ?></label>
+                                    </p>
+
+                                    <p>
+                                        <label class="font-medium">Order Date:</label>
+                                        <label id="order_date"><?php echo $row['created']; ?></label>
+                                    </p>
+                                    
+                                    <p class="flex gap-1 mt-4">
+                                        <label class="pl-0.5 font-medium">Customer ID :</label>
+                                        <label id="customer_id"><?php echo $row['customer_id']; ?></label>
+                                    </p>
+
+                                    <p class="">
+                                        <label class="font-medium">Customer Name:</label> 
+                                        <label id="customer_name"><?php echo ucfirst($row['customer_name']); ?></label>
+                                    </p>
+
+                                    <p class="">
+                                        <label class="font-medium">Customer Email:</label> 
+                                        <label id="customer_email"><?php echo $row['customer_email']; ?></label>
+                                    </p>
+
+                                    <label id="payment_status" hidden>Purchased</label>
+                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-yellow-500 rounded-lg w-fit">Purchased</p>
+
+                                    <div class="flex gap-2 mt-1">
+                                        <button type="button" id="Modal_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_Btn bg-slate-800">
+                                            View
+                                        </button>
+
+                                        <button type="button" id="Modal_view_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_view_Btn bg-slate-800">
+                                            Invoice
+                                            <i class="ml-1 fa-solid fa-file-pdf"></i>
+                                        </button>
+                                        
+                                        <button type="button" id="Modal_complte_Btn" value="<?php echo $row['Reference_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md Modal_complte_Btn bg-slate-800">
+                                            Complete Order
+                                        </button>
+
+                                    </div>
+                                    
+                                </form>
+                            
+                                <?php
+
+                                }
+
+                            }else {
+                                
+                                ?>
+                                    <h1 class="w-full mt-20 text-4xl font-semibold text-center">You have no orders yet</h1>
+                                <?php
+                            }
+                        }
+                        
                     ?>
 
                 </div>

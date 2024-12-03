@@ -36,7 +36,7 @@
                 <h1 id="" class="h-8 mb-1 ml-10 font-serif text-3xl font-bold w-fit">Product Manage</h1>
 
                 <div class="flex justify-end h-10 mb-1 ml-10 mr-28">
-                    <button id="add_product_btn" data-bs-toggle="modal" data-bs-target="#product_add_modal" class="w-[140px] p-1 text-xl text-white rounded-lg bg-slate-800 hover:bg-slate-500">Add Product</button>
+                    <button id="add_vegetable_btn" data-bs-toggle="modal" data-bs-target="#vegetable_add_modal" class="w-[140px] p-1 text-xl text-white rounded-lg bg-slate-800 hover:bg-slate-500">Add Product</button>
                 </div>
 
                 <div class="flex h-10 gap-4 ml-10 text-xl text-white mr-28 bg-slate-800 justify-evenly mb-7">
@@ -126,7 +126,6 @@
                                         <label id="customer_email"><?php echo $row['customer_email']; ?></label>
                                     </p>
                                     
-                                    <!-- <label  hidden>Cancelled</label> -->
                                     <p id="payment_status" class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-red-500 rounded-lg w-fit">Cancelled</p>
                                             
                                     <div class="flex gap-1 mt-1">
@@ -270,95 +269,74 @@
                 <div id="available_products" class="flex flex-wrap mr-12">
 
                     <?php 
-                    
                         include('db_connect.php');
                         $user_id = $_SESSION['login_id'];
                         $user_type = $_SESSION['login_type'];
 
-                        $sql = "SELECT * FROM agrochemical WHERE supplier_id = '$user_id' AND total_quantity > 0  ORDER BY (LENGTH(agro_location) > 25) DESC, LENGTH(agro_location) DESC";   //Rows with address length > 20 first and then rows with address length < 20 display
+                        $sql = "SELECT * FROM vegetablefruit WHERE farmer_id = '$user_id' AND vegfruit_total > 0  ORDER BY (LENGTH(vegfruit_location) > 25) DESC, LENGTH(vegfruit_location) DESC";
                         $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                             
                             while($row = $result->fetch_assoc()) {
                             ?> 
-
                             <form class="flex flex-col ml-10 mb-6 gap-1 pb-2 w-[350px] border-l-2 border-b-2 border-slate-200  rounded-lg shadow-2xl">
                                 
                                 <div class="flex flex-col items-center gap-1">
-                                    <label id="product_id" hidden> <?php echo $row['agro_id']; ?></label>
-                                    <label id="product_name" class="text-xl font-bold text-center"> <?php echo ucfirst($row['agro_name']); ?></label>
-                                    <label id="product_category" class="font-medium"> <?php echo ucfirst($row['agro_category']); ?></label>
+                                    <label id="vegfruitle_id" hidden> <?php echo $row['vegfruitle_id']; ?></label>
+                                    <label class="text-xl font-bold text-center"> <?php echo ucfirst($row['vegfruitle_verity']); ?></label>
+                                    <label class="font-medium"> <?php echo ucfirst($row['vegetable_category']); ?></label>
+
+                                    <label id="vegfruitle_verity" hidden> <?php echo $row['vegfruitle_verity']; ?></label>
+                                    <label id="vegetable_category" hidden> <?php echo $row['vegetable_category']; ?></label>
                                 </div>
 
-                                <label id="fertilizer_category" hidden><?php echo $row['fertilizer_category']; ?></label>
-                                <label id="fertilizer_type" hidden><?php echo $row['fertilizer_type']; ?></label>
-                                <label id="agro_district" hidden><?php echo $row['agro_district']; ?></label>
-                                <label id="agro_area" hidden><?php echo $row['agro_area']; ?></label>
-                                <label id="agro_description" hidden><?php echo $row['agro_description']; ?></label>                                
+                                <label id="vegfruit_distric" hidden><?php echo $row['vegfruit_distric']; ?></label>
+                                <label id="vegfruit_area" hidden><?php echo $row['vegfruit_area']; ?></label>
 
                                 <div class="flex justify-center">
-                                    <img class="w-[180px] h-[150px] py-1 " src="images/fertilizer/saveferti/<?php echo $row['agro_image']; ?>" alt="fertilizer">
-                                    <label id="agro_image" hidden><?php echo $row['agro_image']; ?></label>
+                                    <img class="w-[180px] h-[150px] py-1 rounded-lg" src="images/vegetable/<?php echo $row['vegfruit_image']; ?>" alt="fertilizer">
+                                    <label id="vegfruit_image" hidden><?php echo $row['vegfruit_image']; ?></label>
                                 </div>
 
                                 <div class="flex justify-center mt-2">
-                                    <label id="" class="font-medium"><?php echo ucfirst($row['fertilizer_type'])." ".ucfirst($row['fertilizer_category'])." ".ucfirst($row['agro_category']); ?></label>
+                                    <label class="font-medium"><?php echo ucfirst($row['vegetable_name']); ?></label>
+                                    
+                                    <label id="vegetable_name" hidden><?php echo $row['vegetable_name']; ?></label>
                                 </div>
 
                                 <div class="flex flex-col gap-1 px-2.5 mt-2 place-self-start">
 
-                                    <div>
-                                        <label class="font-bold">SLS Number : </label>
-                                        <label id="sls_id"><?php echo $row['sls_id']; ?></label>
-                                    </div>
-
-                                    <?php 
-                                        if ($row['iso_id'] != '') {
-                                            ?>
-                                            <div>
-                                                <label class="font-bold">ISO Number : </label>
-                                                <label id="iso_id"><?php if (isset($row['iso_id'])) { echo $row['iso_id']; } else { echo ''; } ?></label>
-                                            </div>
-                                            <?php
-                                        }
-                                    ?>
-
-                                    <div>
-                                        <label class="font-bold">Shop Name : </label>
-                                        <label id="shop_name"><?php echo $row['shop_name']; ?></label>
-                                    </div>
                                     <div> 
                                         <label class="font-bold">Product Price : </label>
-                                        <label>Rs.<label id="productPrice"><?php echo $row['agro_price']; ?></label></label> 
+                                        <label>Rs.<label id="vegfruit_price"><?php echo $row['vegfruit_price']; ?></label></label> 
                                     </div>
-                                    <div>
-                                        <label class="font-bold">Product Quantity :</label>
-                                        <label id="agro_quantity"><?php echo $row['agro_quantity']; ?></label>
-                                        <label  id="meassure"><?php echo $row['meassure']; ?></label>
-                                    </div>
+
                                     <div>
                                         <label class="font-bold">Total Quantity :</label>
-                                        <label id="total_quantity"><?php echo $row['total_quantity']; ?></label>
-                                        <label  id=""><?php echo $row['meassure']; ?></label>
+                                        <label id="vegfruit_total"><?php echo $row['vegfruit_total']; ?></label>
+                                        <label  id="">Kg</label>
                                     </div>
+
                                     <div>
                                         <label class="font-bold">Pick up location : </label>
-                                        <label id="agro_location"><?php echo $row['agro_location']; ?></label>
+                                        <label id="vegfruit_location"><?php echo $row['vegfruit_location']; ?></label>
                                     </div>
+
                                     <div>
                                         <label class="font-bold">Pick up District and area : </label>
-                                        <label id=""><?php echo $row['agro_district']." - ".$row['agro_area']; ?></label>
+                                        <label id=""><?php echo $row['vegfruit_distric']." - ".$row['vegfruit_area']; ?></label>
                                     </div>
+                                    
                                 </div>
 
                                 <div class="flex gap-2 mt-3 mr-5 place-self-end">
 
-                                    <button type="button" id="product_delete_btn" value="<?php echo $row['agro_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md product_delete_btn bg-slate-800 hover:bg-slate-600">
-                                    Delete
+                                    <button type="button" id="vegetable_delete_btn" value="<?php echo $row['vegfruitle_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md vegetable_delete_btn bg-slate-800 hover:bg-slate-600">
+                                        Delete
                                     </button>
 
-                                    <button type="button" id="product_update_btn" value="<?php echo $row['agro_id']; ?>" data-bs-toggle="modal" data-bs-target="#product_update_modal" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white bg-blue-700 rounded-md hover:bg-blue-500 product_update_btn">
-                                    Update
+                                    <button type="button" id="vegetable_update_btn" value="<?php echo $row['vegfruitle_id']; ?>" data-bs-toggle="modal" data-bs-target="#vegetable_update_modal" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white bg-blue-700 rounded-md hover:bg-blue-500 vegetable_update_btn">
+                                        Update
                                     </button>
                                     
                                 </div>
@@ -388,102 +366,78 @@
                         $user_id = $_SESSION['login_id'];
                         $user_type = $_SESSION['login_type'];
 
-                        $sql = "SELECT * FROM agrochemical WHERE supplier_id = '$user_id' AND total_quantity = 0  ORDER BY (LENGTH(agro_location) > 25) DESC, LENGTH(agro_location) DESC";
+                        $sql = "SELECT * FROM vegetablefruit WHERE farmer_id = '$user_id' AND vegfruit_total = 0  ORDER BY (LENGTH(vegfruit_location) > 25) DESC, LENGTH(vegfruit_location) DESC";
                         $result = $conn->query($sql);
+                        
                         if ($result->num_rows > 0) {
                             
                             while($row = $result->fetch_assoc()) {
                             ?> 
-
-                            <form class="flex flex-col ml-10 mb-6 gap-1 pb-2 w-[350px] border-l-2 border-b-2 border-slate-200  rounded-lg shadow-2xl">
-                                
-                                <div class="flex flex-col items-center gap-1">
-                                    <label id="product_id" hidden> <?php echo $row['agro_id']; ?></label>
-                                    <label id="product_name" class="text-xl font-bold text-center"> <?php echo ucfirst($row['agro_name']); ?></label>
-                                    <label id="product_category" class="font-medium"> <?php echo ucfirst($row['agro_category']); ?></label>
-                                </div>
-
-                                <label id="fertilizer_category" hidden> <?php echo $row['fertilizer_category']; ?></label>
-                                <label id="fertilizer_type" hidden> <?php echo $row['fertilizer_type']; ?></label>
-                                <label id="agro_district" hidden> <?php echo $row['agro_district']; ?></label>
-                                <label id="agro_area" hidden> <?php echo $row['agro_area']; ?></label>
-                                <label id="agro_description" hidden> <?php echo $row['agro_description']; ?></label>                                
-
-                                <div class="flex justify-center">
-                                    <img class="w-[180px] h-[150px] py-1 " src="images/fertilizer/saveferti/<?php echo $row['agro_image']; ?>" alt="fertilizer">
-                                </div>
-
-                                <div class="flex justify-center mt-2">
-                                    <label id="" class="font-medium"><?php echo ucfirst($row['fertilizer_type'])." ".ucfirst($row['fertilizer_category'])." ".ucfirst($row['agro_category']); ?></label>
-                                </div>
-
-                                <div class="flex flex-col gap-1 px-2.5 mt-2 place-self-start">
-
-                                    <div>
-                                        <label class="font-bold">SLS Number : </label>
-                                        <label id="sls_id"><?php echo $row['sls_id']; ?></label>
-                                    </div>
-
-                                    <?php 
-                                        if ($row['iso_id'] != '') {
-                                            ?>
-                                            <div>
-                                                <label class="font-bold">ISO Number : </label>
-                                                <label id="iso_id"><?php if (isset($row['iso_id'])) { echo $row['iso_id']; } else { echo ''; } ?></label>
-                                            </div>
-                                            <?php
-                                        }
-                                    ?>
-
-                                    <div>
-                                        <label class="font-bold">Shop Name : </label>
-                                        <label id="shop_name"><?php echo $row['shop_name']; ?></label>
-                                    </div>
-                                    <div> 
-                                        <label class="font-bold">Product Price : </label>
-                                        <label>Rs.<label id="productPrice"><?php echo $row['agro_price']; ?></label></label> 
-                                    </div>
-                                    <div>
-                                        <label class="font-bold">Product Quantity :</label>
-                                        <label id="agro_quantity"><?php echo $row['agro_quantity']; ?>
-                                            <label  id="meassure"><?php echo $row['meassure']; ?></label>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <label class="font-bold">Total Quantity :</label>
-                                        <label id="total_quantity"><?php echo $row['total_quantity']; ?></label>
-                                        <label  id=""><?php echo $row['meassure']; ?></label>
-                                    </div>
-                                    <div>
-                                        <label class="font-bold">Pick up location : </label>
-                                        <label id="agro_location"><?php echo $row['agro_location']; ?></label>
-                                    </div>
-                                    <div>
-                                        <label class="font-bold">Pick up District and area : </label>
-                                        <label id=""><?php echo $row['agro_district']." - ".$row['agro_area']; ?></label>
-                                    </div>
-                                </div>
-
-                                <div class="flex gap-2 mt-3 mr-5 place-self-end">
-
-                                    <button type="button" id="product_delete_btn" value="<?php echo $row['agro_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md product_delete_btn bg-slate-800 hover:bg-slate-600">
-                                    Delete
-                                    </button>
-
-                                    <button type="button" id="product_update_btn" value="<?php echo $row['agro_id']; ?>" data-bs-toggle="modal" data-bs-target="#product_update_modal" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white bg-blue-700 rounded-md hover:bg-blue-500 product_update_btn">
-                                    Update
-                                    </button>
+                                <form class="flex flex-col ml-10 mb-6 gap-1 pb-2 w-[350px] border-l-2 border-b-2 border-slate-200  rounded-lg shadow-2xl">
                                     
-                                </div>
-                                
-                            </form>
-                        
+                                    <div class="flex flex-col items-center gap-1">
+                                        <label id="vegfruitle_id" hidden> <?php echo $row['vegfruitle_id']; ?></label>
+                                        <label class="text-xl font-bold text-center"> <?php echo ucfirst($row['vegfruitle_verity']); ?></label>
+                                        <label class="font-medium"> <?php echo ucfirst($row['vegetable_category']); ?></label>
+
+                                        <label id="vegfruitle_verity" hidden> <?php echo $row['vegfruitle_verity']; ?></label>
+                                        <label id="vegetable_category" hidden> <?php echo $row['vegetable_category']; ?></label>
+                                    </div>
+
+                                    <label id="vegfruit_distric" hidden><?php echo $row['vegfruit_distric']; ?></label>
+                                    <label id="vegfruit_area" hidden><?php echo $row['vegfruit_area']; ?></label>
+
+                                    <div class="flex justify-center">
+                                        <img class="w-[180px] h-[150px] py-1 rounded-lg" src="images/vegetable/<?php echo $row['vegfruit_image']; ?>" alt="fertilizer">
+                                        <label id="vegfruit_image" hidden><?php echo $row['vegfruit_image']; ?></label>
+                                    </div>
+
+                                    <div class="flex justify-center mt-2">
+                                        <label class="font-medium"><?php echo ucfirst($row['vegetable_name']); ?></label>
+                                        
+                                        <label id="vegetable_name" hidden><?php echo $row['vegetable_name']; ?></label>
+                                    </div>
+
+                                    <div class="flex flex-col gap-1 px-2.5 mt-2 place-self-start">
+
+                                        <div> 
+                                            <label class="font-bold">Product Price : </label>
+                                            <label>Rs.<label id="vegfruit_price"><?php echo $row['vegfruit_price']; ?></label></label> 
+                                        </div>
+
+                                        <div>
+                                            <label class="font-bold">Total Quantity :</label>
+                                            <label id="vegfruit_total"><?php echo $row['vegfruit_total']; ?></label>
+                                            <label  id="">Kg</label>
+                                        </div>
+
+                                        <div>
+                                            <label class="font-bold">Pick up location : </label>
+                                            <label id="vegfruit_location"><?php echo $row['vegfruit_location']; ?></label>
+                                        </div>
+
+                                        <div>
+                                            <label class="font-bold">Pick up District and area : </label>
+                                            <label id=""><?php echo $row['vegfruit_distric']." - ".$row['vegfruit_area']; ?></label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="flex gap-2 mt-3 mr-5 place-self-end">
+
+                                        <button type="button" id="vegetable_delete_btn" value="<?php echo $row['vegfruitle_id']; ?>" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white rounded-md vegetable_delete_btn bg-slate-800 hover:bg-slate-600">
+                                        Delete
+                                        </button>
+
+                                        <button type="button" id="vegetable_update_btn" value="<?php echo $row['vegfruitle_id']; ?>" data-bs-toggle="modal" data-bs-target="#vegetable_update_modal" class="pt-1 pb-1 pl-2 pr-2 mb-1 font-bold text-white bg-blue-700 rounded-md hover:bg-blue-500 vegetable_update_btn">
+                                        Update
+                                        </button>
+                                        
+                                    </div>
+                                    
+                                </form>
                             <?php
-
                             }
-
                         }else {
-                            
                             ?>
                                 <h1 class="w-full mt-20 text-4xl font-semibold text-center">You havn't any unavailable products</h1>
                             <?php
@@ -500,8 +454,8 @@
     </div>
 
 
-    <!-- Modal for added product view -->
-    <div class="modal fade" id="product_add_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal for added vegatable view -->
+    <div class="modal fade" id="vegetable_add_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl ">
             <div class="absolute text-black modal-content">
                 <div class="modal-header">
@@ -518,54 +472,25 @@
                                 <div class="grid grid-cols-3 gap-3 mt-2">
 
                                     <div class="flex flex-col gap-1">
-                                        <label for="Product_name">Product Name</label>
-                                        <input type="text" id="Product_name" name="Product_name" placeholder="x ven" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
-                                    </div>
-
-                                    <div class="flex flex-col gap-1">
-                                        <label for="Origin">Product Origin</label>
-                                        <select name="Origin" id="Origin"  class="h-8 border-2 border-black rounded-md w-72" required>
-                                            <option value="fertilizer">Fertilizer</option>
-                                            <option value="chemical">Chemical</option>
+                                        <label for="Product_Origin">Product Origin</label>
+                                        <select name="Product_Origin" id="Product_Origin"  class="h-8 border-2 border-black rounded-md w-72" required>
+                                            <option value="vegetable">Vegetable</option>
+                                            <option value="fruit">Fruit</option>
                                         </select>
                                     </div>
 
                                     <div id="ferilizer_div" class="flex flex-col gap-1">                                    
-                                        <label for="Category_fertilizer">Product Category</label>
-                                        <select name="Category_fertilizer" id="Category_fertilizer"  class="h-8 border-2 border-black rounded-md w-72" required>
-                                            <option value="Straight">Straight</option>
-                                            <option value="Specialty">Specialty</option>
-                                            <option value="Garden">Home Garden</option>
-                                            <option value="Blended">Blended</option>
+                                        <label for="Product_Category">Product Category</label>
+                                        <select name="Product_Category" id="Product_Category" class="h-8 border-2 border-black rounded-md w-72" required>
+                                            <option value="">Select Category</option>
                                         </select>
                                     </div>
 
-                                    <div id="chemical_div" class="flex flex-col gap-1" style="display: none;">                                    
-                                        <label for="Category_chemical">Product Category</label>
-                                        <select name="Category_chemical" id="Category_chemical"  class="h-8 border-2 border-black rounded-md w-72" required>
-                                            <option value="Insecticides">Insecticides</option>
-                                            <option value="Fungicides">Fungicides</option>
-                                            <option value="Weedicides">Weedicides</option>
-                                            <option value="Organic">Organic Insecticides</option>
+                                    <div class="flex flex-col gap-1">
+                                        <label for="Product_name">Product Name</label>
+                                        <select name="Product_name" id="Product_name" class="h-8 border-2 border-black rounded-md w-72" required>
+                                            <option value="">Select Name</option>
                                         </select>
-                                    </div>
-
-                                    <div class="flex flex-col gap-1">                                    
-                                        <label for="type" class="">Product Type</label>
-                                        <input name="type" id="type"  class="h-8 border-2 border-black rounded-md w-72" required>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="sls_number">SLS Number</label>
-                                        <input type="text" pattern="\d+" id="sls_number" name="sls_number" placeholder="9999" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="iso_number">ISO Number</label>
-                                        <input type="text" pattern="\d+" id="iso_number" name="iso_number" placeholder="78453" class="h-8 pl-1 border-2 border-black rounded-md w-72">
-                                    </div>
-                                
-                                    <div class="flex flex-col gap-1">
-                                        <label for="Description">Item Description</label>
-                                        <textarea name="Description" rows="4" type="text" id="Description" placeholder="Brief description........" class="pl-1 text-black border-2 border-black rounded-md w-72" required></textarea>
                                     </div>
 
                                     <div class="flex flex-col gap-1">
@@ -573,52 +498,38 @@
                                         <input type="file" accept="image/*" id="Product_image" name="Product_image" placeholder="Product name" class="w-72 border-2 h-[30px] border-black rounded-md" required>
                                     </div>
                                     
-                                    
-
                                 </div>
                             </div>
 
                             <!-- Selling Info -->
                             <div>
                                 <label for="" class="mt-4 text-2xl italic font-bold border-b-2 border-black">Selling Info</label>
+                                
+                                <div class="flex flex-col mt-1">
+                                    <div class="flex gap-1">
+                                        <label for="minimum_price"><label class="text-lg text-red-600">*</label>Minimum Price:</label>
+                                        <input id="minimum_price" class="outline-none" readonly>
+                                    </div>
+                                    <div class="flex gap-1">
+                                        <label for="maximum_price"><label class="text-lg text-red-600">*</label>Maximum Price:</label>
+                                        <input id="maximum_price" class="outline-none" readonly>
+                                    </div>
+                                </div>
+                                
                                 <div class="grid grid-cols-3 gap-3 mt-1">
 
-                                <?php 
-
-                                    include('db_connect.php');
-                                    $user_id = $_SESSION['login_id'];
-                                    $user_type = $_SESSION['login_type'];
-
-                                    $sql = "SELECT supplier_shop_name FROM supplier WHERE supplier_id = '$user_id'";
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        $row = $result->fetch_assoc(); // Use fetch_assoc() for mysqli
-                                        $supplier_shop_name = $row['supplier_shop_name'];
-                                    } else {
-                                        $supplier_shop_name = "No supplier found"; // Handle no result case
-                                    }
-                                    
-                                ?>
-                                    <input type="text" value="<?php echo $supplier_shop_name; ?>" id="shop_name" name="shop_name" placeholder="Eenter your shop name" class="h-8 pl-1 border-2 border-black rounded-md w-72" required hidden>
                                         
                                     <div class="flex flex-col gap-1">
-                                        <label for="product_price">Product Price</label>
-                                        <input type="text"  id="product_price" name="product_price" placeholder="450.00" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
+                                        <label for="product_price">Product Price(Kg)</label>
+                                        <input type="number" min="" max="" step="0.01" id="product_price" name="product_price" placeholder="450.00" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
                                     </div>
+
+
                                     <div class="flex flex-col gap-1">
-                                        <label for="product_quantity">Product Quantity</label>
-                                        <div class="flex pl-1 pr-0.5 border-2 border-black rounded-md w-72">
-                                            <input type="text" id="product_quantity" name="product_quantity" placeholder="60" class="h-8 pl-1 outline-none w-[220px]" required>
-                                            <select name="measurement" id="measurement"  class="w-16 h-8 pl-1 outline-none" required>                                           
-                                                <option value="Kg">Kg</option>
-                                                <option value="Liter">Liter</option>
-                                            </select>
-                                        </div>
+                                        <label for="total_quantity">Total Selling Quantity(Kg)</label>
+                                        <input type="number" min="1" id="total_quantity" name="total_quantity" placeholder="400" class="h-8 pl-1 border-2 border-black rounded-md w-72" >
                                     </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="total_quantity">Total Selling Quantity</label>
-                                        <input type="text" id="total_quantity" name="total_quantity" placeholder="400" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
-                                    </div>
+                                    
                                     <div class="flex flex-col gap-1">
                                         <label for="district">District</label>
                                         <select name="district" id="district" class="h-8 border-2 border-black rounded-md w-72" required>
@@ -649,12 +560,14 @@
                                             <option value="Vavuniya">Vavuniya</option>
                                         </select>
                                     </div>
+
                                     <div class="flex flex-col gap-1">
                                         <label for="area">Mother Town</label>
                                         <input type="text" id="area" name="area" placeholder="Petta" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
                                     </div>
+
                                     <div class="flex flex-col gap-1">
-                                        <label for="address">Shop Address</label>
+                                        <label for="address">Selling Address</label>
                                         <input type="text" id="address" name="address" placeholder="No 258, Petta Bus Road" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
                                     </div>
 
@@ -665,19 +578,19 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="w-24 bg-slate-400 btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="product_submit"  class="w-24 btn btn-primary">Add</button>
+                        <button type="submit" name="vegetable_submit"  class="w-24 btn btn-primary">Add</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal for update product view -->
-    <div class="modal fade" id="product_update_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal for update vegetable view -->
+    <div class="modal fade" id="vegetable_update_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl ">
             <div class="absolute text-black modal-content">
                 <div class="modal-header">
-                    <b><h5 class="modal-title" id="exampleModalLabel">Update product details</h5></b>
+                    <b><h5 class="modal-title" id="exampleModalLabel">Add new product details</h5></b>
                     <button type="button" class=" btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="updatefont.php" method="POST" enctype="multipart/form-data">
@@ -689,90 +602,72 @@
                                 <label for="" class="text-2xl italic font-bold border-b-2 border-black">Product Info</label>
                                 <div class="grid grid-cols-3 gap-3 mt-2">
 
-                                    <div class="flex flex-col gap-1">
-                                        <label for="Product_name_update">Product Name</label>
-                                        
-                                        <input type="text" id="Product_id_update" name="Product_id_update" hidden required>
-                                        <input type="text" id="Product_name_update" name="Product_name_update" placeholder="x ven" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
-                                    </div>
+                                    <input type="text" id="update_vegfruitle_id" name="update_vegfruitle_id" hidden value="">
 
                                     <div class="flex flex-col gap-1">
-                                        <label for="Origin_update">Product Origin</label>
-                                        <select name="Origin_update" id="Origin_update"  class="h-8 border-2 border-black rounded-md w-72" required>
-                                            <option value="fertilizer">Fertilizer</option>
-                                            <option value="chemical">Chemical</option>
+                                        <label for="update_product_category">Product Origin</label>
+                                        <select name="update_product_category" id="update_product_category"  class="h-8 border-2 border-black rounded-md w-72" required>
+                                            <option value="vegetable">Vegetable</option>
+                                            <option value="fruit">Fruit</option>
                                         </select>
                                     </div>
 
-                                    <div id="" class="flex flex-col gap-1">                                    
-                                        <label for="">Product Category</label>
-                                        <select name="Category_fertilizer_update" id="Category_fertilizer_update" class="h-8 border-2 border-black rounded-md w-72" style="display: none;">
-                                            <option value="Straight">Straight</option>
-                                            <option value="Specialty">Specialty</option>
-                                            <option value="Garden">Home Garden</option>
-                                            <option value="Blended">Blended</option>
-                                        </select>
-                                        <select name="Category_chemical_update" id="Category_chemical_update"  class="h-8 border-2 border-black rounded-md w-72" style="display: none;">
-                                            <option value="Insecticides">Insecticides</option>
-                                            <option value="Fungicides">Fungicides</option>
-                                            <option value="Weedicides">Weedicides</option>
-                                            <option value="Organic">Organic Insecticides</option>
+                                    <div id="ferilizer_div" class="flex flex-col gap-1">                                    
+                                        <label for="update_product_name">Product Category</label>
+                                        <select name="update_product_name" id="update_product_name" class="h-8 border-2 border-black rounded-md w-72" required>
+                                            <option value="">Select Category</option>
                                         </select>
                                     </div>
 
-                                    <div class="flex flex-col gap-1">                                    
-                                        <label for="type_update" class="">Product Type</label>
-                                        <input name="type_update" id="type_update" class="h-8 border-2 border-black rounded-md w-72" required>
+                                    <div class="flex flex-col gap-1">
+                                        <label for="update_product_variety">Product Name</label>
+                                        <select name="update_product_variety" id="update_product_variety" class="h-8 border-2 border-black rounded-md w-72" required>
+                                            <option value="">Select Name</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="flex flex-col gap-1">
+                                        <label for="Product_image">Product Image</label>
+                                        <input type="file" accept="image/*" id="update_product_image" name="update_product_image" class="w-72 border-2 h-[30px] border-black rounded-md">
+                                        <img src="" id="preview_product_image"  class="w-72 border-2 h-[110px] border-black rounded-md">
                                     </div>
                                     
-                                    <div class="flex flex-col gap-1">
-                                        <label for="sls_number_update">SLS Number</label>
-                                        <input type="text" pattern="\d+" id="sls_number_update" name="sls_number_update" placeholder="9999" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="iso_number_update">ISO Number</label>
-                                        <input type="text" pattern="\d+" id="iso_number_update" name="iso_number_update" placeholder="78453" class="h-8 pl-1 border-2 border-black rounded-md w-72">
-                                    </div>
-                                
-                                    <div class="flex flex-col gap-1">
-                                        <label for="Description_update">Item Description</label>
-                                        <textarea name="Description_update" rows="6" type="text" id="Description_update" placeholder="Brief description........" class="pl-1 text-black border-2 border-black rounded-md w-72" required></textarea>
-                                    </div>
-
-                                    <div class="flex flex-col gap-1">
-                                        <label for="Product_image_update">Product Image</label>
-                                        <input type="file" accept="image/*" id="Product_image_update" name="Product_image_update" placeholder="Product name" class="w-72 border-2 h-[30px] border-black rounded-md">
-                                        <img id="agroImagePreview" src="" alt="product Image" class="w-72 border-2 h-[110px] border-black rounded-md" required/>
-                                    </div>
-                                                                       
+                                    
                                 </div>
                             </div>
 
                             <!-- Selling Info -->
                             <div>
                                 <label for="" class="mt-4 text-2xl italic font-bold border-b-2 border-black">Selling Info</label>
+                                
+                                <div class="flex flex-col mt-1">
+                                    <div class="flex gap-1">
+                                        <label for="update_minimum_price"><label class="text-lg text-red-600">*</label>Minimum Price:</label>
+                                        <input id="update_minimum_price" class="outline-none" readonly>
+                                    </div>
+                                    <div class="flex gap-1">
+                                        <label for="update_maximum_price"><label class="text-lg text-red-600">*</label>Maximum Price:</label>
+                                        <input id="update_maximum_price" class="outline-none" readonly>
+                                    </div>
+                                </div>
+                                
                                 <div class="grid grid-cols-3 gap-3 mt-1">
+
+                                        
                                     <div class="flex flex-col gap-1">
-                                        <label for="product_price_update">Product Price</label>
-                                        <input type="text"  id="product_price_update" name="product_price_update" placeholder="450.00" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
+                                        <label for="update_product_price">Product Price(Kg)</label>
+                                        <input type="number" min="" max="" step="0.01" id="update_product_price" name="update_product_price" placeholder="450.00" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
                                     </div>
+
+
                                     <div class="flex flex-col gap-1">
-                                        <label for="product_quantity_update">Product Quantity</label>
-                                        <div class="flex pl-1 pr-0.5 border-2 border-black rounded-md w-72">
-                                            <input type="text" id="product_quantity_update" name="product_quantity_update" placeholder="60" class="h-8 pl-1 outline-none w-[220px]" required>
-                                            <select name="measurement_update" id="measurement_update"  class="w-16 h-8 pl-1 outline-none" required>                                           
-                                                <option value="Kg">Kg</option>
-                                                <option value="Liter">Liter</option>
-                                            </select>
-                                        </div>
+                                        <label for="update_total_quantity">Total Selling Quantity(Kg)</label>
+                                        <input type="number" min="1" id="update_total_quantity" name="update_total_quantity" placeholder="400" class="h-8 pl-1 border-2 border-black rounded-md w-72" >
                                     </div>
+                                    
                                     <div class="flex flex-col gap-1">
-                                        <label for="total_quantity_update">Total Selling Quantity</label>
-                                        <input type="text" id="total_quantity_update" name="total_quantity_update" placeholder="400" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="district_update">District</label>
-                                        <select name="district_update" id="district_update" class="h-8 border-2 border-black rounded-md w-72" required>
+                                        <label for="update_district">District</label>
+                                        <select name="update_district" id="update_district" class="h-8 border-2 border-black rounded-md w-72" required>
                                             <option value="Ampara">Ampara</option>
                                             <option value="Anuradhapura">Anuradhapura</option>
                                             <option value="Badulla">Badulla</option>
@@ -800,13 +695,15 @@
                                             <option value="Vavuniya">Vavuniya</option>
                                         </select>
                                     </div>
+
                                     <div class="flex flex-col gap-1">
-                                        <label for="area_update">Mother Town</label>
-                                        <input type="text" id="area_update" name="area_update" placeholder="Petta" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
+                                        <label for="area">Mother Town</label>
+                                        <input type="text" id="update_area" name="update_area" placeholder="Petta" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
                                     </div>
+
                                     <div class="flex flex-col gap-1">
-                                        <label for="address_updates">Shop Address</label>
-                                        <input type="text" id="address_update" name="address_update" placeholder="No 258, Petta Bus Road" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
+                                        <label for="address">Selling Address</label>
+                                        <input type="text" id="update_address" name="update_address" placeholder="No 258, Petta Bus Road" class="h-8 pl-1 border-2 border-black rounded-md w-72" required>
                                     </div>
 
                                 </div>
@@ -816,16 +713,17 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="w-24 bg-slate-400 btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="product_update"  class="w-24 btn btn-primary">Update</button>
+                        <button type="submit" name="vegetable_update" class="w-24 btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
+ 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <!-- Delete function run here -->
     <script src="javascript/delete.js"></script>
 
@@ -873,6 +771,83 @@
         // Attach event listeners to buttons
         buttons.forEach((btn) => {
             btn.addEventListener("click", () => handleButtonClick(btn.id));
+        });
+    </script>
+
+    <!-- Fetch crop names on page load and change based on origin  with ADD modal-->
+    <script>
+        $(document).ready(function() {
+
+            // Fetch crop names on page load using origin
+            var origin = $('#Product_Origin').val();
+            $.ajax({
+                url: 'get_vegetables_data.php',
+                method: 'POST',
+                data: { action: 'fetch_crop_names', origin: origin },
+                success: function(data) {
+                    $('#Product_Category').html(data);
+                }
+            });
+
+            // Fetch crop names based on selected origin
+            $('#Product_Origin').change(function() {
+                var origin = $(this).val();
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_names', origin: origin },
+                    success: function(data) {
+                        $('#Product_Category').html(data);
+                    }
+                });
+            });
+
+            // Fetch crop varieties based on selected crop name
+            $('#Product_Category').change(function() {
+                
+                var origin = $('#Product_Origin').val();
+                var Category = $(this).val();
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_varieties', Category: Category , origin: origin },
+                    success: function(data) {
+                        
+                        // getting out put displya this id element
+                        $('#Product_name').html(data);
+                    }
+                });
+            });
+
+            // Fetch Minimum and Mximum price based on selected crop name
+            $('#Product_name').change(function() {
+                
+                var origin = $('#Product_Origin').val();
+                var category = $('#Product_Category').val();
+                var name = $(this).val();
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_minimum and maxmum price',
+                            origin: origin , 
+                            category: category , 
+                            name: name },
+                    success: function(data) {
+                        
+                        // Set values in the input fields
+                        $('#minimum_price').val(data.min_price);
+                        $('#maximum_price').val(data.max_price);
+                        
+                        // Set min and max attributes for the Product_price input field
+                        $('#product_price').attr('min', data.min_price);
+                        $('#product_price').attr('max', data.max_price);
+                        
+                    },error: function(xhr, status, error) {
+                            console.error("Error fetching data:", error);
+                    }
+                });
+            });
+
         });
     </script>
 
@@ -995,135 +970,131 @@
     <!-- SET UPDATE MODAL VALUE -->
     <script>
         
-        const product_update_btn = document.querySelectorAll('.product_update_btn');
-
-        const Origin_update = document.getElementById('Origin_update'); 
+        const vegetable_update_btn = document.querySelectorAll('.vegetable_update_btn');
         
-        let Category_fertilizer_update = document.getElementById('Category_fertilizer_update');
-        let Category_chemical_update = document.getElementById('Category_chemical_update');
-        
-        product_update_btn.forEach(button => {
+        vegetable_update_btn.forEach(button => {
             button.addEventListener("click", function() {
 
                 let form = this.closest('form');
 
-                let product_id = form.querySelector('#product_id').innerText;
-                let product_name = form.querySelector('#product_name').innerText;
-
-                let product_category = form.querySelector('#product_category').innerText.trim();
-
-                let fertilizer_category = form.querySelector('#fertilizer_category').innerText.trim();
-                let fertilizer_type = form.querySelector('#fertilizer_type').innerText.trim();
-                let sls_id = form.querySelector('#sls_id').innerText;
-                let iso_id = form.querySelector('#iso_id').innerText;
-                let agro_description = form.querySelector('#agro_description').innerText;
-
-                let Origin_select = product_category.toLowerCase();
+                let vegfruitle_id = form.querySelector('#vegfruitle_id').innerText;
+                let vegetable_name = form.querySelector('#vegetable_name').innerText.trim();
+                let vegetable_category = form.querySelector('#vegetable_category').innerText.trim();
+                let vegfruit_distric = form.querySelector('#vegfruit_distric').innerText.trim();
+                let vegfruit_area = form.querySelector('#vegfruit_area').innerText;
                 
-                document.getElementById('Product_id_update').value = product_id;
-                document.getElementById('Product_name_update').value = product_name;
-                document.getElementById('Origin_update').value = product_category.toLowerCase();
-
+                let vegfruit_image = form.querySelector('#vegfruit_image').innerText;
+                let vegfruit_price = form.querySelector('#vegfruit_price').innerText;
+                let vegfruit_total = form.querySelector('#vegfruit_total').innerText;
+                let vegfruit_location = form.querySelector('#vegfruit_location').innerText;
                 
-                if (Origin_select == "fertilizer") {
+                let imagePath = "http://localhost/Agricultural-Support-Service-System/MyAgro/end/images/vegetable/" + vegfruit_image;
 
-                    Category_fertilizer_update.style.display = 'flex';
-                    Category_chemical_update.style.display = 'none';
-                    Category_fertilizer_update.value = fertilizer_category;
-
-                } else if(Origin_select == "chemical"){
-
-                    Category_chemical_update.style.display = 'flex';
-                    Category_fertilizer_update.style.display = 'none';
-                    Category_chemical_update.value = fertilizer_category;
-                    
-                }
+                document.getElementById('update_vegfruitle_id').value = vegfruitle_id;
                 
-                let typeSelect = document.getElementById('type_update');
-                typeSelect.value = fertilizer_type;
+                let update_product_category = document.getElementById('update_product_category');
+                update_product_category.value = vegetable_category;
+
+                let update_product_name = document.getElementById('update_product_name');
+                update_product_name.value = vegetable_name;
                 
-                document.getElementById('sls_number_update').value = sls_id;
-                document.getElementById('iso_number_update').value = iso_id;
-                document.getElementById('Description_update').value = agro_description;
-
-                let agro_image = form.querySelector('#agro_image').innerText;
-                let imagePath = "http://localhost/Agricultural-Support-Service-System/MyAgro/end/images/fertilizer/saveferti/" + agro_image;
-
                 // Set the src of the image preview to the file path from the database
-                document.getElementById('agroImagePreview').src = imagePath;
+                document.getElementById('preview_product_image').src = imagePath;
                 
-                // sellin_information
-                
-                let productPrice = form.querySelector('#productPrice').innerText;
-                let agro_quantity = form.querySelector('#agro_quantity').innerText;
-                let meassure = form.querySelector('#meassure').innerText.trim();
-                let total_quantity = form.querySelector('#total_quantity').innerText;
-                let agro_district = form.querySelector('#agro_district').innerText.trim();
-                let agro_area = form.querySelector('#agro_area').innerText;
-                let agro_location = form.querySelector('#agro_location').innerText;
-                
-                document.getElementById('product_price_update').value = productPrice;
-                document.getElementById('product_quantity_update').value = agro_quantity;
+                document.getElementById('update_district').value = vegfruit_distric;
+                document.getElementById('update_area').value = vegfruit_area;
+                document.getElementById('update_address').value = vegfruit_location;
 
-                let measurementSelect = document.getElementById('measurement_update');
-                measurementSelect.value = meassure;
-
-                document.getElementById('total_quantity_update').value = total_quantity;
-
-                let districtSelect = document.getElementById('district_update');
-                districtSelect.value = agro_district;
-
-                document.getElementById('area_update').value = agro_area;
-                document.getElementById('address_update').value = agro_location;
-
+                document.getElementById('update_product_price').value = vegfruit_price;
+                document.getElementById('update_total_quantity').value = vegfruit_total;
+                           
 
             });
         });
 
-        Origin_update.addEventListener('change', function() {
-            var Origin_update = this.value;
+        // Fetch crop names on page load and change based on origin  with UPDATE modal
+        $(document).ready(function() {
 
-            if (Origin_update === 'fertilizer') {
+            // Fetch crop names on page load using origin
+            var origin = $('#update_product_category').val();
+            $.ajax({
+                url: 'get_vegetables_data.php',
+                method: 'POST',
+                data: { action: 'fetch_crop_names', origin: origin },
+                success: function(data) {
+                    $('#update_product_name').html(data);
+                }
+            });
 
-                Category_fertilizer_update.style.display = 'flex';
-                Category_chemical_update.style.display = 'none';
+            // Fetch crop names based on change origin
+            $('#update_product_category').change(function() {
+                var origin = $(this).val();
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_names', origin: origin },
+                    success: function(data) {
+                        $('#update_product_name').html(data);
+                    }
+                });
+            });
 
-            } else if (Origin_update === 'chemical') {
+            // Fetch crop varieties based on change crop name
+            $('#update_product_name').change(function() {
                 
-                Category_fertilizer_update.style.display = 'none';
-                Category_chemical_update.style.display = 'flex';
+                var origin = $('#update_product_category').val();
+                var Category = $(this).val();
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_varieties', Category: Category , origin: origin },
+                    success: function(data) {
+                        
+                        // getting out put displya this id element
+                        $('#update_product_variety').html(data);
+                    }
+                });
+            });
 
-            }
-        }); 
+
+            // Fetch Minimum and Mximum price based on selected crop name
+            $('#update_product_variety').change(function() {
+                
+                var origin = $('#update_product_category').val();
+                var category = $('#update_product_name').val();
+                var name = $(this).val();
+                $.ajax({
+                    url: 'get_vegetables_data.php',
+                    method: 'POST',
+                    data: { action: 'fetch_crop_minimum and maxmum price',
+                            origin: origin , 
+                            category: category , 
+                            name: name },
+                    success: function(data) {
+                        
+                        // Set values in the input fields
+                        $('#update_minimum_price').val(data.min_price);
+                        $('#update_maximum_price').val(data.max_price);
+                        
+                        // Set min and max attributes for the Product_price input field
+                        $('#update_product_price').attr('min', data.min_price);
+                        $('#update_product_price').attr('max', data.max_price);
+                        
+                    },error: function(xhr, status, error) {
+                            console.error("Error fetching data:", error);
+                    }
+                });
+            });
+
+        });
             
     </script>
 
-    <!-- Add your JavaScript to handle the dynamic changes of product category -->
-    <script>
-
-        const Origin = document.getElementById('Origin');
-        const Category_fertilizer = document.getElementById('ferilizer_div');
-        const Category_chemical = document.getElementById('chemical_div');
-
-        Origin.addEventListener('change', function() {
-            var Origin = this.value;
-
-            if (Origin === 'fertilizer') {
-                Category_fertilizer.style.display = 'flex';
-                Category_chemical.style.display = 'none';
-            } else if (Origin === 'chemical') {
-                Category_fertilizer.style.display = 'none';
-                Category_chemical.style.display = 'flex';
-            }
-
-        });
-
-    </script>
 
     <!-- output message -->
     <script>
         // show success or error message
-        var message ="<?php echo isset($_SESSION['product_manage']) ? $_SESSION['product_manage'] : ''; ?>";   //send product_manage include massage  varible message, but if not product_manage then print ''.
+        var message ="<?php echo isset($_SESSION['vegetable_manage']) ? $_SESSION['vegetable_manage'] : ''; ?>";   //send vegetable_manage include massage  varible message, but if not vegetable_manage then print ''.
 
         if (message != "") {
             if(message.includes('successfully')) {
@@ -1163,7 +1134,7 @@
                 });
             }
             // remove after once message is shown
-            <?php unset($_SESSION['product_manage']); ?>
+            <?php unset($_SESSION['vegetable_manage']); ?>
         }   
     </script>
 

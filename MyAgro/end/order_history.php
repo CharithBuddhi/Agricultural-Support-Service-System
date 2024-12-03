@@ -20,7 +20,7 @@ if (isset($_POST['rate_provider'])) {
 
     $product_category = $_POST['product_category_rate'];
     
-    if(($product_category == 'vegetable') || ($product_category == 'Fruits')){
+    if(($product_category == 'Vegetable') || ($product_category == 'Fruit')){
 
         $provider_type = "farmer";
 
@@ -74,7 +74,7 @@ if (isset($_POST['rate_provider'])) {
     </style>
 </head>
 
-<body>
+<body class="select-none">
 
     <?php require('user_header.php'); ?>
 
@@ -97,132 +97,132 @@ if (isset($_POST['rate_provider'])) {
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
                     ?>                    
-                        <form class="flex flex-col ml-20 mb-12 gap-1 p-3 w-[320px] border-l-2 border-b-2 border-slate-200  rounded-lg shadow-2xl">
-                            
-                            <div class="flex flex-col items-center gap-1">
-                                <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
-                                <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
-                                <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
-                                <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
-                                <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
-                            </div>
-                            
-                            <label id="customer_name" hidden><?php echo $row['customer_name']; ?></label>
-                            <label id="customer_email" hidden><?php echo $row['customer_email']; ?></label>
-
-                            <p class="flex gap-1 mt-4">
-                                <label class="pl-0.5 font-medium">RP ID :</label>
-                                <label id="rp_id"><?php echo $row['Reference_id']; ?></label>
-                            </p>
-                            
-                            <p hidden>
-                                <label class="font-medium">Product price:</label> 
-                                <label id="product_price"><?php echo "Rs. ".$row['item_price']; ?></label>
-                            </p>
-
-                            <p>
-                                <label class="font-medium">Order Quantity:</label>
-                                <label id="order_quantity"><?php echo $row['order_quantity']; ?></label>
-                                <?Php 
-                                if($row['item_category'] == "fertilizer"){
-                                    ?>
-                                    <label>Kg</label>
-                                    <?php
-                                }
-                                ?>
-                            </p>
-
-                            <p>
-                                <label class="font-medium">Paid Amount:</label>
-                                <label hidden id="paid_amount"><?php echo $row['paid_amount']; ?></label>
-                                <?php 
-                                    if($row['paid_amount'] == ""){
-                                        ?>
-                                        <label class="font-medium text-red-500">CDM Payment</label>
-                                        <?php
-                                    }else{
-                                        echo "Rs. ".$row['paid_amount'];
-                                } ?>
-                            </p>
-
-                            <p>
-                                <label class="font-medium">Toatal Amount:</label>
-                                <label id="total_amount"><?php echo "Rs. ".$row['total_amount']; ?></label>
-                            </p>
-
-                            <p>
-                                <label class="font-medium">Location:</label>
-                                <label id="location"><?php echo $row['item_location']; ?></label>
-                            </p>
-
-                            <p hidden>
-                                <label class="font-medium">Order Date:</label>
-                                <label id="order_date"><?php echo $row['created']; ?></label>
-                            </p>
-                            
-                            <p class="mt-2">
-                                <label class="font-medium">Provider Name:</label> 
-                                <label id="provider_name"><?php echo ucfirst($row['provider_name']); ?></label>
-                                <label id="provider_id" hidden><?php echo $row['provider_id']; ?></label>
-                            </p>
-                            
-                            <p>
-                                <label class="font-medium">Provider Number:</label> 
-                                <label id="provider_phone"><?php echo "+".$row['provider_phone']; ?></label>
-                                <label id="provider_email" hidden><?php echo $row['provider_email']; ?></label>
-                            </p>
-
-
-                            <label id="payment_status" hidden><?php echo $row['payment_status']; ?></label>
-                            <?php 
-                                if(($row['payment_status'] == "Pending")){
-                                    ?>
-                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-yellow-500 rounded-lg w-fit">Pending</p>
-                                    <?php
-                                }else if($row['payment_status'] == "Completed"){
-                                    ?>
-                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-green-500 rounded-lg w-fit">Completed</p>
-                                    <?php
-                                }else if($row['payment_status'] == "Canceled"){
-                                    ?>
-                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-red-500 rounded-lg w-fit">Cancelled</p>
-                                    <?php
-                                }else if($row['payment_status'] == "Process"){
-                                    ?>
-                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-orange-400 rounded-lg w-fit">Process</p>
-                                    <?php
-                                }else if($row['payment_status'] == "Rejected"){
-                                    ?>
-                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-orange-600 rounded-lg w-fit">Rejected</p>
-                                    <?php
-                                }else if($row['payment_status'] == "succeeded"){
-                                    ?>
-                                    <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-lime-400 rounded-lg w-fit">Prepared</p>
-                                    <?php
-                                }
-                            ?>
-
-                            <div class="flex gap-1 mt-1">
-                                <button type="button" id="Modal_Btn" value="<?php echo $row['Reference_id']; ?>" class="Modal_Btn pl-4 pr-4 pt-0.5 pb-0.5 mb-1 font-bold text-white rounded-md bg-slate-800">
-                                    View
-                                </button>
-
-                                <button type="button" id="Modal_view_Btn" value="<?php echo $row['Reference_id']; ?>" class="Modal_view_Btn pl-4 pr-4 pt-0.5 pb-0.5 mb-1 font-bold text-white rounded-md bg-slate-800">
-                                    Invoice
-                                    <i class="ml-1 fa-solid fa-file-pdf"></i>
-                                </button>
+                            <form class="flex flex-col ml-20 mb-12 gap-1 p-3 w-[320px] border-l-2 border-b-2 border-slate-200  rounded-lg shadow-2xl">
                                 
-                                <?php 
-                                    if(($row['payment_status'] == "Completed") && ($row['rating'] == 0)){
+                                <div class="flex flex-col items-center gap-1">
+                                    <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
+                                    <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
+                                    <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+                                    <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
+                                    <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
+                                </div>
+                                
+                                <label id="customer_name" hidden><?php echo $row['customer_name']; ?></label>
+                                <label id="customer_email" hidden><?php echo $row['customer_email']; ?></label>
+
+                                <p class="flex gap-1 mt-4">
+                                    <label class="pl-0.5 font-medium">RP ID :</label>
+                                    <label id="rp_id"><?php echo $row['Reference_id']; ?></label>
+                                </p>
+                                
+                                <p hidden>
+                                    <label class="font-medium">Product price:</label> 
+                                    <label id="product_price"><?php echo "Rs. ".$row['item_price']; ?></label>
+                                </p>
+
+                                <p>
+                                    <label class="font-medium">Order Quantity:</label>
+                                    <label id="order_quantity"><?php echo $row['order_quantity']; ?></label>
+                                    <?Php 
+                                    if($row['item_category'] == "fertilizer"){
                                         ?>
-                                        <button type="button" id="Modal_rating_Btn" value="<?php echo $row['Reference_id']; ?>" class="Modal_rating_Btn pl-4 pr-4 pt-0.5 pb-0.5 mb-1 font-bold text-white rounded-md bg-slate-800">Rating</button>
+                                        <label>Kg</label>
+                                        <?php
+                                    }
+                                    ?>
+                                </p>
+
+                                <p>
+                                    <label class="font-medium">Paid Amount:</label>
+                                    <label hidden id="paid_amount"><?php echo $row['paid_amount']; ?></label>
+                                    <?php 
+                                        if($row['paid_amount'] == ""){
+                                            ?>
+                                            <label class="font-medium text-red-500">CDM Payment</label>
+                                            <?php
+                                        }else{
+                                            echo "Rs. ".$row['paid_amount'];
+                                    } ?>
+                                </p>
+
+                                <p>
+                                    <label class="font-medium">Toatal Amount:</label>
+                                    <label id="total_amount"><?php echo "Rs. ".$row['total_amount']; ?></label>
+                                </p>
+
+                                <p>
+                                    <label class="font-medium">Location:</label>
+                                    <label id="location"><?php echo $row['item_location']; ?></label>
+                                </p>
+
+                                <p hidden>
+                                    <label class="font-medium">Order Date:</label>
+                                    <label id="order_date"><?php echo $row['created']; ?></label>
+                                </p>
+                                
+                                <p class="mt-2">
+                                    <label class="font-medium">Provider Name:</label> 
+                                    <label id="provider_name"><?php echo ucfirst($row['provider_name']); ?></label>
+                                    <label id="provider_id" hidden><?php echo $row['provider_id']; ?></label>
+                                </p>
+                                
+                                <p>
+                                    <label class="font-medium">Provider Number:</label> 
+                                    <label id="provider_phone"><?php echo "+".$row['provider_phone']; ?></label>
+                                    <label id="provider_email" hidden><?php echo $row['provider_email']; ?></label>
+                                </p>
+
+
+                                <label id="payment_status" hidden><?php echo $row['payment_status']; ?></label>
+                                <?php 
+                                    if(($row['payment_status'] == "Pending")){
+                                        ?>
+                                        <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-yellow-500 rounded-lg w-fit">Pending</p>
+                                        <?php
+                                    }else if($row['payment_status'] == "Completed"){
+                                        ?>
+                                        <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-green-500 rounded-lg w-fit">Completed</p>
+                                        <?php
+                                    }else if($row['payment_status'] == "Canceled"){
+                                        ?>
+                                        <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-red-500 rounded-lg w-fit">Cancelled</p>
+                                        <?php
+                                    }else if($row['payment_status'] == "Process"){
+                                        ?>
+                                        <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-orange-400 rounded-lg w-fit">Process</p>
+                                        <?php
+                                    }else if($row['payment_status'] == "Rejected"){
+                                        ?>
+                                        <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-orange-600 rounded-lg w-fit">Rejected</p>
+                                        <?php
+                                    }else if($row['payment_status'] == "succeeded"){
+                                        ?>
+                                        <p class="pl-2 pr-2 pt-0.5 pb-0.5 mt-1 mb-1 font-bold text-white bg-lime-400 rounded-lg w-fit">Prepared</p>
                                         <?php
                                     }
                                 ?>
 
-                            </div>
-                            
-                        </form>
+                                <div class="flex gap-1 mt-1">
+                                    <button type="button" id="Modal_Btn" value="<?php echo $row['Reference_id']; ?>" class="Modal_Btn pl-4 pr-4 pt-0.5 pb-0.5 mb-1 font-bold text-white rounded-md bg-slate-800">
+                                        View
+                                    </button>
+
+                                    <button type="button" id="Modal_view_Btn" value="<?php echo $row['Reference_id']; ?>" class="Modal_view_Btn pl-4 pr-4 pt-0.5 pb-0.5 mb-1 font-bold text-white rounded-md bg-slate-800">
+                                        Invoice
+                                        <i class="ml-1 fa-solid fa-file-pdf"></i>
+                                    </button>
+                                    
+                                    <?php 
+                                        if(($row['payment_status'] == "Completed") && ($row['rating'] == 0)){
+                                            ?>
+                                            <button type="button" id="Modal_rating_Btn" value="<?php echo $row['Reference_id']; ?>" class="Modal_rating_Btn pl-4 pr-4 pt-0.5 pb-0.5 mb-1 font-bold text-white rounded-md bg-slate-800">Rating</button>
+                                            <?php
+                                        }
+                                    ?>
+
+                                </div>
+                                
+                            </form>
                     <?php
                             }
                         }else {
