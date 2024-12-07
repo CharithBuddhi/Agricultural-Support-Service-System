@@ -443,6 +443,67 @@ session_start();
 
     }
 
+    // nutrition details update here
+    if(isset($_POST['update_nutrition'])){
+
+        $update_item_id = $_POST['update_item_id'];
+        $update_item_name = ucfirst(trim($_POST['update_Item_name']));
+        $update_Category = ucfirst(trim($_POST['update_Category']));
+        $update_Quantity = ucfirst(trim($_POST['update_Quantity']));
+        $update_Nutrient1 = ucfirst(trim($_POST['update_Nutrient1']));
+        $update_Nutrient2 = ucfirst(trim($_POST['update_Nutrient2']));
+        $update_Nutrient3 = ucfirst(trim($_POST['update_Nutrient3']));
+        $update_Nutrient4 = ucfirst(trim($_POST['update_Nutrient4']));
+        $update_Nutrient5 = ucfirst(trim($_POST['update_Nutrient5']));
+        $update_Nutrient6 = ucfirst(trim($_POST['update_Nutrient6']));
+
+        $check = "SELECT `item` FROM `nutrition` WHERE `nutrient_id` = '$update_item_id'";
+        $result = mysqli_query($conn, $check);
+    
+        // Count the number of rows with the matching 
+        $rowCount = mysqli_num_rows($result);
+        
+        if($rowCount == 1) {
+
+            $id = $_SESSION['login_staff_user'];
+    
+            $Item_name = mysqli_real_escape_string($conn, $update_item_name);
+            $Category = mysqli_real_escape_string($conn, $update_Category);
+            $Quantity = mysqli_real_escape_string($conn, $update_Quantity);
+            $Nutrient1 = mysqli_real_escape_string($conn, $update_Nutrient1);
+            $Nutrient2 = mysqli_real_escape_string($conn, $update_Nutrient2);
+            $Nutrient3 = mysqli_real_escape_string($conn, $update_Nutrient3);
+            $Nutrient4 = mysqli_real_escape_string($conn, $update_Nutrient4);
+            $Nutrient5 = mysqli_real_escape_string($conn, $update_Nutrient5);
+            $Nutrient6 = mysqli_real_escape_string($conn, $update_Nutrient6);
+
+            $sql = "UPDATE `nutrition` SET `item`='$Item_name',`item_category`='$Category',`nutrient_amont`='$Quantity',
+            `nutrient_valu1`='$Nutrient1',`nutrient_valu2`='$Nutrient2',`nutrient_valu3`='$Nutrient3',`nutrient_valu4`='$Nutrient4',
+            `nutrient_valu5`='$Nutrient5',`nutrient_valu6`='$Nutrient6',`response`='$id', update_time = NOW() WHERE nutrient_id='$update_item_id'";
+            $updateResult = mysqli_query($conn, $sql);
+
+            if($updateResult) {
+
+                $_SESSION['verity_status'] = "Nurition details update successfully";
+                header('location:variety.php');
+                exit();
+
+            } else {
+
+                $_SESSION['verity_status'] = "Nurition details update failed!,Try Again";
+                header('location:variety.php');
+                exit();
+            }
+            
+        }else{
+
+            $_SESSION['verity_status'] = "This nurition details are not exist";
+            header('location:variety.php');
+            exit();
+        }
+
+    }
+
     // password reset in staff members
     if(isset($_POST['froget_password_update'])){
 

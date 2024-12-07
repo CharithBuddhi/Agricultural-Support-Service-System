@@ -44,7 +44,15 @@ if (isset($_POST['detect_image'])) {
                     if ($return_var === 0 && !empty($result)) {
                         echo $result;
 
+                        $check = "SELECT `item` FROM `nutrition` WHERE `nutrient_id` = '$update_item_id'";
+                        $result = mysqli_query($conn, $check);
 
+                        if($result->num_rows > 0){
+                            $row = $result->fetch_assoc();
+                            $item = $row['item'];
+                        }else{
+                            $item = "";
+                        }   
 
                     } else {
                         echo "Error:". $result;

@@ -130,6 +130,33 @@
         
     }
 
+    // Nutrients details delete function
+    if(isset($_POST['nutrient_delete_btn'])){
+
+        $nutrient_id = mysqli_real_escape_string($conn, $_POST['nutrient_id']);
+
+        $check = "SELECT * FROM nutrition WHERE nutrient_id = '$nutrient_id'";
+
+        $query_run = mysqli_query($conn, $check);
+
+        if($query_run->num_rows > 0){
+
+            // Delete the record from the database
+            $sql = "DELETE FROM nutrition WHERE nutrient_id = '$nutrient_id'";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                echo 200;
+            }
+            else{
+                echo 500;
+            }
+
+        } else {
+            echo "Cannot find this nutrition details.";
+        } 
+
+    }
+
     // staff members details delete function
     if(isset($_POST['staff_delete_btn'])){
 
@@ -246,8 +273,8 @@
         !isset($_POST["verity_delete_btn"]) &&
         !isset($_POST["staff_delete_btn"]) &&
         !isset($_POST["customer_detail_delete_btn"]) &&
-        !isset($_POST["supplier_detail_delete_btn"]) //&&
-        // !isset($_POST["staff_profile_update_btn"])
+        !isset($_POST["supplier_detail_delete_btn"]) &&
+        !isset($_POST["nutrient_delete_btn"])
     ) {
         header('Location: index.php');
         exit(0);
