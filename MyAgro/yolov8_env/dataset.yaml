@@ -1,0 +1,7 @@
+path: D:/a XAmpp projec/htdocs/Agricultural-Support-Service-System/MyAgro/yolov8_env/dataset
+train: images/train
+val: images/val
+names:
+  0: apple
+  1: banana
+  2: kiwi

@@ -1,0 +1,6 @@
+node_modules
+MyAgro/yolov8_env/Lib/
+!yolov8_env/Lib/site-packages/  # Allow site-packages if you need some files in it
+yolov8_env/Lib/site-packages/*.whl  # Ignore wheel files if they are large
+yolov8_env/Lib/site-packages/*.tar.gz  # Ignore large package tarballs
+
