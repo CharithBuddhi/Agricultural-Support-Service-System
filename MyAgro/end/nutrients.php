@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
     <h1 class="my-6 font-serif text-3xl italic font-semibold text-center">Nutrients  of crop</h1>
 
     <div class="flex justify-center gap-10 pb-20">
-        <form class="flex p-4 flex-col ml-2 border-[1px] border-gray-400 shadow-lg rounded-xl shadow-gray-400">
+        <form action="detect_image.php" method="post" enctype="multipart/form-data" class="flex p-4 flex-col ml-2 border-[1px] border-gray-400 shadow-lg rounded-xl shadow-gray-400">
             <label class="text-red-600 text-md">When inserting a photo, clearly insert the vegetable or fruit as follows.</br> Otherwise, the accuracy of your results may decrease.</label>
             <div class="flex flex-col mt-4">
                 <h3>Examples</h3>
@@ -26,7 +27,7 @@
             </div>
             <div class="flex flex-col">
                 <label for="" class="mt-2">Upload image:</label>
-                <input type="file" id="image" name="image" class="mt-2 w-[500px] h-[300px] border-2 border-gray-200">   
+                <input type="file" id="image" name="image" accept="image/jpeg, image/png, image/jpg" class="mt-2 w-[500px] h-[300px] border-2 border-gray-200" required>   
             </div>
             <div class="flex flex-col">
                 <label for="" class="mt-2">Accepted file types:</label>
@@ -35,7 +36,7 @@
             </div>
             <div class="flex gap-8">
                 <button type="reset" class="mt-5 mr-6 h-8 rounded-full w-[145px] bg-white border-2">Clear</button>
-                <button type="submit" class="mt-5 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-black">Submit</button>
+                <button type="submit" name="detect_image" class="mt-5 h-8 rounded-full w-[160px] bg-[#6EE70F]/50 text-black">Submit</button>
             </div>
         </form>
         <div class="flex flex-col gap-5 p-4 border-[1px] w-[400px] border-gray-400 shadow-lg rounded-xl shadow-gray-400">
@@ -57,6 +58,54 @@
 
     <!-- footer section in home page -->
     <?php require('footer.php'); ?>
+
+    <!-- sweetalert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- show output message -->
+    <script>
+        var message ="<?php echo isset($_SESSION['detect']) ? $_SESSION['detect'] : ''; ?>"; //send profile_status include massage  varible message, but if not status then print ''.
+        if (message != "") {
+            if(message.includes('analysis')) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#69f44a",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "success",
+                title: message,
+                });
+            } else {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                iconColor: "#f84444",
+                background: "#fcf2f2",
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                });
+                Toast.fire({
+                icon: "error",
+                title: message,
+                });
+            }
+            // remove after once message is shown
+            <?php unset($_SESSION['detect']); ?>
+        } 
+    </script>
     
 </body>
 </html>
