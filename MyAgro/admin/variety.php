@@ -25,7 +25,7 @@ if(!isset($_SESSION['login_staff_user'])){
         }
     </style>
 </head>
-<body class="bg-[#350dc3] text-white">
+<body class="bg-[#323fb1] text-white">
 
 <div class="flex w-full h-screen">
     
@@ -34,9 +34,10 @@ if(!isset($_SESSION['login_staff_user'])){
     
     <div class="flex flex-col w-[79%]">
         
-        <!-- Verites manage table section -->
+        
         <div class="flex flex-col w-full">
             <div class="mt-[18px]">
+                <!-- Verites manage table section -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-mt-2">
@@ -151,6 +152,123 @@ if(!isset($_SESSION['login_staff_user'])){
                     </div>
         
                 </div>
+
+                <!-- Nutrients manage table section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-mt-2">
+                            <div class="flex card-header ">
+                                <h1 class="mt-4 text-xl">Nutrients Manage</h1>
+                            </div>
+                            <div class="p-1 ml-3 h-[50px]">
+        
+                                <div class="flex">
+                                    
+                                    <div class="col-md-7">
+        
+                                        <form action="" method="post" class="flex gap-4e">
+                                            <div class="input-group">
+                                                <input type="text" name="search_verities" value="<?php if(isset($_POST['search_verities'])){ echo $_POST['search_verities']; } ?>" class="form-control" placeholder="use for search technology type or ID"  required>
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                            </div>  
+                                        </form>
+                                    </div>
+                                    <button class="relative left-[270px]" data-bs-toggle="modal" data-bs-target="#add_verities">
+                                        <div class="flex flex-col items-center justify-center w-32 bg-blue-500 border-2 border-white hover:bg-blue-600 hover:text-white rounded-xl h-9">
+                                            <h3>Add Verities</h3>
+                                        </div>
+                                    </button>
+                                    
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+        
+                    <div class="col-md-12">
+                        <div class="card-mt-1">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="card-body table-responsive" style="max-height: 500px; overflow-y: auto;">
+                                    <table class="table text-center text-white table-hover">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Verites Name</th>
+                                                <th scope="col">Verites Image</th>
+                                                <th scope="col">Info</th>
+                                                <th scope="col">Action</th>
+                                            <tr>   
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <?php
+                                                require 'db_conn.php';
+                                                
+                                                if(isset($_POST['search_verities'])){
+                                                    $filter_verities = $_POST['search_verities'];
+                                                    $query = "SELECT * FROM `verity` WHERE CONCAT(`product_name`, `verity_name`) LIKE '%$filter_verities%'";
+                                                    $query_run = mysqli_query($conn, $query);
+                                                
+                                                    // CONCAT keyword filter the inside bracket column data only
+                                                    // mysqli_num_rows use to check inside the query_run is empty or not
+                                                    if(mysqli_num_rows($query_run) >  0)
+                                                    {
+            
+                                                        foreach($query_run as $items){
+                                                            //want to print table rows here and need to use insdie the td again php tag so close php tag here
+                                                            ?>
+                                                            <tr>   
+                                                                <!-- using = mark can access the data, this are the print like echo data-bs-toggle="modal" data-bs-target="#update_verities"-->
+                                                                <?php $updateVarity = $items['verity_id']; ?>
+                                                                <td class="font-bold" id="verity_id" name="verity_id"><?= $items['verity_id']; ?></td>
+                                                                <td><?= $items['product_category']; ?></td> 
+                                                                <td><?= $items['product_name']; ?></td> 
+                                                                <td><?= $items['verity_name']; ?></td>            
+                                                                <td><?php echo '<img src="/Agricultural-Support-Service-System/MyAgro/admin/images/verity/'.$items['Verities_image'].'" class="ml-16 proof_doc h-[40px] w-[80px]">'; ?></td>
+                                                                <td class="text-black">
+                                                                    <textarea class="rounded-lg disabled:bg-white" disabled cols="25" rows="2"><?= $items['Description']; ?></textarea>
+                                                                </td>
+                                                                <td class="flex justify-center gap-3 ">
+                                                                    <button type="button" id="update_btn" data-id="<?php echo $items['verity_id']; ?>" class="update_btn" name="update_btn" >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class= " size-7 hover:text-blue-500 h-[55px]">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <button type="button" value=<?php echo $items['verity_id'] ?> class="verity_delete_btn">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" size-7 hover:text-red-500">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+            
+                                                            <?php
+                                                        }
+            
+                                                    }
+                                                    else{
+                                                        
+                                                        ?>
+                                                            <tr>
+                                                                <td colspan="6">No Record Found</td>
+                                                            </tr>
+                                                        <?php
+                                                    }
+                                                }
+                                            
+                                            ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+        
+                </div>
+
             </div>
         </div>
     
