@@ -25,7 +25,7 @@ if(!isset($_SESSION['login_staff_user'])){
         }
     </style>
 </head>
-<body class="bg-[#323fb1] text-white">
+<body class="bg-[#1c4094] text-white">
 
 <div class="flex w-full h-screen">
     

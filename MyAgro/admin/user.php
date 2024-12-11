@@ -22,7 +22,7 @@ if(!isset($_SESSION['login_admin_user'])){
         }  
     </style>
 </head>
-<body class="bg-[#350dc3] text-white">
+<body class="bg-[#1c4094] text-white">
     <div class="w-screen h-screen">
         <div class="flex w-full h-full">
 
@@ -39,11 +39,11 @@ if(!isset($_SESSION['login_admin_user'])){
 
                             <div class="gap-1">
                                 <div class="flex">
-                                    <h1 class="mt-2 text-xl font-serif">Customer Details</h1>
+                                    <h1 class="mt-2 font-serif text-2xl">Customer Details</h1>
                                 </div>  
                                 <form action="" method="post" class="flex mt-1">
                                     <div class="flex gap-2">
-                                        <input type="text" class="border-1 rounded-md font-sans w-96 h-8 p-1 text-black" name="search_customer" value="<?php if(isset($_POST['search_customer'])){ echo $_POST['search_customer']; } ?>" placeholder="use for search username" required>
+                                        <input type="text" class="h-8 p-1 font-sans text-black rounded-md border-1 w-96" name="search_customer" value="<?php if(isset($_POST['search_customer'])){ echo $_POST['search_customer']; } ?>" placeholder="use for search username" required>
                                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-center h-8 w-[100px] rounded-lg">Search</button>
                                     </div>  
                                 </form>                                           
@@ -51,9 +51,9 @@ if(!isset($_SESSION['login_admin_user'])){
                 
                             <div class="mt-3">
                                 <div class="" id="customer_table" style="max-height: 310px; overflow-y: auto;">
-                                    <table class="table-auto text-center font-sans text-white table-hover justify-between w-full">
+                                    <table class="justify-between w-full font-sans text-center text-white table-auto table-hover">
                                         <thead>
-                                            <tr class="bg-white  text-black h-10 text-center">
+                                            <tr class="h-10 text-center text-black bg-white">
                                                 <th>User Name</th>
                                                 <th>Name</th>
                                                 <th>Address</th>
@@ -96,7 +96,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                             
                                                             ?>
 
-                                                                <tr class="border-b-2 border-slate-300 h-10 text-center">
+                                                                <tr class="h-10 text-center border-b-2 border-slate-300">
                                                                     <td id="customer_id" class="hidden"><?= $row['customer_id']; ?></td>
                                                                     <td id="username"><?= $row['username']; ?></td>
                                                                     <td class="w-36"><?= $row['customer_name']; ?></td>
@@ -108,21 +108,21 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                         if($row['customer_status'] == 0) {
                                                                             ?>
                                                                             <td class="gap-1 w-[80px] shrink-0 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                                <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                 <label class="text-green-500">Active</label>
                                                                             </td>
                                                                             <?php
                                                                         }else{
                                                                             ?>
                                                                             <td class="gap-1 w-[80px] shrink-0 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-exclamation text-yellow-400"></i>
+                                                                                <i class="text-yellow-400 fa-solid fa-circle-exclamation"></i>
                                                                                 <label class="text-yellow-500">Hold</label>
                                                                             </td>
                                                                             <?php
                                                                             
                                                                         }
                                                                     ?>
-                                                                    <td class="justify-center mt-1 items-center gap-3">
+                                                                    <td class="items-center justify-center gap-3 mt-1">
                                                                         <button type="button" value="<?= $row['customer_id']; ?>" class="customer_status_hold_btn h-fit">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hover:text-yellow-600">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -177,7 +177,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                             
                                                             ?>
 
-                                                                <tr class="border-b-2 border-slate-300 h-10 text-center">
+                                                                <tr class="h-10 text-center border-b-2 border-slate-300">
                                                                     <td id="customer_id" class="hidden"><?= $row['customer_id']; ?></td>
                                                                     <td id="username"><?= $row['username']; ?></td>
                                                                     <td class="w-36"><?= $row['customer_name']; ?></td>
@@ -189,21 +189,21 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                         if($row['customer_status'] == 0) {
                                                                             ?>
                                                                             <td class="gap-1 w-[80px] shrink-0 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                                <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                 <label class="text-green-500">Active</label>
                                                                             </td>
                                                                             <?php
                                                                         }else{
                                                                             ?>
                                                                             <td class="gap-1 w-[80px] shrink-0 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-exclamation text-yellow-400"></i>
+                                                                                <i class="text-yellow-400 fa-solid fa-circle-exclamation"></i>
                                                                                 <label class="text-yellow-500">Hold</label>
                                                                             </td>
                                                                             <?php
                                                                             
                                                                         }
                                                                     ?>
-                                                                    <td class="justify-center mt-1 items-center gap-3">
+                                                                    <td class="items-center justify-center gap-3 mt-1">
                                                                         <button type="button" value="<?= $row['customer_id']; ?>" class="customer_status_hold_btn h-fit">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hover:text-yellow-600">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -254,11 +254,11 @@ if(!isset($_SESSION['login_admin_user'])){
 
                             <div class="gap-1">
                                 <div class="flex">
-                                    <h1 class="mt-5 text-xl font-serif">Supplier Details</h1>
+                                    <h1 class="mt-5 font-serif text-2xl">Supplier Details</h1>
                                 </div>  
                                 <form action="" method="post" class="flex mt-1">
                                     <div class="flex gap-2">
-                                        <input type="text" class="border-1 rounded-md font-sans w-96 h-8 p-1 text-black" name="search_supplier" value="<?php if(isset($_POST['search_supplier'])){ echo $_POST['search_supplier']; } ?>" placeholder="use for search username" required>
+                                        <input type="text" class="h-8 p-1 font-sans text-black rounded-md border-1 w-96" name="search_supplier" value="<?php if(isset($_POST['search_supplier'])){ echo $_POST['search_supplier']; } ?>" placeholder="use for search username" required>
                                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-center h-8 w-[100px] rounded-lg">Search</button>
                                     </div>  
                                 </form>                                           
@@ -266,9 +266,9 @@ if(!isset($_SESSION['login_admin_user'])){
                 
                             <div class="mt-3">
                                 <div class="" id="customer_table" style="max-height: 310px; overflow-y: auto;">
-                                    <table class="table-auto text-center font-sans text-white table-hover w-full">
+                                    <table class="w-full font-sans text-center text-white table-auto table-hover">
                                         <thead>
-                                            <tr class="bg-white  text-black h-10 text-center">
+                                            <tr class="h-10 text-center text-black bg-white">
                                                 <th>User Name</th>
                                                 <th>Shop Name</th>
                                                 <th>Email</th>
@@ -312,34 +312,36 @@ if(!isset($_SESSION['login_admin_user'])){
                                                             
                                                             ?>
 
-                                                                <tr class="border-b-2 border-slate-300 h-10 text-center">
+                                                                <tr class="h-10 text-center border-b-2 border-slate-300">
                                                                     <td id="supplier_id" class="hidden"><?= $row['supplier_id']; ?></td>
-                                                                    <td id="username"><?= $row['username']; ?></td>
-                                                                    <td ><?= $row['supplier_shop_name']; ?></td>
-                                                                    <td ><?= $row['supplier_email']; ?></td>
-                                                                    <td ><?= $row['supplier_nic']; ?></td>
-                                                                    <td><?php echo '<img src="/Agricultural-Support-Service-System/MyAgro/admin/images/user/'.$row['supplier_proof'].'" width="50px" height="50px" class="supplier_proof_doc">'; ?></td>
-                                                                    <td><?= $row['response']; ?></td>
-                                                                    <td class="hidden"><?= $row['customer_telno']; ?></td>
+                                                                    <td id="supplier_name" class="hidden"><?= $row['supplier_name']; ?></td>
+                                                                    <td id="supplier_address" class="hidden"><?= $row['supplier_address']; ?></td>
+                                                                    <td id="supplier_phone" class="hidden"><?= $row['supplier_phone']; ?></td>
+                                                                    <td id="supplier_username"><?= $row['username']; ?></td>
+                                                                    <td id="supplier_shop_name"><?= $row['supplier_shop_name']; ?></td>
+                                                                    <td id="supplier_email"><?= $row['supplier_email']; ?></td>
+                                                                    <td id="supplier_nic"><?= $row['supplier_nic']; ?></td>
+                                                                    <td ><?php echo '<img src="/Agricultural-Support-Service-System/MyAgro/admin/images/user/'.$row['supplier_proof'].'" width="50px" height="50px" class="supplier_proof_doc">'; ?></td>
+                                                                    <td ><?= $row['response']; ?></td>
                                                                     <?php
                                                                         if($row['supplier_status'] == 0) {
                                                                             ?>
                                                                             <td class="gap-1 w-[80px] shrink-0 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                                <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                 <label class="text-green-500">Active</label>
                                                                             </td>
                                                                             <?php
                                                                         }else{
                                                                             ?>
                                                                             <td class="gap-1 mt-1 w-[80px] shrink-0 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-exclamation text-yellow-400"></i>
+                                                                                <i class="text-yellow-400 fa-solid fa-circle-exclamation"></i>
                                                                                 <label class="text-yellow-500">Hold</label>
                                                                             </td>
                                                                             <?php
                                                                             
                                                                         }
                                                                     ?>
-                                                                    <td class="justify-center mt-1 items-center">
+                                                                    <td class="items-center justify-center mt-1">
                                                                         <button type="button" value="<?= $row['supplier_id']; ?>" class="supplier_status_hold_btn h-fit">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hover:text-yellow-600">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -399,7 +401,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                             
                                                             ?>
 
-                                                                <tr class="border-b-2 border-slate-300 h-10 text-center">
+                                                                <tr class="h-10 text-center border-b-2 border-slate-300">
                                                                     <td id="supplier_id" class="hidden"><?= $row['supplier_id']; ?></td>
                                                                     <td id="supplier_name" class="hidden"><?= $row['supplier_name']; ?></td>
                                                                     <td id="supplier_address" class="hidden"><?= $row['supplier_address']; ?></td>
@@ -414,21 +416,21 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                         if($row['supplier_status'] == 0) {
                                                                             ?>
                                                                             <td class="gap-1 w-[80px] shrink-0 mt-1 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                                                <i class="text-green-500 fa-solid fa-circle-check"></i>
                                                                                 <label class="text-green-500">Active</label>
                                                                             </td>
                                                                             <?php
                                                                         }else{
                                                                             ?>
                                                                             <td class="gap-1 mt-1 w-[80px] shrink-0 items-center justify-center">
-                                                                                <i class="fa-solid fa-circle-exclamation text-yellow-400"></i>
+                                                                                <i class="text-yellow-400 fa-solid fa-circle-exclamation"></i>
                                                                                 <label class="text-yellow-500">Hold</label>
                                                                             </td>
                                                                             <?php
                                                                             
                                                                         }
                                                                     ?>
-                                                                    <td class="justify-center mt-1 items-center">
+                                                                    <td class="items-center justify-center mt-1">
                                                                         <button type="button" value="<?= $row['supplier_id']; ?>" class="supplier_status_hold_btn h-fit">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hover:text-yellow-600">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -481,7 +483,7 @@ if(!isset($_SESSION['login_admin_user'])){
     </div>
 
     <!-- Modal for supplier proof document view -->
-    <div id="staff_modal" class="bg-black bg-opacity-50 fixed inset-0 flex items-center justify-center" style="display: none;">      
+    <div id="staff_modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display: none;">      
         <div class="p-4 rounded-xl border shadow-2xl border-slate-500 bg-[#fefefe] text-black"
             style="max-width: 90%; max-height: 90%; overflow-y: auto;">
 
@@ -491,19 +493,19 @@ if(!isset($_SESSION['login_admin_user'])){
             </div>
 
             <!-- Modal Body -->
-            <div class="flex align-middle justify-center items-center">
-                <img src="" alt="user proof document" class="modal-img object-contain">
+            <div class="flex items-center justify-center align-middle">
+                <img src="" alt="user proof document" class="object-contain modal-img">
             </div>
 
             <!-- Modal Footer -->
-            <div class="mt-4 gap-2 flex text-center justify-end">
-                <button type="button" id="close" class="close w-24 h-9 rounded-lg bg-slate-400 hover:bg-slate-500 transition">Close</button>
+            <div class="flex justify-end gap-2 mt-4 text-center">
+                <button type="button" id="close" class="w-24 transition rounded-lg close h-9 bg-slate-400 hover:bg-slate-500">Close</button>
             </div>
         </div>
     </div>
 
     <!--  Modal for supplier update information view-->
-    <div id="supplier_modal" class="bg-black bg-opacity-50 fixed inset-0 flex items-center justify-center" style="display: none;">
+    <div id="supplier_modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display: none;">
         <div class="p-4 rounded-xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border shadow-2xl border-slate-500 bg-[#fefefe] text-black w-[420px]">
 
             <!-- Modal Header -->
@@ -519,7 +521,7 @@ if(!isset($_SESSION['login_admin_user'])){
                         <input type="text" name="update_supplier_id" id="update_supplier_id" hidden>
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="update_supplier_name">Supplier Name:</label>
-                            <input type="text" name="update_supplier_name" id="update_supplier_name"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
+                            <input type="text" name="update_supplier_name" id="update_supplier_name" class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
                         </div>
                         
                         <div class="flex flex-col gap-1 font-bold">
@@ -529,27 +531,27 @@ if(!isset($_SESSION['login_admin_user'])){
 
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="update_supplier_NIC">Supplier NIC:</label>
-                            <input type="text" name="update_supplier_NIC" id="update_supplier_NIC"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required readonly>
+                            <input type="text" name="update_supplier_NIC" id="update_supplier_NIC" class="h-10 border-2 rounded-lg w-96 border-slate-300" required readonly>
                         </div>
                         
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="update_shop_name">Supplier Shop Name:</label>
-                            <input type="text" id="update_shop_name" name="update_shop_name"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
+                            <input type="text" id="update_shop_name" name="update_shop_name" class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
                         </div>
 
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="update_supplier_email">Supplier Email:</label>
-                            <input type="text" name="update_supplier_email" id="update_supplier_email"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required readonly>
+                            <input type="text" name="update_supplier_email" id="update_supplier_email" class="h-10 border-2 rounded-lg w-96 border-slate-300" required readonly>
                         </div>
 
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="update_shop_address">Shop Address:</label>
-                            <input type="text" id="update_shop_address" name="update_shop_address"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
+                            <input type="text" id="update_shop_address" name="update_shop_address" class="h-10 border-2 rounded-lg w-96 border-slate-300" required>
                         </div>
 
                         <div class="flex flex-col gap-1 font-bold">
                             <label for="update_supplier_phone">Supplier Phone:</label>
-                            <input type="text" name="update_supplier_phone" id="update_supplier_phone"  class="h-10 border-2 rounded-lg w-96 border-slate-300" required readonly>
+                            <input type="text" name="update_supplier_phone" id="update_supplier_phone" class="h-10 border-2 rounded-lg w-96 border-slate-300" required readonly>
                         </div>
 
                         <div class="flex flex-col gap-1 font-bold">
@@ -561,9 +563,9 @@ if(!isset($_SESSION['login_admin_user'])){
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="mt-4 gap-2 flex text-center justify-end">
-                    <button type="button" id="close_suppllir_update_btn" class="close w-24 h-9 rounded-lg bg-slate-400 hover:bg-slate-500 transition">Close</button>
-                    <button type="submit" name="supplier_detail_update" id="supplier_detail_update"  class="w-24 h-9 rounded-lg bg-blue-500 hover:bg-blue-600 transition">Update</button>
+                <div class="flex justify-end gap-2 mt-4 text-center">
+                    <button type="button" id="close_suppllir_update_btn" class="w-24 transition rounded-lg close h-9 bg-slate-400 hover:bg-slate-500">Close</button>
+                    <button type="submit" name="supplier_detail_update" id="supplier_detail_update"  class="w-24 transition bg-blue-500 rounded-lg h-9 hover:bg-blue-600">Update</button>
                 </div>
             </form>
         </div>

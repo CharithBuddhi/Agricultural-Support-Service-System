@@ -8,17 +8,17 @@
     <title>Play Video</title>
 </head>
 <body>
-    <div class="flex flex-col ml-2 bg-slate-400">
+    <div class="flex flex-col ml-2 bg-black">
         <!-- search bar -->
         <form action="techno.php" method="post" class="flex justify-center mt-2 mb-1" enctype="multipart/form-data">
             <a href="techno.php" class="relative right-[310px]">
-                <button  type="button" class="bg-red-300 w-[100px] rounded-3xl border border-slate-500 text-lg font-bold">Back</button>
+                <button  type="button" class="bg-white w-[100px] rounded-3xl border border-slate-500 text-lg font-bold">Back</button>
             </a>
-            <div class="flex">
-                <div class="flex">
+            <div class="flex justify-center">
+                <div class="flex justify-center mr-10">
                     <input type="text" name="search_techniq" value="<?php if(isset($_POST['search_techniq'])){ echo $_POST['search_techniq']; } ?>"
-                        class="h-10 text-xl border-l-2 outline-none rounded-l-3xl w-96" placeholder="search all techniques using keyword all"  required>
-                    <button type="submit" class="h-10 text-white bg-blue-500 rounded-r-3xl w-28">Search</button>
+                        class="h-10 pl-1 text-xl border-l-2 outline-none rounded-l-xl w-96" placeholder="search by video name"  required>
+                    <button type="submit" class="h-10 text-white bg-blue-500 rounded-r-xl w-28">Search</button>
                 </div>  
             </div>
         </form>

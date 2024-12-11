@@ -264,6 +264,47 @@
         
     }
 
+    // farmer_detail_delete_btn details delete function
+    if(isset($_POST['farmer_detail_delete_btn'])){
+
+        $farmer_id = mysqli_real_escape_string($conn, $_POST['farmer_id']);
+
+        $check = "SELECT farmer_proof FROM farmer WHERE farmer_id = '$farmer_id'";
+
+        $query_run = mysqli_query($conn, $check);
+
+        if($query_run->num_rows > 0){
+
+            $row = $query_run->fetch_assoc();
+
+            $filePath = 'images/user/' . $row['farmer_proof'];
+
+            // Delete the file from the server
+            if(file_exists($filePath)){ 
+
+                unlink($filePath);
+
+                // Delete the record from the database
+                $sql = "DELETE FROM farmer WHERE farmer_id = '$farmer_id'";
+                $result = mysqli_query($conn, $sql);
+                if($result){
+
+                    echo 200;
+                }
+                else{
+                    echo 500;
+                }
+
+            }else{
+                echo "This farmer proof document are missin.";
+            }
+
+        } else {
+            echo "This farmer proof document are not found.";
+        }
+        
+    }
+
     // redirect to index page
     if (
         !isset($_POST["price_delete_btn"]) &&
@@ -274,6 +315,7 @@
         !isset($_POST["staff_delete_btn"]) &&
         !isset($_POST["customer_detail_delete_btn"]) &&
         !isset($_POST["supplier_detail_delete_btn"]) &&
+        !isset($_POST["farmer_detail_delete_btn"]) &&
         !isset($_POST["nutrient_delete_btn"])
     ) {
         header('Location: index.php');

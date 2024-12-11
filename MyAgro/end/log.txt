@@ -2,11 +2,11 @@ Result: kiwi
 Output: Array
 (
     [0] => Model loaded successfully!
-    [1] => Image path: D:\a XAmpp projec\htdocs\Agricultural-Support-Service-System\MyAgro\yolov8_env\try_data\download-3-_jpeg.rf.04dd436e79938a05b3b7efaa2fb5813a_1733594566.jpg
-    [2] => Running inference on image: D:\a XAmpp projec\htdocs\Agricultural-Support-Service-System\MyAgro\yolov8_env\try_data\download-3-_jpeg.rf.04dd436e79938a05b3b7efaa2fb5813a_1733594566.jpg
+    [1] => Image path: D:\a XAmpp projec\htdocs\Agricultural-Support-Service-System\MyAgro\yolov8_env\try_data\download_jpeg.rf.c582455c3767eb1b594ab0abac16a382_1733801239.jpg
+    [2] => Running inference on image: D:\a XAmpp projec\htdocs\Agricultural-Support-Service-System\MyAgro\yolov8_env\try_data\download_jpeg.rf.c582455c3767eb1b594ab0abac16a382_1733801239.jpg
     [3] => 
-    [4] => image 1/1 D:\a XAmpp projec\htdocs\Agricultural-Support-Service-System\MyAgro\yolov8_env\try_data\download-3-_jpeg.rf.04dd436e79938a05b3b7efaa2fb5813a_1733594566.jpg: 640x640 16 kiwis, 100.6ms
-    [5] => Speed: 3.2ms preprocess, 100.6ms inference, 46.7ms postprocess per image at shape (1, 3, 640, 640)
+    [4] => image 1/1 D:\a XAmpp projec\htdocs\Agricultural-Support-Service-System\MyAgro\yolov8_env\try_data\download_jpeg.rf.c582455c3767eb1b594ab0abac16a382_1733801239.jpg: 640x640 3 kiwis, 112.8ms
+    [5] => Speed: 0.0ms preprocess, 112.8ms inference, 12.4ms postprocess per image at shape (1, 3, 640, 640)
     [6] => Inference completed successfully.
     [7] => kiwi
 )

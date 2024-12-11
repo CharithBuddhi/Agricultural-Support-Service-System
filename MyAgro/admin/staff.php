@@ -13,7 +13,7 @@ if(!isset($_SESSION['login_staff_user'])){
     <title>Staff</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
-<body class="bg-[#350dc3] text-white">
+<body class="bg-[#1c4094] text-white">
     <div class="w-screen h-screen">
         <div class="flex w-full h-full">
 

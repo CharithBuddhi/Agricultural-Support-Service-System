@@ -16,7 +16,7 @@ if(!isset($_SESSION['login_admin_user'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Staff Info</title>
 </head>
-<body class="bg-[#350dc3] text-white">
+<body class="bg-[#1c4094] text-white">
 
     <div class="w-screen h-screen">
         
@@ -156,7 +156,8 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                     <td><?= $row['reponse']; ?></td>
                                                                     <td><?= $row['update_date']; ?></td>
                                                                     <?php
-                                                                        if($row['staff_id'] == $_SESSION['login_staff_id']) {
+                                                                        $type = $row['staff_id'];
+                                                                        if($row['staff_userName'] == $_SESSION['login_staff_id'][$type]) {
                                                                             ?>
                                                                             <td class="flex items-center justify-center gap-1 mt-1">
                                                                                 <i class="text-green-500 fa-solid fa-circle-check"></i>
@@ -164,7 +165,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                             </td>
                                                                             <?php
                                                                         }else{
-                                                                            if($row['staff_id'] == $_SESSION['login_admin_id']) {
+                                                                            if($row['staff_userName'] == $_SESSION['login_admin_id'][$type]) {
                                                                                 ?>
                                                                                 <td class="flex items-center justify-center gap-1 mt-1">
                                                                                     <i class="text-green-500 fa-solid fa-circle-check"></i>
