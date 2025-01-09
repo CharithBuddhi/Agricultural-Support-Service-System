@@ -443,6 +443,67 @@ session_start();
 
     }
 
+    // nutrition details update here
+    if(isset($_POST['update_nutrition'])){
+
+        $update_item_id = $_POST['update_item_id'];
+        $update_item_name = ucfirst(trim($_POST['update_Item_name']));
+        $update_Category = ucfirst(trim($_POST['update_Category']));
+        $update_Quantity = ucfirst(trim($_POST['update_Quantity']));
+        $update_Nutrient1 = ucfirst(trim($_POST['update_Nutrient1']));
+        $update_Nutrient2 = ucfirst(trim($_POST['update_Nutrient2']));
+        $update_Nutrient3 = ucfirst(trim($_POST['update_Nutrient3']));
+        $update_Nutrient4 = ucfirst(trim($_POST['update_Nutrient4']));
+        $update_Nutrient5 = ucfirst(trim($_POST['update_Nutrient5']));
+        $update_Nutrient6 = ucfirst(trim($_POST['update_Nutrient6']));
+
+        $check = "SELECT `item` FROM `nutrition` WHERE `nutrient_id` = '$update_item_id'";
+        $result = mysqli_query($conn, $check);
+    
+        // Count the number of rows with the matching 
+        $rowCount = mysqli_num_rows($result);
+        
+        if($rowCount == 1) {
+
+            $id = $_SESSION['login_staff_user'];
+    
+            $Item_name = mysqli_real_escape_string($conn, $update_item_name);
+            $Category = mysqli_real_escape_string($conn, $update_Category);
+            $Quantity = mysqli_real_escape_string($conn, $update_Quantity);
+            $Nutrient1 = mysqli_real_escape_string($conn, $update_Nutrient1);
+            $Nutrient2 = mysqli_real_escape_string($conn, $update_Nutrient2);
+            $Nutrient3 = mysqli_real_escape_string($conn, $update_Nutrient3);
+            $Nutrient4 = mysqli_real_escape_string($conn, $update_Nutrient4);
+            $Nutrient5 = mysqli_real_escape_string($conn, $update_Nutrient5);
+            $Nutrient6 = mysqli_real_escape_string($conn, $update_Nutrient6);
+
+            $sql = "UPDATE `nutrition` SET `item`='$Item_name',`item_category`='$Category',`nutrient_amont`='$Quantity',
+            `nutrient_valu1`='$Nutrient1',`nutrient_valu2`='$Nutrient2',`nutrient_valu3`='$Nutrient3',`nutrient_valu4`='$Nutrient4',
+            `nutrient_valu5`='$Nutrient5',`nutrient_valu6`='$Nutrient6',`response`='$id', update_time = NOW() WHERE nutrient_id='$update_item_id'";
+            $updateResult = mysqli_query($conn, $sql);
+
+            if($updateResult) {
+
+                $_SESSION['verity_status'] = "Nurition details update successfully";
+                header('location:variety.php');
+                exit();
+
+            } else {
+
+                $_SESSION['verity_status'] = "Nurition details update failed!,Try Again";
+                header('location:variety.php');
+                exit();
+            }
+            
+        }else{
+
+            $_SESSION['verity_status'] = "This nurition details are not exist";
+            header('location:variety.php');
+            exit();
+        }
+
+    }
+
     // password reset in staff members
     if(isset($_POST['froget_password_update'])){
 
@@ -694,6 +755,85 @@ session_start();
 
     }
 
+     // farmer_status_hold_btn
+     if(isset($_POST['farmer_status_hold_btn'])){
+
+
+        $farmer_id = $_POST['farmer_id'];
+    
+        $check = "SELECT farmer_status FROM `farmer` WHERE `farmer_id` = '$farmer_id'";
+        $result = mysqli_query($conn, $check);
+    
+        // Count the number of rows with the matching username
+        $rowCount = mysqli_num_rows($result);
+    
+        // If no user is found, show error message
+        if($rowCount == 0) {
+            echo 'This user details are missing from the system.';
+            exit(0);
+        }else{
+            
+            $row = mysqli_fetch_assoc($result);
+            $db_farmer_status = $row['farmer_status'];
+    
+            if($db_farmer_status == 1){
+                echo'This user is already Hold.';
+                exit(0);
+            }
+            $sql = "UPDATE `farmer` SET `farmer_status`= 1 WHERE farmer_id = '$farmer_id'";
+            $result1 = mysqli_query($conn, $sql);
+            if($result1){
+                echo 'farmer account hold successfully.';
+                exit(0);
+            }
+            else{
+                echo "farmer account cannot be hold.";
+                exit(0);
+            }
+        }
+
+    }
+
+    // farmer_status_active_btn
+    if(isset($_POST['farmer_status_active_btn'])){
+
+        $farmer_id = $_POST['farmer_id'];
+    
+        $check = "SELECT farmer_status FROM `farmer` WHERE `farmer_id` = '$farmer_id'";
+        $result = mysqli_query($conn, $check);
+    
+        // Count the number of rows with the matching username
+        $rowCount = mysqli_num_rows($result);
+    
+        // If no user is found, show error message
+        if($rowCount == 0) {
+            echo 'This user details are missing from the system.';
+            exit(0);
+        }else{
+
+            $row = mysqli_fetch_assoc($result);
+            $db_farmer_status = $row['farmer_status'];
+    
+            if($db_farmer_status == 0){
+                echo'This user account is already Active.';
+                exit(0);
+            }
+            $sql = "UPDATE `farmer` SET `farmer_status`= 0 WHERE farmer_id = '$farmer_id'";
+            $result1 = mysqli_query($conn, $sql);
+            if($result1){
+                echo 'farmer account active successfully.';
+                exit(0);
+            }
+            else{
+                echo "farmer account cannot be active.";
+                exit(0);
+            }
+            
+        }
+
+
+    }
+
     // supplier_detail_update
     if(isset($_POST['supplier_detail_update'])){
 
@@ -796,6 +936,103 @@ session_start();
 
     }
 
+    // farmer_detail_update
+    if(isset($_POST['farmer_detail_update'])){
+
+        $update_farmer_id = $_POST['update_farmer_id'];
+        $update_farmer_name = $_POST['update_farmer_name'];
+        $update_farmer_address = $_POST['update_farmer_address'];
+
+        if(isset($_FILES['farmer_proof_doc'])){
+            $farmer_proof_doc = $_FILES['farmer_proof_doc']['name'];
+            $image_temp_name = $_FILES['farmer_proof_doc']['tmp_name'];
+            $image_destination = "D:\\a XAmpp projec\\htdocs\\Agricultural-Support-Service-System\\MyAgro\\admin\\images\\user/$farmer_proof_doc";     
+        }
+
+        if(!empty($farmer_proof_doc)){
+
+            $sql = "SELECT farmer_proof FROM `farmer` WHERE `farmer_id` = '$update_farmer_id'";
+            $result = mysqli_query($conn, $sql);
+
+            if($result->num_rows > 0){
+
+                $row = $result->fetch_assoc();
+    
+                $filePath = 'images/user/' . $row['farmer_proof'];
+    
+                // Delete the file from the server
+                if(file_exists($filePath)){ 
+    
+                    unlink($filePath);
+
+                    if(move_uploaded_file($image_temp_name,$image_destination)){
+
+                        $farmer_proof_doc = mysqli_real_escape_string($conn, $farmer_proof_doc);
+                        $update_farmer_name = mysqli_real_escape_string($conn, $update_farmer_name);
+                        $update_farmer_address = mysqli_real_escape_string($conn, $update_farmer_address);
+        
+                        $sql= "UPDATE `farmer` SET 
+                        `farmer_name`='$update_farmer_name',
+                        `farmer_address`='$update_farmer_address',
+                        `farmer_proof`='$farmer_proof_doc' WHERE `farmer_id`='$update_farmer_id' ";
+                        
+                        $result = mysqli_query($conn,$sql);
+        
+                        if($result){
+                            $_SESSION['farmer_info_msg'] = "farmer details update successfully";
+                            header('location: farmer_info.php');
+                            exit();
+                        }else{
+                            $_SESSION['farmer_info_msg'] = "farmer details update Failed!,Try Again";
+                            header('location: farmer_info.php');
+                            exit();
+                        }
+        
+                    }else{
+                        $_SESSION['farmer_info_msg'] = "Please select a image to upload for update!";
+                        header("Location: farmer_info.php");
+                        exit();
+                    }
+    
+                }else{
+                    $_SESSION['farmer_info_msg'] = "farmer proof document missing!";
+                    header('location: farmer_info.php');
+                    exit();
+                }
+    
+            } else {
+                $_SESSION['farmer_info_msg'] = "farmer proof document not found!";
+                header('location: farmer_info.php');
+                exit();
+            }
+
+            
+
+        }else{
+
+            $update_farmer_name = mysqli_real_escape_string($conn, $update_farmer_name);
+            $update_farmer_address = mysqli_real_escape_string($conn, $update_farmer_address);
+
+            $sql= "UPDATE `farmer` SET 
+            `farmer_name`='$update_farmer_name',
+            `farmer_address`='$update_farmer_address' WHERE `farmer_id`='$update_farmer_id' ";
+            
+            $result = mysqli_query($conn,$sql);
+
+            if($result){
+                $_SESSION['farmer_info_msg'] = "Farmer details update successfully";
+                header('location: farmer_info.php');
+                exit();
+            }else{
+                $_SESSION['farmer_info_msg'] = "Farmer details update Failed!,Try Again";
+                header('location: farmer_info.php');
+                exit();
+            }
+        }
+
+
+    }
+
     // redirect to index page
     if (
         !isset($_POST["admin_profile_update_btn"]) &&
@@ -810,7 +1047,10 @@ session_start();
         !isset($_POST["customer_status_active_btn"]) &&
         !isset($_POST["supplier_status_hold_btn"]) &&
         !isset($_POST["supplier_status_active_btn"]) &&
-        !isset($_POST["supplier_detail_update"])
+        !isset($_POST["farmer_status_hold_btn"]) &&
+        !isset($_POST["farmer_status_active_btn"]) &&
+        !isset($_POST["supplier_detail_update"]) &&
+        !isset($_POST["farmer_detail_update"])
     ) {
         header('Location: index.php');
         exit(0);

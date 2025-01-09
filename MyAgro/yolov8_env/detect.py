@@ -45,7 +45,7 @@ if not os.path.exists(image_path):
 # Perform inference on the image with a confidence threshold of 75%
 try:
     print(f"Running inference on image: {image_path}")
-    results = model(image_path, conf=0.10)
+    results = model(image_path, conf=0.75)
     print("Inference completed successfully.")
 except Exception as e:
     print(f"Error during inference: {e}")

@@ -1,7 +1,7 @@
 <?php 
     session_start();
     require ('db_connect.php');  
-    
+    date_default_timezone_set('Asia/Colombo');
     
     // registration manage here
     if(isset($_POST['register'])){
@@ -25,20 +25,12 @@
                 $address = $_POST['address'];
                 $phone = $_POST['phone'];
                 
-                echo $usertype;
-                echo $email;
-                echo $yourname;
-                echo $username;
-                echo $password;
-                echo $address;
-                echo $phone;
-    
                 if (!empty($yourname) && !empty($username) && !empty($password) && !empty($address) && !empty($email) && !empty($phone)) {
     
                     echo $phone;
                     $SELECT = "SELECT username FROM customer WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT customer_email FROM customer WHERE customer_email = ? LIMIT 1";
-                    $INSERT = "INSERT INTO customer (customer_name, username, password, customer_address, customer_email, customer_telno) values(?, ?, ?, ?, ?, ?)";
+                    $INSERT = "INSERT INTO customer (customer_name, username, password, customer_address, customer_email, customer_telno, create_time) values(?, ?, ?, ?, ?, ?,Now())";
                     
                     // prepare statment
                     $stmt = $conn->prepare($SELECT);

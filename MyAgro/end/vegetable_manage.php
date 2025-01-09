@@ -774,7 +774,7 @@
         });
     </script>
 
-    <!-- Fetch crop names on page load and change based on origin  with ADD modal-->
+    <!-- Fetch crop names on page load and change based on origin with ADD-->
     <script>
         $(document).ready(function() {
 

@@ -12,7 +12,7 @@
     <!-- navigation bar -->
     <?php require('header.php'); ?>
 
-    <div class="flex flex-col gap-5 h-screen bg-[#f8fde3]">
+    <div class="flex flex-col h-screen gap-5">
         <h1 class="mt-5 font-serif text-3xl font-bold text-center">Crop of verities </h1>
 
         <!-- search bar -->

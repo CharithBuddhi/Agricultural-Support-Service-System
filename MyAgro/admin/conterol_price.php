@@ -21,7 +21,7 @@ if(!isset($_SESSION['login_admin_user'])){
     </style>
 
 </head>
-<body class="bg-[#350dc3] text-white">
+<body class="bg-[#1c4094] text-white">
 <div class="flex">
     <!-- load staff menu bar here -->
     <div class="load_data_container w-[20%]"></div>
@@ -366,12 +366,22 @@ if(isset($_POST['confirm'])) {
 
             // Ensure the connection is established before running the query
             if ($conn) {
-                // Prepare the update statement using prepared statements
-                $sql = "UPDATE `controlprice` SET `min_price`=?, `max_price`=?, `create_date`=now() WHERE price_id = ?";
                 
-                $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, "ssi", $min_result, $max_result, $id);
+                // update previuose value machanisum
+                $SELECT= "SELECT min_price, max_price, update_date FROM controlprice WHERE price_id = '$id'";
+                $result = mysqli_query($conn, $SELECT);
 
+                // Fetch the data from the database
+                $row = mysqli_fetch_assoc($result);
+                $previuse_min_price = $row['min_price'];
+                $previuse_max_price = $row['max_price'];
+                $update_date = $row['update_date'];
+                
+                // Prepare the update statement using prepared statements
+                $sql = "UPDATE `controlprice` SET `pervious_min_price`=?, `pervious_max_price`=?, `create_date`=?, `min_price`=?, `max_price`=?, `update_date`=now() WHERE price_id = ?";
+                $stmt = mysqli_prepare($conn, $sql);
+                mysqli_stmt_bind_param($stmt, "sssssi",$previuse_min_price, $previuse_max_price, $update_date, $min_result, $max_result, $id);
+                
                 // Execute the update query
                 if(mysqli_stmt_execute($stmt)) {
                     $_SESSION['msg'] = "Control price updated successfully";
@@ -392,8 +402,8 @@ if(isset($_POST['confirm'])) {
             require('db_conn.php');
             if ($conn) {
                 // Prepare the SQL insert statement
-                $sql = "INSERT INTO controlprice (crop_category, crop_name, varieties_name, min_price, max_price, create_date) 
-                        VALUES (?, ?, ?, ?, ?, now())";
+                $sql = "INSERT INTO controlprice (crop_category, crop_name, varieties_name, min_price, max_price, create_date, update_date) 
+                        VALUES (?, ?, ?, ?, ?, now(), now())";
 
                 $stmt = mysqli_prepare($conn, $sql);
                 

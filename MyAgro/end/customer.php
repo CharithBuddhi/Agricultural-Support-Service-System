@@ -25,11 +25,11 @@
             <div class="flex flex-col w-[330px]" id="commonfield">
 
                 <label for="username" class="mt-[140px]">Enter your Username</label>
-                <input type="text" placeholder=" E.g. charitha" minlength="5" id="username" name="username" class="rounded-md p-1 font-semibold h-8 placeholder:italic placeholder:text-[14px]" required>
+                <input type="text" placeholder=" E.g. charitha" minlength="5" id="username" value="<?php if(isset($_POST['username'])){ echo $_POST['username']; } ?>" name="username" class="rounded-md p-1 font-semibold h-8 placeholder:italic placeholder:text-[14px]" required>
 
                 <label for="password" class="mt-2">Enter your Password</label>
                 <div class="relative flex items-center">
-                    <input type="password" placeholder=" pick up your password" id="password" name="password" class="p-1 rounded-md font-semibold h-8 placeholder:italic placeholder:text-[14px] w-full" required>
+                    <input type="password" placeholder=" pick up your password" id="password" name="password" value="<?php if(isset($_POST['password'])){ echo $_POST['password']; } ?>" class="p-1 rounded-md font-semibold h-8 placeholder:italic placeholder:text-[14px] w-full" required>
                     <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
                 </div> 
 
@@ -39,7 +39,7 @@
                 </select>
 
                 <label for="customerAddress" class="mt-2">Enter your address</label>
-                <input type="text" id="customerAddress" name="address" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md p-1 font-semibold h-8 fill:bg-black placeholder:text-[14px] placeholder:italic" required>
+                <input type="text" id="customerAddress" name="address" value="<?php if(isset($_POST['address'])){ echo $_POST['address']; } ?>" placeholder=" E.g. No 250/3, Colombo Road, Kandy" class="rounded-md p-1 font-semibold h-8 fill:bg-black placeholder:text-[14px] placeholder:italic" required>
 
                 <div class="mt-2">
                     <label for="supplierOTP" class="mt-2">Enter your OTP number</label>
@@ -48,7 +48,7 @@
                 </div>
 
                 <label for="customerPhone" class="mt-2">Enter your phone number</label>
-                <input type="tel" id="customerPhone" name="phone" pattern="[0-9]{11}" placeholder=" E.g. 94795555555" class="rounded-md p-1 font-semibold h-8 placeholder:text-[14px] placeholder:italic" required>
+                <input type="tel" id="customerPhone" name="phone" value="<?php if(isset($_POST['phone'])){ echo $_POST['phone']; } ?>" pattern="[0-9]{11}" placeholder=" E.g. 94795555555" class="rounded-md p-1 font-semibold h-8 placeholder:text-[14px] placeholder:italic" required>
                 
                 <div class="flex">
                     <button type="reset" class="mt-6 mr-6 h-8 rounded-full font-semibold w-[145px] bg-[#6EE70F]/80 hover:bg-lime-300 hover:text-[#000000] text-[#ffffff]">Clear</button>
@@ -71,6 +71,7 @@
                 <input type="email" id="email" name="email" placeholder=" E.g. charit@gmail.com" value="<?php if(isset($_GET['email'])){ echo $_GET['email']; } ?>" class="rounded-md p-1 font-semibold w-[225px] h-8 placeholder:text-[14px] placeholder:italic" required>
                 <button name="email_btn" id="email_btn" class="font-semibold text-sm rounded-md w-[100px] h-8 bg-[#6EE70F]/80 focus:cursor-pointer self-end hover:text-[#000000] text-[#ffffff]">Send OTP</button>    
             </div>
+            
         </form>
 
         <!-- load side manu bar in registration form -->
@@ -94,10 +95,41 @@
         verify_btn.addEventListener("click", () => {
             if (otp_value !== "") {
                 if (verify_otp.value == otp_value) {
-                    alert("OTP verified successfully");
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        iconColor: "#69f44a",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        },
+                        });
+                        Toast.fire({
+                        icon: "success",
+                        title: "OTP verified successfully",
+                    });
                     request_btn.disabled = false;  
                 } else {
-                    alert("Incorrect OTP");
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        iconColor: "#f84444",
+                        background: "#fcf2f2",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        },
+                        });
+                        Toast.fire({
+                        icon: "error",
+                        title: "Incorrect OTP",
+                    });
                     request_btn.disabled = true;
                 }
                 <?php unset($_SESSION['otp']); ?>

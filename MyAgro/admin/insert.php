@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require ('db_conn.php');
-date_default_timezone_set('Asia/Calcutta');
+date_default_timezone_set('Asia/Colombo');
 
 if(isset($_POST['harvest_submit'])){
     $crop = trim($_POST['crop']);
@@ -215,6 +215,61 @@ if(isset($_POST['verities_submit'])){
 
 }
 
+if(isset($_POST['nutrition_submit'])){
+
+    $id = $_SESSION['login_staff_user'];
+
+    $Item_name = ucfirst(trim($_POST['Item_name']));
+    $Category = ucfirst(trim($_POST['Category']));
+    $Quantity = ucfirst(trim($_POST['Quantity']));
+    $Nutrient1 = ucfirst(trim($_POST['Nutrient1']));
+    $Nutrient2 = ucfirst(trim($_POST['Nutrient2']));
+    $Nutrient3 = ucfirst(trim($_POST['Nutrient3'])); 
+    $Nutrient4 = ucfirst(trim($_POST['Nutrient4']));
+    $Nutrient5 = ucfirst(trim($_POST['Nutrient5']));
+    $Nutrient6 = ucfirst(trim($_POST['Nutrient6']));
+
+    // check if variteis details already added
+    $run = "SELECT * FROM `nutrition` WHERE item = '$Item_name'";
+    $result = mysqli_query($conn,$run);
+    $row = mysqli_num_rows($result);
+    if($row > 0){
+        $_SESSION['verity_status'] = "This item nutrition is already added";
+        header('location:variety.php');
+        exit();
+    }else{
+
+        // escape for " ' " this mark is used to prevent sql injection
+        // Escape each input variable to prevent SQL injection and handle special characters
+        $Item_name = mysqli_real_escape_string($conn, $Item_name);
+        $Category = mysqli_real_escape_string($conn, $Category);
+        $Quantity = mysqli_real_escape_string($conn, $Quantity);
+        $Nutrient1 = mysqli_real_escape_string($conn, $Nutrient1);
+        $Nutrient2 = mysqli_real_escape_string($conn, $Nutrient2);
+        $Nutrient3 = mysqli_real_escape_string($conn, $Nutrient3);
+        $Nutrient4 = mysqli_real_escape_string($conn, $Nutrient4);
+        $Nutrient5 = mysqli_real_escape_string($conn, $Nutrient5);
+        $Nutrient6 = mysqli_real_escape_string($conn, $Nutrient6);
+
+
+        $sql= "INSERT INTO `nutrition`(`item`, `item_category`, `nutrient_amont`, `nutrient_valu1`, `nutrient_valu2`, `nutrient_valu3`, `nutrient_valu4`, `nutrient_valu5`, `nutrient_valu6`, `crate`, `response`) 
+        VALUES ('$Item_name','$Category','$Quantity','$Nutrient1','$Nutrient2','$Nutrient3','$Nutrient4','$Nutrient5','$Nutrient6',NOW(),'$id')";
+        
+        $result = mysqli_query($conn,$sql);
+
+        if($result){
+            $_SESSION['verity_status'] = "Nurition details added successfully";
+            header('location:variety.php');
+            exit();
+        }else{
+            $_SESSION['verity_status'] = "Nurition details added Failed!,Try Again";
+            header('location:variety.php');
+            exit();
+        }
+
+    }
+}
+
 if(isset($_POST['registar_staff'])){
 
     $name = trim($_POST['name']);
@@ -233,7 +288,7 @@ if(isset($_POST['registar_staff'])){
 
         // Check if username exists
         $SELECT = "SELECT staff_userName FROM staff WHERE staff_userName = ? LIMIT 1";
-        $INSERT = "INSERT INTO staff (staff_name, staff_userName, staff_password, staff_email, staff_type, reponse, update_date) values(?, ?, ?, ?, ?, ?, ?)";
+        $INSERT = "INSERT INTO staff (staff_name, staff_userName, staff_password, staff_email, staff_type, reponse, create_time) values(?, ?, ?, ?, ?, ?, ?)";
 
         // prepare statment
         $stmt = $conn->prepare($SELECT);
@@ -264,7 +319,7 @@ if(isset($_POST['registar_staff'])){
 
 }
 
-if(empty($_POST["harvest_submit"]) && empty($_POST["technology_submit"]) && empty($_POST["verity_submit"]) && empty($_POST["registar_staff"])){
+if(empty($_POST["harvest_submit"]) && empty($_POST["technology_submit"]) && empty($_POST["verity_submit"]) && empty($_POST["registar_staff"]) && empty($_POST["nutrition_submit"]) ){
     header('Location: index.php');
     exit(0);
 }

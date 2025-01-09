@@ -19,6 +19,12 @@
                         <h1 class="text-3xl font-bold tracking-wide">Get in Touch</h1>
                         <p class="pt-2 text-sm text-cyan-100">If you have any questions or concerns, please don't hesitate to contact us. Our team is always here to help. We're here to answer any questions you may have.</p>
                     </div>
+
+                    <div class="flex gap-2">
+                        <p class="text-2xl font-bold">Hot Line :</p>
+                        <p class="text-2xl text-white">0112 345 678</p>
+                    </div>
+
                     <div class="flex flex-col space-y-4 ">
                         <div class="inline-flex items-center space-x-2">
                             <ion-icon name="call" class="text-xl text-teal-300"></ion-icon>

@@ -22,5 +22,16 @@
             }
             echo $output;
         }
+
+        if ($_POST['action'] == 'fetch_control_crop_names') {
+            $query = "SELECT DISTINCT crop_name FROM controlprice";
+            $result = $conn->query($query);
+            $output = '<option value="">Select Crop</option>';
+            while ($row = $result->fetch_assoc()) {
+                $output .= '<option value="' . $row['crop_name'] . '">' . $row['crop_name'] . '</option>';
+            }
+            echo $output;
+        }
+
     }
 ?>

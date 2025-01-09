@@ -367,14 +367,14 @@ date_default_timezone_set("Asia/colombo");
                                         
                                         for($i = 1; $i <= $rating; $i++){
                                         ?>
-                                            <a href="rating_view.php?id=<?php echo $data['supplier_id'];?>&type=<?php echo $provider_type; ?>">
+                                            <a href="rating_view.php?id=<?php echo $data['farmer_id'];?>&type=<?php echo $provider_type; ?>">
                                             <label id="rate_<?php echo $i; ?>" class="relative text-2xl text-yellow-400 cursor-pointer bottom-1">&#9733;</label>
                                             </a>
                                         <?php
                                         } 
                                         for($i = $rating + 1; $i <= 5; $i++){
                                         ?>  
-                                            <a href="rating_view.php?id=<?php echo $data['supplier_id'];?>&type=<?php echo $provider_type; ?>">
+                                            <a href="rating_view.php?id=<?php echo $data['farmer_id'];?>&type=<?php echo $provider_type; ?>">
                                             <label id="rate_<?php echo $i; ?>" class="relative text-2xl text-gray-400 cursor-pointer bottom-1">&#9733;</label>
                                             </a>
                                         <?php

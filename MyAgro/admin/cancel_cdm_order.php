@@ -43,13 +43,13 @@
         
             }else if($item_category == "vegetable" || $item_category == "fruit"){
 
-                $SELECT = "SELECT total_quantity FROM `vegetablefruit` WHERE `agro_id` = '$item_id'";
+                $SELECT = "SELECT vegfruit_total FROM `vegetablefruit` WHERE `vegfruitle_id` = '$item_id'";
                 $result1 = $conn->query($SELECT);
                 $row = $result1->fetch_assoc();
-                $db_quantity = $row['total_quantity'];
+                $db_quantity = $row['vegfruit_total'];
 
                 $total_quantity = $db_quantity + $order_quantity;
-                $sql = "UPDATE `vegetablefruit` SET `total_quantity`='$total_quantity' WHERE `veg_id` = '$item_id'";            
+                $sql = "UPDATE `vegetablefruit` SET `vegfruit_total`='$total_quantity' WHERE `vegfruit_total` = '$item_id'";            
                 $result = $conn->query($sql);
 
                 $sql = "UPDATE `transaction` SET `payment_status` = 'Canceled' , `update_time` = NOW() WHERE `Reference_id` = '$order_id'";
