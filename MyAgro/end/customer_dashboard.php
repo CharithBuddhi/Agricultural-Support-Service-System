@@ -227,29 +227,30 @@ if(isset($_POST['customer_password_update_btn'])){
                             </svg>
                             Active
                         </label>
+
                         <div class="flex mt-4 text-lg gap-28">
                             <div class="flex flex-col gap-2">
                                 <h1 class="pl-1 font-semibold">Customer Name</h1>
-                                <input type="text" name="customer_name" value="<?php echo $row['customer_name']; ?>" class="rounded-md text-base pl-1 h-8 w-[320px]" required>
+                                <input type="text" name="customer_name" value="<?php echo $row['customer_name']; ?>" class="rounded-md text-base border-2 pl-1 h-8 w-[320px]" required>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <h1 class="pl-1 font-semibold">User name</h1>
-                                <input type="text" name="username" value="<?php echo $row['username']; ?>" class="rounded-lg text-base h-8 w-[280px] pl-2 disabled:bg-slate-50" disabled>
+                                <input type="text" name="username" value="<?php echo $row['username']; ?>" class="rounded-lg text-base border-2 h-8 w-[280px] pl-2 disabled:bg-slate-50" disabled>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <h1 class="pl-1 font-semibold">Email Address</h1>
-                                <input type="email" name="customer_email" value="<?php echo $row['customer_email']; ?>" class="rounded-lg text-base h-8 w-[280px] pl-2" required>
+                                <input type="email" name="customer_email" value="<?php echo $row['customer_email']; ?>" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2" required>
                             </div>
                         </div>
 
                         <div class="flex mt-10 text-lg gap-28">
                             <div class="flex flex-col gap-2">
                                 <h1 class="pl-1 font-semibold">Customer Address</h1>
-                                <input type="text" name="customer_address" value="<?php echo $row['customer_address']; ?>" class="w-[320px] h-8 pl-2 text-base rounded-lg" required>
+                                <input type="text" name="customer_address" value="<?php echo $row['customer_address']; ?>" class="w-[320px] border-2 h-8 pl-2 text-base rounded-lg" required>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <h1 class="pl-1 font-semibold">Phone Number</h1>
-                                <input type="text" maxlength="12" name="customer_phone" value="<?php echo "+".$row['customer_telno']; ?>" class="rounded-lg text-base h-8 w-[280px] pl-2" required>
+                                <input type="text" maxlength="12" name="customer_phone" value="<?php echo "+".$row['customer_telno']; ?>" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2" required>
                             </div>
                         </div>
                         
@@ -272,20 +273,20 @@ if(isset($_POST['customer_password_update_btn'])){
                 <input type="text" name="user_id" value="<?php echo $row['customer_id']; ?>" hidden readonly>
                     <div class="flex flex-col gap-2">
                         <h1 class="font-semibold">Old Password</h1>
-                        <input type="text" name="old_password" class="rounded-lg text-base h-8 w-[280px] pl-2"  required>
+                        <input type="text" name="old_password" class="rounded-lg border-2 text-base h-8 w-[280px] pl-2"  required>
                     </div>
                     <div class="flex gap-32">
                         <div class="flex flex-col gap-2">
                             <h1 class="font-semibold">New Password</h1>
                             <div class="relative flex items-center">
-                                <input type="password" id="password1" name="new_password" class="rounded-lg w-[280px] text-base h-8 pl-2" required>
+                                <input type="password" id="password1" name="new_password" class="rounded-lg border-2 w-[280px] text-base h-8 pl-2" required>
                                 <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg1">
                             </div>
                         </div>
                         <div class="flex flex-col gap-2">
                             <h1 class="font-semibold">Confirm Password</h1>
                             <div class="relative flex items-center">
-                                <input type="password" id="password" name="confirm_password" class="rounded-lg w-[280px] text-base h-8 pl-2" required>
+                                <input type="password" id="password" name="confirm_password" class="rounded-lg border-2 w-[280px] text-base h-8 pl-2" required>
                                 <img src="images/eye-close.png" alt="eye-colse.png" class="absolute w-5 h-4 cursor-pointer right-2 " id="toggleImg">
                             </div>
                         </div>

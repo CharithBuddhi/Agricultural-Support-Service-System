@@ -103,10 +103,41 @@
         verify_btn.addEventListener("click", () => {
             if (otp_value !== "") {
                 if (verify_otp.value == otp_value) {
-                    alert("OTP verified successfully");
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        iconColor: "#69f44a",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        },
+                        });
+                        Toast.fire({
+                        icon: "success",
+                        title: "OTP verified successfully",
+                    });
                     request_btn.disabled = false;  
                 } else {
-                    alert("Incorrect OTP");
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        iconColor: "#f84444",
+                        background: "#fcf2f2",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        },
+                        });
+                        Toast.fire({
+                        icon: "error",
+                        title: "Incorrect OTP",
+                    });
                     request_btn.disabled = true;
                 }
                 <?php unset($_SESSION['otp']); ?>

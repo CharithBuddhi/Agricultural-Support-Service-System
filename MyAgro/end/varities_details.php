@@ -23,7 +23,7 @@
     ?>
     
     <!-- main div -->
-    <div class="p-12 bg-[#fcfcf1] font-medium">
+    <div class="p-12 font-medium">
 
         <!-- product name heading -->
         <div>

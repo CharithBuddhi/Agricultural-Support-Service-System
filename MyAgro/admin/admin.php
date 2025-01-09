@@ -14,7 +14,7 @@ if(!isset($_SESSION['login_admin_user'])){
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body class="text-white bg-[#1c4094]">
-    <div class="w-screen h-screen ">
+    <div class="w-screen h-screen">
         <div class="flex w-full h-full">
 
             <!-- Dashboard Menu bar load here-->
@@ -35,6 +35,7 @@ if(!isset($_SESSION['login_admin_user'])){
 
                 <!-- Graph section -->
                 <div class="flex mt-6 text-black justify-evenly">
+                    
                     <div>
                         <img src="images/grap.png" alt="" class="w-[500px] h-[250px] rounded-lg">
                     </div>
@@ -233,7 +234,7 @@ if(!isset($_SESSION['login_admin_user'])){
     })
     </script>
 
-<!-- show inquiry reply success or error message -->
+    <!-- show inquiry reply success or error message -->
     <script>
         var message = "<?php echo isset($_SESSION['admin_home_message']) ? $_SESSION['admin_home_message'] : ''; ?>"; //send status include massage  varible message, but if not status then print ''.
         if (message != "") {

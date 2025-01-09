@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require ('db_conn.php');
-date_default_timezone_set('Asia/Calcutta');
+date_default_timezone_set('Asia/Colombo');
 
 if(isset($_POST['harvest_submit'])){
     $crop = trim($_POST['crop']);
@@ -288,7 +288,7 @@ if(isset($_POST['registar_staff'])){
 
         // Check if username exists
         $SELECT = "SELECT staff_userName FROM staff WHERE staff_userName = ? LIMIT 1";
-        $INSERT = "INSERT INTO staff (staff_name, staff_userName, staff_password, staff_email, staff_type, reponse, update_date) values(?, ?, ?, ?, ?, ?, ?)";
+        $INSERT = "INSERT INTO staff (staff_name, staff_userName, staff_password, staff_email, staff_type, reponse, create_time) values(?, ?, ?, ?, ?, ?, ?)";
 
         // prepare statment
         $stmt = $conn->prepare($SELECT);

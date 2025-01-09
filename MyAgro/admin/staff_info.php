@@ -30,7 +30,7 @@ if(!isset($_SESSION['login_admin_user'])){
                 <!-- Staff Registration Info -->
                 <fieldset class="mt-10 ml-4 rounded-2xl p-5 border-2 h-fit border-white w-[75%]">
                     <legend class="font-serif text-xl font-bold">Staff Registration Info</legend>
-                    <form action="insert.php" method="post" class="flex grid justify-between grid-cols-2 gap-5">
+                    <form action="insert.php" method="post" class="grid justify-between grid-cols-2 gap-5">
 
                         <div class="flex flex-col w-[300px]">
                             <label for="" class="font-serif text-lg">Name</label>
