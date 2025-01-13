@@ -9,7 +9,7 @@ if(isset($_POST['calculate'])){
     isset($_POST['cost_beds']) && isset($_POST['cost_seeds']) && isset($_POST['cost_fertilizer']) &&
     isset($_POST['cost_pest']) && isset($_POST['cost_water']) && isset($_POST['cost_harvesting']) &&
     isset($_POST['cost_other']) && isset($_POST['yield']) && isset($_POST['min_profit']) &&
-    isset($_POST['max_profit']) && isset($_POST['benefit']) && isset($_POST['taxt'])){
+    isset($_POST['max_profit']) && isset($_POST['benefit']) && isset($_POST['taxt']) && isset($_POST['commission'])) {
 
         // get data from form
         $id = $_POST['price_id'];
@@ -33,6 +33,7 @@ if(isset($_POST['calculate'])){
         $max_profit = $_POST['max_profit'];
         $benefit = $_POST['benefit'];
         $taxt = $_POST['taxt'];
+        $commission = $_POST['commission'];
 
 
         require('db_conn.php');
@@ -54,9 +55,7 @@ if(isset($_POST['calculate'])){
             $work = $period - $leave;
             $salary = $farmer_salary * $work;
         
-            // one kilo product cost calculation
-            $product_cost = ($salary + $cost_land + $cost_plough + $cost_beds + $cost_seeds + $cost_fertilizer + $cost_pest + $cost_water + $cost_harvesting + $cost_other) / $yield;
-        
+            
             // min control price calculation
             if($min_profit > $max_profit){
                 $_SESSION['price_message'] = 'Min profit percentage cannot be greater than max profit percentage';
@@ -73,6 +72,10 @@ if(isset($_POST['calculate'])){
                     header("Location: " . $_SERVER['HTTP_REFERER']);
                     exit();
                 }else{
+                    
+                    // one kilo product cost calculation
+                    $product_cost = ($salary + $cost_land + $cost_plough + $cost_beds + $cost_seeds + $cost_fertilizer + $cost_pest + $cost_water + $cost_harvesting + $cost_other) / $yield;
+                    
                     $after_min_profit = ($product_cost * $min_profit) / 100;
                     $after_max_profit = ($product_cost * $max_profit) / 100;
                     
@@ -111,29 +114,37 @@ if(isset($_POST['calculate'])){
                             if (isTodayInRange($yala_start, $yala_end,$maha_start,$maha_end)) {
                                 $after_min_benefit_price = (($product_cost + $after_min_profit) * 0) / 100;
                                 $after_max_benefit_price = (($product_cost + $after_max_profit) * 0) / 100;
-                                echo "0";    
+                                   
                             }else{
-                                echo "2";
+                               
                                 $after_min_benefit_price = (($product_cost + $after_min_profit) * $benefit) / 100;
                                 $after_max_benefit_price = (($product_cost + $after_max_profit) * $benefit) / 100;
                             }
+
+                            // creeate commision price for the min and max control price
+                            $commission_price_set_min = (($product_cost + $after_min_profit + $after_min_benefit_price) * $commission) / 100;
+                            $commission_price_set_max = (($product_cost + $after_max_profit + $after_max_benefit_price) * $commission) / 100;
+
+                            $avgcommission = (($commission_price_set_min + $commission_price_set_max) / 2);
         
+                            // creeate taxt price for the min and max control price
                             $after_min_taxt_price = (($product_cost + $after_min_profit + $after_min_benefit_price) * $taxt) / 100;       
-                            $min_control_price = $product_cost + $after_min_profit + $after_min_benefit_price + $after_min_taxt_price;
-                            
                             $after_max_taxt_price = (($product_cost + $after_max_profit + $after_max_benefit_price) * $taxt) / 100;       
-                            $max_control_price = $product_cost + $after_max_profit + $after_max_benefit_price + $after_max_taxt_price;
-        
+                            
+                            // create min and max control price
+                            $min_control_price = $product_cost + $after_min_profit + $after_min_benefit_price + $after_min_taxt_price + $commission_price_set_min;
+                            $max_control_price = $product_cost + $after_max_profit + $after_max_benefit_price + $after_max_taxt_price + $commission_price_set_max;
+
                             // Round the number to two decimal places
                             $min_control_price = round($min_control_price, precision: 2);
                             $max_control_price = round($max_control_price, precision: 2);
         
                             // send final calculation output to conterol_price.php
                             if ($id == ""){
-                                header('Location: conterol_price.php?&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&crops='.$crop);
+                                header('Location: conterol_price.php?&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&crops='.$crop.'&commission='.$avgcommission);
                                 exit;
                             }else{
-                                header('Location: conterol_price.php?id='.$id.'&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&search='.$search.'&crops='.$crop);
+                                header('Location: conterol_price.php?id='.$id.'&max_result='.$max_control_price.'&min_result='.$min_control_price.'&crop_name='.$crop_name.'&crop_variety='.$crop_variety.'&search='.$search.'&crops='.$crop.'&commission='.$avgcommission);
                                 exit;
                             }
         

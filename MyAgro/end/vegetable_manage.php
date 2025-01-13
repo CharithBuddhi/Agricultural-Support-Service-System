@@ -507,6 +507,10 @@
                                 
                                 <div class="flex flex-col mt-1">
                                     <div class="flex gap-1">
+                                        <label for="commission"><label class="text-lg text-red-600">*</label>Cuts as service payment:</label>
+                                        <input id="commission" class="outline-none" readonly>
+                                    </div>
+                                    <div class="flex gap-1">
                                         <label for="minimum_price"><label class="text-lg text-red-600">*</label>Minimum Price:</label>
                                         <input id="minimum_price" class="outline-none" readonly>
                                     </div>
@@ -641,6 +645,10 @@
                                 <label for="" class="mt-4 text-2xl italic font-bold border-b-2 border-black">Selling Info</label>
                                 
                                 <div class="flex flex-col mt-1">
+                                    <div class="flex gap-1">
+                                        <label for="update_commission"><label class="text-lg text-red-600">*</label>Cuts as service payment:</label>
+                                        <input id="update_commission" class="outline-none" readonly>
+                                    </div>
                                     <div class="flex gap-1">
                                         <label for="update_minimum_price"><label class="text-lg text-red-600">*</label>Minimum Price:</label>
                                         <input id="update_minimum_price" class="outline-none" readonly>
@@ -835,6 +843,7 @@
                     success: function(data) {
                         
                         // Set values in the input fields
+                        $('#commission').val(data.commission);
                         $('#minimum_price').val(data.min_price);
                         $('#maximum_price').val(data.max_price);
                         
@@ -1073,6 +1082,7 @@
                     success: function(data) {
                         
                         // Set values in the input fields
+                        $('#update_commission').val(data.commission);
                         $('#update_minimum_price').val(data.min_price);
                         $('#update_maximum_price').val(data.max_price);
                         

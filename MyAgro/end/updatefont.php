@@ -4,7 +4,7 @@ session_start();
 
     require('db_connect.php');
 
-    // staff_password_update_btn in profile
+    // update froget password 
     if(isset($_POST['update_password'])){
 
         if(isset($_POST['email']) && isset($_POST['new_password']) && isset($_POST['confirm_password']) && isset($_POST['usertype'])){
@@ -45,16 +45,16 @@ session_start();
         
                 }else if($new_password==$confirm_password){
 
-                    
+                    $hash_password = password_hash($confirm_password, PASSWORD_DEFAULT);
         
                     if($user_type == 'customer'){
-                        $sql = "UPDATE `customer` SET `password`='$confirm_password' WHERE customer_email = '$email'";
+                        $sql = "UPDATE `customer` SET `password`='$hash_password' WHERE customer_email = '$email'";
                         
                     }else if($user_type == 'farmer'){
-                        $sql = "UPDATE `farmer` SET `password`='$confirm_password' WHERE farmer_email = '$email'";
+                        $sql = "UPDATE `farmer` SET `password`='$hash_password' WHERE farmer_email = '$email'";
                         
                     }else if($user_type == 'supplier'){
-                        $sql = "UPDATE `supplier` SET `password`='$confirm_password' WHERE supplier_email = '$email'";
+                        $sql = "UPDATE `supplier` SET `password`='$hash_password' WHERE supplier_email = '$email'";
         
                     }
                     $result1 = mysqli_query($conn, $sql);
@@ -161,13 +161,15 @@ session_start();
 
         $Description_update = trim($_POST['Description_update']);
         $product_price_update = trim($_POST['product_price_update']);
+
         $product_quantity_update = trim($_POST['product_quantity_update']);
         $measurement_update = trim($_POST['measurement_update']);
         $total_quantity_update = trim($_POST['total_quantity_update']);    
         $district_update = trim($_POST['district_update']);   
         $area_update = trim($_POST['area_update']);
         $address_update = trim($_POST['address_update']);
-    
+        
+        $commission_update = $product_price_update * 0.02;
 
         if(!empty($Product_image_update)){
 
@@ -196,6 +198,7 @@ session_start();
                                                         agro_image = ?, 
                                                         agro_description = ?,
                                                         agro_price = ?, 
+                                                        commission = ?,
                                                         agro_quantity = ?, 
                                                         total_quantity = ?, 
                                                         meassure = ?, 
@@ -210,7 +213,7 @@ session_start();
                         }
             
                         // Bind parameters (types: 's' for string, 'i' for integer)
-                        $stmt->bind_param("ssssssssdddssssi", $Product_name_update, 
+                        $stmt->bind_param("ssssssssddddssssi", $Product_name_update, 
                                                                     $Origin_update, 
                                                                     $Category_update, 
                                                                     $type_update, 
@@ -219,6 +222,7 @@ session_start();
                                                                     $Product_image_update,
                                                                     $Description_update,
                                                                     $product_price_update,
+                                                                    $commission_update,
                                                                     $product_quantity_update,
                                                                     $total_quantity_update,
                                                                     $measurement_update,
@@ -267,7 +271,8 @@ session_start();
                         iso_id = ?, 
                         sls_id = ?, 
                         agro_description = ?,
-                        agro_price = ?, 
+                        agro_price = ?,
+                        commission = ?,
                         agro_quantity = ?, 
                         total_quantity = ?, 
                         meassure = ?, 
@@ -282,7 +287,7 @@ session_start();
             }
 
             // Bind parameters (types: 's' for string, 'i' for integer)
-            $stmt->bind_param("sssssssdddssssi", $Product_name_update, 
+            $stmt->bind_param("sssssssddddssssi", $Product_name_update, 
                 $Origin_update, 
                 $Category_update, 
                 $type_update, 
@@ -290,6 +295,7 @@ session_start();
                 $sls_number_update,
                 $Description_update,
                 $product_price_update,
+                $commission_update,
                 $product_quantity_update,
                 $total_quantity_update,
                 $measurement_update,

@@ -581,24 +581,27 @@
                             <!-- Selling Info -->
                             <div>
                                 <label for="" class="mt-4 text-2xl italic font-bold border-b-2 border-black">Selling Info</label>
+                                <div class="flex gap-1">
+                                    <label for="update_commission"><label class="text-lg text-red-600">*</label>2% is deducted from each product as a service charge.</label>
+                                </div>
                                 <div class="grid grid-cols-3 gap-3 mt-1">
 
-                                <?php 
+                                    <?php 
 
-                                    include('db_connect.php');
-                                    $user_id = $_SESSION['login_id'];
-                                    $user_type = $_SESSION['login_type'];
+                                        include('db_connect.php');
+                                        $user_id = $_SESSION['login_id'];
+                                        $user_type = $_SESSION['login_type'];
 
-                                    $sql = "SELECT supplier_shop_name FROM supplier WHERE supplier_id = '$user_id'";
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        $row = $result->fetch_assoc(); // Use fetch_assoc() for mysqli
-                                        $supplier_shop_name = $row['supplier_shop_name'];
-                                    } else {
-                                        $supplier_shop_name = "No supplier found"; // Handle no result case
-                                    }
-                                    
-                                ?>
+                                        $sql = "SELECT supplier_shop_name FROM supplier WHERE supplier_id = '$user_id'";
+                                        $result = $conn->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            $row = $result->fetch_assoc(); // Use fetch_assoc() for mysqli
+                                            $supplier_shop_name = $row['supplier_shop_name'];
+                                        } else {
+                                            $supplier_shop_name = "No supplier found"; // Handle no result case
+                                        }
+                                        
+                                    ?>
                                     <input type="text" value="<?php echo $supplier_shop_name; ?>" id="shop_name" name="shop_name" placeholder="Eenter your shop name" class="h-8 pl-1 border-2 border-black rounded-md w-72" required hidden>
                                         
                                     <div class="flex flex-col gap-1">
@@ -751,6 +754,9 @@
                             <!-- Selling Info -->
                             <div>
                                 <label for="" class="mt-4 text-2xl italic font-bold border-b-2 border-black">Selling Info</label>
+                                <div class="flex gap-1">
+                                    <label for="update_commission"><label class="text-lg text-red-600">*</label>2% is deducted from each product as a service charge.</label>
+                                </div>
                                 <div class="grid grid-cols-3 gap-3 mt-1">
                                     <div class="flex flex-col gap-1">
                                         <label for="product_price_update">Product Price</label>

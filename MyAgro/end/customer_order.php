@@ -9,29 +9,84 @@ include('db_connect.php');
 
 if (isset($_POST['complete_order'])) {
 
-    $complete_RP_ID = $_POST['complete_RP_ID'];
-    $complete_customer_id = $_POST['complete_customer_id'];
-    $complete_order_price  = $_POST['complete_order_price'];
-    $complete_product_name = $_POST['complete_product_name'];
-    $provider_id = $_POST['complete_provider_id'];
+    $complete_product_categorys = trim($_POST['complete_product_category']);
+
+    $complete_RP_ID = trim($_POST['complete_RP_ID']);
+    $complete_customer_id = trim($_POST['complete_customer_id']);
+    $complete_order_price  = trim($_POST['complete_order_price']);
+    $complete_paid_amount = trim($_POST['complete_paid_amount']);
+    $provider_id = trim($_POST['complete_provider_id']);
+    $complete_product_id = trim($_POST['complete_product_id']);
+    $time  = trim($_POST['complete_time']);
+    $complete_product_name = trim($_POST['complete_product_name']);
 
     $customer_name = $_SESSION['login_user'];
     $customer_type = $_SESSION['login_type'];
     $user_id = $_SESSION['login_id'];
-       
-    $sql = "UPDATE transaction SET payment_status = 'Completed' , responsible = '$user_id' , update_time = NOW() WHERE Reference_id = '$complete_RP_ID' AND customer_id = '$complete_customer_id' AND item_name = '$complete_product_name' AND provider_id = '$provider_id'";
-    $result = $conn->query($sql);
 
-    if ($result && $conn->affected_rows > 0) {
-        // Update was successful and rows were affected
-        $_SESSION['verify_order'] = "Your order has been completed!";
-    } else {
-        // Update failed or no rows were affected
-        $_SESSION['verify_order'] = "Something went wrong, Please try again!";
+    if($customer_type == "farmer"){
+        $complete_product_categorys_search = ucfirst(trim($_POST['complete_product_category']));
+        $SELECT = "SELECT commission FROM controlprice WHERE crop_category = '$complete_product_categorys_search' AND varieties_name = '$complete_product_name'";
+    }else if($customer_type == "supplier"){
+        $SELECT = "SELECT commission FROM agrochemical WHERE agro_id = '$complete_product_id'";
     }
+    $query = $conn->query($SELECT);
+    $row = $query->fetch_assoc();
+    $commission = $row['commission'];
+
     
-    header("Location: customer_order.php");
-    exit();
+    if(!isset($commission)){
+        $_SESSION['verify_order'] = "Something went wrong, Please contact company!";  
+        header("Location: customer_order.php");
+        exit();
+    }else{
+        
+        $after_commision_amount = $complete_paid_amount - $commission;
+           
+        $sql_2 = "SELECT * FROM `transaction` WHERE payment_status = 'succeeded' AND customer_id = '$complete_customer_id' AND provider_id = '$provider_id' AND item_id = '$complete_product_id' AND created = '$time'";
+        $query_2 = $conn->query($sql_2);
+
+        // Check if query execution was successful
+        if (!$query_2) {
+            die("Query Failed: " . $conn->error);
+        }
+
+        // Check if any rows are returned
+        if ($query_2->num_rows > 0) {
+            $row_2 = $query_2->fetch_assoc();
+            $DB_RP_ID = $row_2['Reference_id'];
+        } else {
+            echo "No matching records found for the given criteria.";
+        }
+    
+        if($complete_RP_ID != $DB_RP_ID){
+            $_SESSION['verify_order'] = "Something went wrong,";  
+            header("Location: customer_order.php");
+            exit();
+            
+        }elseif($complete_RP_ID == $DB_RP_ID){
+            
+            $sql = "UPDATE `transaction` SET payment_status = 'Completed' , responsible = '$user_id' , update_time = NOW() WHERE Reference_id = '$complete_RP_ID'";
+            $result = $conn->query($sql);
+            
+            if ($result && $conn->affected_rows > 0) {
+                
+                // Update was successful and rows were affected
+                $_SESSION['verify_order'] = "Your order has been completed!";
+    
+                $INSERT = "INSERT INTO `income`(`income`, `date`, `order_id`, `cutomer_id`, `product_name`, `order_paid_amount`) VALUES ('$commission',NOW(),'$complete_RP_ID','$complete_customer_id','$complete_product_name','$after_commision_amount')";
+                $result_insert = $conn->query($INSERT);
+                header("Location: customer_order.php");
+                exit();
+    
+            } else {
+                // Update failed or no rows were affected
+                $_SESSION['verify_order'] = "Something went wrong, Please try again!";
+                header("Location: customer_order.php");
+                exit();
+            }
+        }
+    }
 
 }
 
@@ -99,10 +154,16 @@ if (isset($_POST['complete_order'])) {
                                     
                                     <div class="flex flex-col items-center gap-1">
                                         <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
-                                        <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
-                                        <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+                                        <label id="create_time" hidden> <?php echo $row['created']; ?></label>
+                                        <label class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
+                                        <label id="product_name" hidden> <?php echo $row['item_name']; ?></label>
+
+                                        <label class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+                                        <label id="product_category" class="font-medium"hidden> <?php echo $row['item_category']; ?></label>
+
                                         <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
                                         <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
+                                        
                                     </div>
     
                                     <label id="rp_id" hidden><?php echo $row['Reference_id']; ?></label>
@@ -206,11 +267,20 @@ if (isset($_POST['complete_order'])) {
                                 <form class="flex flex-col ml-[50px] mb-12 gap-1 p-3 w-[340px] border-l-2 border-b-2 border-slate-200 rounded-lg shadow-2xl">
                                     
                                     <div class="flex flex-col items-center gap-1">
+
                                         <label id="product_id" hidden> <?php echo $row['item_id']; ?></label>
-                                        <label id="product_name" class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
-                                        <label id="product_category" class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+
+                                        <label id="create_time" hidden> <?php echo $row['created']; ?></label>
+
+                                        <label class="text-xl font-bold"> <?php echo ucfirst($row['item_name']); ?></label>
+                                        <label id="product_name" hidden> <?php echo $row['item_name']; ?></label>
+
+                                        <label class="font-medium"> <?php echo ucfirst($row['item_category']); ?></label>
+                                        <label id="product_category" class="font-medium"hidden> <?php echo $row['item_category']; ?></label>
+
                                         <label id="product_price" class="font-medium" hidden> <?php echo $row['item_price']; ?></label>
                                         <label id="product_quantity" class="font-medium" hidden> <?php echo $row['item_quantity']; ?></label>
+
                                     </div>
 
                                     <label id="rp_id" hidden><?php echo $row['Reference_id']; ?></label>
@@ -433,6 +503,10 @@ if (isset($_POST['complete_order'])) {
                         <div class="flex flex-col w-full gap-1 mt-4 ml-10">
 
                             <input type="text" name="complete_provider_id" id="complete_provider_id" value="" hidden required>
+                            <input type="text" name="complete_product_category" id="complete_product_category" value="" hidden required>
+                            <input type="text" name="complete_paid_amount" id="complete_paid_amount" value="" hidden required>
+                            <input type="text" name="complete_product_id" id="complete_product_id" value="" hidden required>
+                            <input type="text" name="complete_time" id="complete_time" value="" hidden required>
 
                             <div class="flex gap-2 p-1">
                                 <label class="font-medium">Product Name :</label>
@@ -678,8 +752,20 @@ if (isset($_POST['complete_order'])) {
                     let total_amount = form.querySelector('#total_amount').innerText;
                     document.getElementById('complete_order_price').value = total_amount;
 
+                    let paid_amount = form.querySelector('#paid_amount').innerText;
+                    document.getElementById('complete_paid_amount').value = paid_amount;
+
                     let product_name = form.querySelector('#product_name').innerText;
                     document.getElementById('complete_product_name').value = product_name;
+
+                    let product_category = form.querySelector('#product_category').innerText;
+                    document.getElementById('complete_product_category').value = product_category;
+
+                    let product_id = form.querySelector('#product_id').innerText;
+                    document.getElementById('complete_product_id').value = product_id;
+
+                    let create_time = form.querySelector('#create_time').innerText;
+                    document.getElementById('complete_time').value = create_time;
 
                     let provider_id = form.querySelector('#provider_id').innerText;
                     document.getElementById('complete_provider_id').value = provider_id;
