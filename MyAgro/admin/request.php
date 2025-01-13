@@ -30,7 +30,7 @@ if(!isset($_SESSION['login_staff_user'])){
 
 
 </head>
-<body class="text-white bg-[#1c4094]">
+<body class="text-white bg-[#305dc7]">
 
 <div class="flex w-full h-screen">
     <!-- load staff menu bar here -->

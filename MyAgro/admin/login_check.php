@@ -14,15 +14,22 @@ if(isset($_POST['login'])){
 
     }else{
 
-        $sql = "SELECT * FROM staff WHERE staff_userName = '$username' AND staff_password = '$password'";
+        $sql = "SELECT * FROM staff WHERE staff_userName = '$username'";
         $query_run = mysqli_query($conn, $sql);
 
         if(mysqli_num_rows($query_run) >  0){
 
             $row = mysqli_fetch_assoc($query_run);
-            $user_type = $row['staff_type'];
-            $staff_id = $row['staff_id'];
             
+            $hash_password = $row['staff_password'];
+            if(!password_verify($password, $hash_password)){
+                $_SESSION['login_message'] = "Invalid username or password";
+                header("Location: index.php");
+                exit();
+            }else{
+                $user_type = $row['staff_type'];
+                $staff_id = $row['staff_id'];
+            }
             
             if($user_type == 'admin'){
                 $_SESSION[$row['staff_id']];

@@ -631,6 +631,8 @@ if(!isset($_SESSION['login_admin_user'])){
             });
         }
         fetch_top_selling();
+        setInterval(fetch_top_selling, 7000);
+        
     </script>
 
     <!-- show inquiry reply success or error message -->

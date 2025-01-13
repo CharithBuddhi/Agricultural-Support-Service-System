@@ -14,7 +14,7 @@ if(!isset($_SESSION['login_admin_user'])){
     <link rel="stylesheet" href="/MyAgro/style.css">
     
 </head>
-<body class="bg-[#1c4094] text-white">
+<body class="bg-[#305dc7] text-white">
 
     <div class="flex w-full h-full">
 

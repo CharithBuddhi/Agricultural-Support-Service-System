@@ -257,6 +257,54 @@
     }
 
 
+
+
+    // fetch data request for supplier dashboard
+    if (isset($_POST['request_data']) && $_POST['request_data'] === "fetch_request") {  
+
+        $user_request = array();
+        
+        // Query to get the request count of completed 
+        $query_completed = "SELECT COUNT(*) AS count FROM request WHERE user_action = 1";
+        $result_completed = $conn->query($query_completed);
+        $row_completed = $result_completed->fetch_assoc();
+        $user_request['accept'] = $row_completed['count'];
+    
+        // Query to get the count request of pending 
+        $query_process = "SELECT COUNT(*) AS count FROM request WHERE user_action = 0";
+        $result_process = $conn->query($query_process);
+        $row_process = $result_process->fetch_assoc();
+        $user_request['pending'] = $row_process['count'];
+    
+
+
+        // Query to get the count of voucher canceled 
+        $query_v_canceled = "SELECT COUNT(*) AS count FROM voucher WHERE action = 2";
+        $result_canceled = $conn->query($query_v_canceled);
+        $row_canceled = $result_canceled->fetch_assoc();
+        $user_request['voucher_reject'] = $row_canceled['count'];
+
+        // Query to get the count of voucher approved 
+        $query_v_approved = "SELECT COUNT(*) AS count FROM voucher WHERE action = 1";
+        $result_approved = $conn->query($query_v_approved);
+        $row_approved = $result_approved->fetch_assoc();
+        $user_request['voucher_approve'] = $row_approved['count'];
+
+        // Query to get the count of voucher pending 
+        $query_v_pending = "SELECT COUNT(*) AS count FROM voucher WHERE action = 0";
+        $result_pending = $conn->query($query_v_pending);
+        $row_pending = $result_pending->fetch_assoc();
+        $user_request['voucher_pending'] = $row_pending['count'];
+
+        
+
+        // Send the result as JSON
+        echo json_encode($user_request);
+
+    }
+    
+
+
     // Close the database connection
     $conn->close();
     

@@ -30,66 +30,67 @@
         <h1 class="flex justify-center mb-8 font-serif text-3xl italic font-bold ">Mostly soled Product</h1>
         <div class="flex justify-evenly">
             <div  class="font-semibold">
-                <img class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/carrot.jpg" alt="carrot">
+                <img id="productImg1" class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/carrot.jpg" alt="carrot">
                 <br>
                 <div class="flex justify-center mt-3">
-                    <label id="productName">Carrot</label>
+                    <label id="productName1">Carrot</label>
                 </div>
-                <div class="flex flex-col gap-4 mt-2">
+                <div class="flex flex-col gap-4 mt-2 ml-1">
                     <div>
                         <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
+                        <label id="productPrice1">1500.00</label>
                     </div>
                     <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
+                        <label >Total Quantity :</label>
+                        <label id="productQuantity1">25</label><label>Kg</label>
                     </div>
                     <div>
                         <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
+                        <label id="productLocation1">Dehiowita</label>
                     </div>
                 </div>
                 
             </div>
-            <div class="font-semibold">
-                <img class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/pineapple.jpg" alt="pineapple">
+            <div  class="font-semibold">
+                <img id="productImg2" class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/carrot.jpg" alt="carrot">
                 <br>
                 <div class="flex justify-center mt-3">
-                    <label id="productName">Pineapple</label>
+                    <label id="productName2">Carrot</label>
                 </div>
-                <div class="flex flex-col gap-4 mt-2">
+                <div class="flex flex-col gap-4 mt-2 ml-1">
                     <div>
-                        <label >Price :</label>
-                        <label>Rs.<label id="productPrice">1800.00</label></label> 
+                        <label>Price :</label>
+                        <label id="productPrice2">1500.00</label>
                     </div>
                     <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
+                        <label >Total Quantity :</label>
+                        <label id="productQuantity2">25</label><label>Kg</label>
                     </div>
                     <div>
                         <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
+                        <label id="productLocation2">Dehiowita</label>
                     </div>
                 </div>
+                
             </div>
-            <div class="font-semibold">
-                <img class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/watermelon.jpg" alt="watermelon">
+            <div  class="font-semibold">
+                <img id="productImg3" class="w-[280px] h-[250px] border-[3px] shadow-2xl shadow-neutral-600 border-[#BFDC0C] rounded-3xl" src="images/carrot.jpg" alt="carrot">
                 <br>
                 <div class="flex justify-center mt-3">
-                    <label id="productName">Watermelon</label>
+                    <label id="productName3">Carrot</label>
                 </div>
-                <div class="flex flex-col gap-4 mt-2">
+                <div class="flex flex-col gap-4 mt-2 ml-1">
                     <div>
-                        <label >Price :</label>
-                        <label>Rs.<label id="productPrice">800.00</label></label> 
+                        <label>Price :</label>
+                        <label id="productPrice3">1500.00</label>
                     </div>
                     <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
+                        <label >Total Quantity :</label>
+                        <label id="productQuantity3">25</label><label>Kg</label>
                     </div>
                     <div>
                         <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
+                        <label id="productLocation3">Dehiowita</label>
                     </div>
                 </div>
             </div>
@@ -104,75 +105,75 @@
         <div class="flex justify-evenly">
             <div  class="flex flex-col items-center font-semibold w-[300px] h-[380px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
                 <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer1.png" alt="fertilizer">
-                </div>
-                <div class="mt-3 ">
-                    <label id="productName">Carrot</label>
-                </div>
-                <div class="flex flex-col gap-4 px-3 mt-2 place-self-start">
-                    <div>
-                        <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
-                    </div>
-                    <div>
-                        <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
-                    </div>
-                    <div>
-                        <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
-                    </div>
-                </div>   
-            </div>
-            <div  class="flex flex-col items-center font-semibold w-[300px] h-[380px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
-                <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/fer2.png" alt="fertilizer">
+                    <img class="w-[250px] h-[210px] py-1" id="fertiImg1" src="" alt="fertilizer">
                 </div>
                 <div class="mt-3 "> <!--flex justify-center-->
-                    <label id="productName">Carrot</label>
+                    <label id="fertiName1"></label>
                 </div>
                 <div class="flex flex-col gap-4 px-3 mt-2 place-self-start"> <!--  -->
                     <div>
                         <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
+                        <label id="fertiPrice1"></label>
                     </div>
                     <div>
                         <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
+                        <label id="fertiQuantity1"></label><label>Kg</label>
                     </div>
                     <div>
                         <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
+                        <label id="fertiLocation1"></label>
+                    </div>
+                </div>
+            </div>
+            <div  class="flex flex-col items-center font-semibold w-[300px] h-[380px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
+                <div class="">
+                    <img class="w-[250px] h-[210px] py-1" id="fertiImg2" src="" alt="fertilizer">
+                </div>
+                <div class="mt-3 "> <!--flex justify-center-->
+                    <label id="fertiName2"></label>
+                </div>
+                <div class="flex flex-col gap-4 px-3 mt-2 place-self-start"> <!--  -->
+                    <div>
+                        <label>Price :</label>
+                        <label id="fertiPrice2"></label>
+                    </div>
+                    <div>
+                        <label >Quantity :</label>
+                        <label id="fertiQuantity2"></label><label>Kg</label>
+                    </div>
+                    <div>
+                        <label >Location :</label>
+                        <label id="fertiLocation2"></label>
                     </div>
                 </div>
                 
             </div>
             <div  class="flex flex-col items-center font-semibold w-[300px] h-[380px] border-[3px] border-[#BFDC0C] rounded-3xl shadow-2xl shadow-neutral-600">
                 <div class="">
-                    <img class="w-[250px] h-[210px] py-1 " src="images/agro.jpg" alt="fertilizer">
+                    <img class="w-[250px] h-[210px] py-1" id="fertiImg3" src="images/fertilizer/saveferti/Zn-Sulphate.png" alt="fertilizer">
                 </div>
                 <div class="mt-3 "> <!--flex justify-center-->
-                    <label id="productName">Carrot</label>
+                    <label id="fertiName3">Hayleys Profenophos</label>
                 </div>
                 <div class="flex flex-col gap-4 px-3 mt-2 place-self-start"> <!--  -->
                     <div>
                         <label>Price :</label>
-                        <label>Rs.<label id="productPrice">1500.00</label></label> 
+                        <label id="fertiPrice3">Rs:450.99</label>
                     </div>
                     <div>
                         <label >Quantity :</label>
-                        <label id="productQuantity">25 <label>Kg</label></label>
+                        <label id="fertiQuantity3">25</label><label>Kg</label>
                     </div>
                     <div>
                         <label >Location :</label>
-                        <label id="productLocation">Dehiowita</label>
+                        <label id="fertiLocation3">Petta</label>
                     </div>
                 </div>
                 
             </div>
         </div>  
         <br><br> 
-        <a href="agrosell.php" class="flex justify-center cursor-pointer w-[200px] self-center text-black font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">View All</a>
+        <a href="typeagrochemical.php" class="flex justify-center cursor-pointer w-[200px] self-center text-black font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">View All</a>
     </div>
 
     <!-- system services in home page -->
@@ -247,7 +248,7 @@
                 MyAgro Institute can be known as an institute recognized by farmers, governments, and farmer organizations. Chamoth Migara owns the company MyAgro, which was founded in Nugegoda in 2013.
                 Apart from this, the institute provides solutions to the problems faced by farmers in relation to agricultural business and provides advisory services for agricultural activities.
                 </p>
-                <button class="justify-self-end cursor-pointer w-[200px] self-center text-black italic font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">Know More</button>
+                <a href="contactUs.php" class="justify-self-end cursor-pointer w-[200px] self-center text-black italic font-bold border-[3px] bg-[#ddf2a1] border-[#BFDC0C] rounded-3xl px-4 py-1 mt-4 ">Know More</a>
             </div>
         </div>
     </div>
@@ -283,6 +284,96 @@
 
         // Change image every minute (60000 milliseconds)
         setInterval(changeImage, 5000);
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            function fetch_selling() {
+                $.ajax({
+                    url: "get_product.php",
+                    method: "POST",
+                    data: { selling: "fetch_top_product" },
+                    success: function (response) {
+                        try {
+                            var SellingData = JSON.parse(response);
+
+                            // Dynamically update top 5 fertilizers
+                            if (SellingData.fertilizers && SellingData.fertilizers.length > 0) {
+                                for (var i = 0; i < SellingData.fertilizers.length; i++) {
+                                    // Check if elements exist before updating
+                                    const imgElement = document.getElementById(`fertiImg${i + 1}`);
+                                    const nameElement = document.getElementById(`fertiName${i + 1}`);
+                                    const priceElement = document.getElementById(`fertiPrice${i + 1}`);
+                                    const quantityElement = document.getElementById(`fertiQuantity${i + 1}`);
+                                    const locationElement = document.getElementById(`fertiLocation${i + 1}`);
+
+                                    if (imgElement) {
+                                        imgElement.src = "images/fertilizer/saveferti/" + SellingData.fertilizers[i].image;
+                                    }
+                                    if (nameElement) {
+                                        nameElement.innerText = SellingData.fertilizers[i].name;
+                                    }
+                                    if (priceElement) {
+                                        priceElement.innerText = "Rs." + SellingData.fertilizers[i].price;
+                                    }
+                                    if (quantityElement) {
+                                        quantityElement.innerText = SellingData.fertilizers[i].quantity;
+                                    }
+                                    if (locationElement) {
+                                        locationElement.innerText = SellingData.fertilizers[i].location;
+                                    }
+                                }
+
+                            } else {
+                                console.warn("No fertilizer data found in the response.");
+                            }
+
+                            if (SellingData.vegetables && SellingData.vegetables.length > 0) {
+                                for (var i = 0; i < SellingData.vegetables.length; i++) {
+                                    // Check if elements exist before updating
+                                    const ProductimgElement = document.getElementById(`productImg${i + 1}`);
+                                    const ProductnameElement = document.getElementById(`productName${i + 1}`);
+                                    const ProductpriceElement = document.getElementById(`productPrice${i + 1}`);
+                                    const ProductquantityElement = document.getElementById(`productQuantity${i + 1}`);
+                                    const ProductlocationElement = document.getElementById(`productLocation${i + 1}`);
+
+                                    if (ProductimgElement) {
+                                        ProductimgElement.src = "images/vegetable/" + SellingData.vegetables[i].image;
+                                    }
+                                    if (ProductnameElement) {
+                                        ProductnameElement.innerText = SellingData.vegetables[i].name;
+                                    }
+                                    if (ProductpriceElement) {
+                                        ProductpriceElement.innerText = "Rs." + SellingData.vegetables[i].price;
+                                    }
+                                    if (ProductquantityElement) {
+                                        ProductquantityElement.innerText = SellingData.vegetables[i].quantity;
+                                    }
+                                    if (ProductlocationElement) {
+                                        ProductlocationElement.innerText = SellingData.vegetables[i].location;
+                                    }
+                                }
+
+                            } else {
+                                console.warn("No vegetable data found in the response.");
+                            }
+
+                        } catch (error) {
+                            console.error("Failed to parse JSON response:", error, response);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request failed:", status, error);
+                    }
+                });
+            }
+
+            // Call the function
+            fetch_selling();
+            // setInterval(fetch_top_selling, 5000);
+
+        });
+
     </script>
 
     <!-- show output message -->
