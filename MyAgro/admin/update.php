@@ -83,17 +83,17 @@ session_start();
     // admin_password_update_btn in profile
     if(isset($_POST['admin_password_update_btn'])){
 
-        $id = $_POST['admin_id'];
-        $admin_old_password= $_POST['old_password'];
-        $admin_new_password= $_POST['new_password'];
-        $admin_confirm_password= $_POST['confirm_password'];
+        $id = trim($_POST['admin_id']);
+        $admin_old_password= trim($_POST['old_password']);
+        $admin_new_password= trim($_POST['new_password']);
+        $admin_confirm_password= trim($_POST['confirm_password']);
 
-        $check = "SELECT  `staff_password` FROM `staff` WHERE staff_id = '$id'";
+        $check = "SELECT staff_password FROM staff WHERE staff_id = '$id'";
         $result = mysqli_query($conn, $check);
         $row = mysqli_fetch_assoc($result);
-        $password = $row['staff_password'];
+        $hash_password = $row['staff_password'];
 
-        if($admin_old_password==$password){
+        if(password_verify($admin_old_password, $hash_password)){
 
             if($admin_old_password==$admin_new_password){
                 $_SESSION['admin_profile_status'] = 'You are not change your password';
@@ -106,7 +106,8 @@ session_start();
                 exit(0);
 
             }else if($admin_new_password==$admin_confirm_password){
-                $sql = "UPDATE `staff` SET `staff_password`='$admin_confirm_password', update_date = NOW() WHERE staff_id = '$id'";
+                $new_hash_password = password_hash($admin_new_password, PASSWORD_DEFAULT);
+                $sql = "UPDATE staff SET staff_password='$new_hash_password', update_date = NOW() WHERE staff_id = '$id'";
                 $result1 = mysqli_query($conn, $sql);
                 if($result1){
                     $_SESSION['admin_profile_status'] = 'Your password update successfully';
@@ -120,7 +121,8 @@ session_start();
                 }
             }
 
-        }else{
+        }
+        else{
             $_SESSION['admin_profile_status'] = 'Your Old password wrong';
             header("Location: admin_profile.php");
             exit(0);
@@ -131,17 +133,17 @@ session_start();
     // staff_password_update_btn in profile
     if(isset($_POST['staff_password_update_btn'])){
 
-        $id = $_POST['user_id'];
-        $old_password= $_POST['old_password'];
-        $new_password= $_POST['new_password'];
-        $confirm_password= $_POST['confirm_password'];
+        $id = trim($_POST['user_id']);
+        $old_password= trim($_POST['old_password']);
+        $new_password= trim($_POST['new_password']);
+        $confirm_password= trim($_POST['confirm_password']);
 
         $check = "SELECT  `staff_password` FROM `staff` WHERE staff_id = '$id'";
         $result = mysqli_query($conn, $check);
         $row = mysqli_fetch_assoc($result);
-        $password = $row['staff_password'];
+        $hash_password = $row['staff_password'];
 
-        if($old_password==$password){
+        if(password_verify($old_password,$hash_password)){
 
             if($old_password==$new_password){
                 $_SESSION['profile_status'] = 'You are not change your password';
@@ -154,7 +156,8 @@ session_start();
                 exit(0);
 
             }else if($new_password==$confirm_password){
-                $sql = "UPDATE `staff` SET `staff_password`='$confirm_password', update_date = NOW() WHERE staff_id = '$id'";
+                $new_hash_password = password_hash($new_password, PASSWORD_DEFAULT);
+                $sql = "UPDATE `staff` SET `staff_password`='$new_hash_password', update_date = NOW() WHERE staff_id = '$id'";
                 $result1 = mysqli_query($conn, $sql);
                 if($result1){
                     $_SESSION['profile_status'] = 'Your password update successfully';
@@ -1052,8 +1055,8 @@ session_start();
         !isset($_POST["supplier_detail_update"]) &&
         !isset($_POST["farmer_detail_update"])
     ) {
-        header('Location: index.php');
-        exit(0);
+        // header('Location: index.php');
+        // exit(0);
     }
     
 

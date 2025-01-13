@@ -45,7 +45,7 @@
                                                 <a href="video_play.php?id=<?php echo $items['tech_id']; ?>">
                                                     <video src="/Agricultural-Support-Service-System/MyAgro/admin/videos/<?php echo $items['video_name']; ?>" class="w-[400px] h-[250px] rounded-3xl shadow-md border-2 hover:rounded-none hover:shadow-2xl"></video>
                                                     <div class="flex space-x-10">
-                                                        <label class="ml-2 text-lg"><?php echo $items['view_name']; ?></label>
+                                                        <label class="ml-2 text-lg"><?php echo ucfirst($items['view_name']); ?></label>
                                                     </div>     
                                                 </a>
                                             </div>
@@ -71,7 +71,7 @@
                     if(mysqli_num_rows($query_run) >  0){
                         
                         ?>
-                            <div class="grid justify-between grid-cols-6 ml-6">
+                            <div class="grid justify-between grid-cols-4 ml-6">
                                 <?php
                                     foreach($query_run as $items) {
                                         ?>
@@ -79,7 +79,7 @@
                                                 <a href="video_play.php?id=<?php echo $items['tech_id']; ?>">
                                                     <video src="/Agricultural-Support-Service-System/MyAgro/admin/videos/<?php echo $items['video_name']; ?>" class="w-[200px] h-[250px] rounded-3xl shadow-md border-2 hover:rounded-none hover:shadow-2xl"></video>
                                                     <div class="flex space-x-10">
-                                                        <label class="ml-2 text-lg"><?php echo $items['view_name']; ?></label>
+                                                        <label class="ml-2 text-lg"><?php echo ucfirst($items['view_name']); ?></label>
                                                     </div>     
                                                 </a>
                                             </div>

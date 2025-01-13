@@ -22,7 +22,7 @@ if(!isset($_SESSION['login_admin_user'])){
         }  
     </style>
 </head>
-<body class="bg-[#1c4094] text-white">
+<body class="bg-[#305dc7] text-white">
     
     <div class="w-screen h-screen">
         <div class="flex w-full h-full">
@@ -204,7 +204,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                 </div>  
                                 <form action="" method="post" class="flex mt-1">
                                     <div class="flex gap-2">
-                                        <input type="text" class="h-8 p-1 font-sans text-black rounded-md border-1 w-96" name="search_supplier_product" value="<?php if(isset($_POST['search_supplier_product'])){ echo $_POST['search_supplier_product']; } ?>" placeholder="Search by farmer name or product name" required>
+                                        <input type="text" class="h-8 p-1 font-sans text-black rounded-md border-1 w-96" name="search_supplier_product" value="<?php if(isset($_POST['search_supplier_product'])){ echo $_POST['search_supplier_product']; } ?>" placeholder="Search by supplier name or product name" required>
                                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-center h-8 w-[100px] rounded-lg">Search</button>
                                     </div>  
                                 </form>                                           

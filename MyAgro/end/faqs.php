@@ -19,11 +19,11 @@
     </style>
 </head>
 
-<body>
+<body class="">
     <!-- navigation bar -->
     <?php require('header.php'); ?>
 
-    <div class="flex flex-col justify-center gap-2 mb-[170px] select-none">
+    <div class="flex flex-col justify-center gap-2 mb-[170px] select-none ">
         <h1 class="mt-10 mb-20 text-4xl text-center libre-baskerville-regular-italic">Frequently Asked Questions</h1>
 
         <div class="self-center px-6 py-5 ml-10 bg-white border-2 border-gray-200 shadow-lg rounded-xl hover:scale-105 hover:bg-gray-100 w-fit hover:shadow-2xl">

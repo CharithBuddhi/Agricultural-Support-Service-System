@@ -14,7 +14,7 @@ if(!isset($_SESSION['login_staff_user'])){
     <title>Profile</title>
     
 </head>
-<body class="bg-[#1c4094] text-white">
+<body class="bg-[#305dc7] text-white">
 
     <div class="flex w-full h-screen">
 

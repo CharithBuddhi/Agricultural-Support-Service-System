@@ -22,7 +22,7 @@ if(!isset($_SESSION['login_admin_user'])){
         }  
     </style>
 </head>
-<body class="bg-[#1c4094] text-white">
+<body class="bg-[#305dc7] text-white">
     <div class="w-screen h-screen">
         <div class="flex w-full h-full">
 

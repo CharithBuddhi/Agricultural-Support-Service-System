@@ -104,24 +104,24 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <!-- <script>
-    // Get the current URL of the web page
-    var currentURL = window.location.href;
+        // Get the current URL of the web page
+        var currentURL = window.location.href;
 
-    // Get elements by their IDs
-    const dashboard = document.getElementById('dashboard');
-    const profile = document.getElementById('profile');
-    const request = document.getElementById('request');
-    const report = document.getElementById('report');
+        // Get elements by their IDs
+        const dashboard = document.getElementById('dashboard');
+        const profile = document.getElementById('profile');
+        const request = document.getElementById('request');
+        const report = document.getElementById('report');
 
-    // Example of how to compare the URL and set the background
-    if (currentURL === "http://localhost/Agricultural-Support-Service-System/MyAgro/admin/admin.php") {
-        dashboard.style.background = "#0AFFFF";  // Use style.background
-    } else if (currentURL === "http://localhost/Agricultural-Support-Service-System/MyAgro/admin/admin_profile.php") {
-        profile.style.background = "#0AFFFF";    // Use style.background
-    } else {
-        console.log("You are on a different page.");
-    } -->
-<!-- </script> -->
+        // Example of how to compare the URL and set the background
+        if (currentURL === "http://localhost/Agricultural-Support-Service-System/MyAgro/admin/admin.php") {
+            dashboard.style.background = "#0AFFFF";  // Use style.background
+        } else if (currentURL === "http://localhost/Agricultural-Support-Service-System/MyAgro/admin/admin_profile.php") {
+            profile.style.background = "#0AFFFF";    // Use style.background
+        } else {
+            console.log("You are on a different page.");
+        }
+    </script> -->
 
 
     <!-- <script>
