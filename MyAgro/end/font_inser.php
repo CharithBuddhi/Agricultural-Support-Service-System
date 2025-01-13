@@ -2,11 +2,34 @@
 
 session_start();
 require('db_connect.php'); 
-date_default_timezone_set('Asia/Calcutta');
+date_default_timezone_set('Asia/Colombo');
 
 if(isset($_POST['product_submit'])){
 
+    $login_user_type = $_SESSION['login_type'];
     $id = $_SESSION['login_id'];
+
+    if($login_user_type == "supplier"){
+        $supplier_id = $id;
+        $select = "SELECT bank_name, account_name, account_no, branch_name FROM supplier WHERE supplier_id = '$supplier_id'";
+        $result = mysqli_query($conn, $select);
+        $row = mysqli_fetch_assoc($result);
+        $bank_name = $row['bank_name'];
+        $account_name = $row['account_name'];
+        $account_no = $row['account_no'];
+        $branch_name = $row['branch_name'];
+
+        if($bank_name == "" || $account_name == "" || $account_no == "" || $branch_name == ""){
+            $_SESSION['product_manage'] = "Please fill your bank details first!";
+            header("Location: product_manage.php");
+            exit();
+        }
+
+    }else{
+        $_SESSION['product_manage'] = "You are not supplier!";
+        header("Location: product_manage.php");
+        exit();
+    }
 
     $Product_name = trim($_POST['Product_name']);
     $Origin = trim($_POST['Origin']);
@@ -29,6 +52,9 @@ if(isset($_POST['product_submit'])){
 
     $shop_name = trim($_POST['shop_name']);
     $product_price = trim($_POST['product_price']);
+
+    $commission = round(($product_price * 0.02),2);
+    
     $product_quantity = trim($_POST['product_quantity']);
     $total_quantity = trim($_POST['total_quantity']);
     $measurement = trim($_POST['measurement']);
@@ -52,16 +78,17 @@ if(isset($_POST['product_submit'])){
                                             agro_image, 
                                             agro_description,
                                             shop_name, 
-                                            agro_price, 
+                                            agro_price,
+                                            commission, 
                                             agro_quantity, 
                                             total_quantity, 
                                             meassure, 
                                             agro_district, 
                                             agro_area, 
                                             agro_location, 
-                                            supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                            supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssssssssdddssssi", $Product_name, 
+            $stmt->bind_param("sssssssssddddssssi", $Product_name, 
                                                             $Origin, 
                                                             $Category, 
                                                             $type, 
@@ -70,7 +97,8 @@ if(isset($_POST['product_submit'])){
                                                             $product_image, 
                                                             $Description, 
                                                             $shop_name, 
-                                                            $product_price, 
+                                                            $product_price,
+                                                            $commission, 
                                                             $product_quantity, 
                                                             $total_quantity, 
                                                             $measurement, 
@@ -106,7 +134,30 @@ if(isset($_POST['product_submit'])){
 
 if(isset($_POST['vegetable_submit'])){
 
+    $login_user_type = $_SESSION['login_type'];
     $id = $_SESSION['login_id'];
+
+    if($login_user_type == "farmer"){
+        $farmer_id = $id;
+        $select = "SELECT bank_name, account_name, account_no, branch_name FROM farmer WHERE farmer_id = '$farmer_id'";
+        $result = mysqli_query($conn, $select);
+        $row = mysqli_fetch_assoc($result);
+        $bank_name = $row['bank_name'];
+        $account_name = $row['account_name'];
+        $account_no = $row['account_no'];
+        $branch_name = $row['branch_name'];
+
+        if($bank_name == "" || $account_name == "" || $account_no == "" || $branch_name == ""){
+            $_SESSION['vegetable_manage'] = "Please fill your bank details first!";
+            header("Location: vegetable_manage.php");
+            exit();
+        }
+
+    }else{
+        $_SESSION['vegetable_manage'] = "You are not farmer!";
+        header("Location: vegetable_manage.php");
+        exit();
+    }
 
     $Product_Origin = trim($_POST['Product_Origin']);
     $Product_name = trim($_POST['Product_Category']);

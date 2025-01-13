@@ -66,7 +66,7 @@ if(!isset($_SESSION['login_admin_user'])){
                             </div>
                 
                             <div class="mt-3">
-                                <div class="" id="customer_table" style="max-height: 500px; overflow-y: auto;">
+                                <div class="" id="customer_table" style="max-height: 600px; overflow-y: auto;">
                                     <table class="w-full font-sans text-center text-white table-auto table-hover">
                                         <thead>
                                             <tr class="h-10 text-center text-black bg-white">
@@ -89,9 +89,9 @@ if(!isset($_SESSION['login_admin_user'])){
                                                 $search = trim(isset($_POST['paid_orders'])) ? $_POST['paid_orders'] : '';
                                                 if($search != '') {
                                                     
-                                                    $query_1 = "SELECT * FROM transaction WHERE payment_status = 'succeeded' AND item_category = ? ORDER BY Reference_id DESC";
+                                                    $order_category = "%" . $conn->real_escape_string($_POST['paid_orders']). "%";
+                                                    $query_1 = "SELECT * FROM transaction WHERE payment_status = 'succeeded' AND (item_name LIKE ? OR item_category LIKE ?) ORDER BY Reference_id DESC";
                                                     $stmt = $conn->prepare($query_1); 
-                                                    $order_category = $_POST['paid_orders'];
                                 
                                                     if ($stmt === false) {
                                 
@@ -99,7 +99,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                         
                                                     }
                                                     
-                                                    $stmt->bind_param("s", $order_category);
+                                                    $stmt->bind_param("ss", $order_category,$order_category);
                                 
                                                     // Execute the statement
                                                     if (!$stmt->execute()) {
@@ -297,7 +297,7 @@ if(!isset($_SESSION['login_admin_user'])){
                             </div>
                 
                             <div class="mt-3">
-                                <div class="" id="customer_table" style="max-height: 500px; overflow-y: auto;">
+                                <div class="" id="customer_table" style="max-height: 600px; overflow-y: auto;">
                                     <table class="w-full font-sans text-center text-white table-auto table-hover">
                                         <thead>
                                             <tr class="h-10 text-center text-black bg-white">
@@ -319,25 +319,32 @@ if(!isset($_SESSION['login_admin_user'])){
                                                 $search1 = trim(isset($_POST['complete_orders'])) ? $_POST['complete_orders'] : '';
                                                 if($search1 != '') {
                                                     
-                                                    $query_1 = "SELECT * FROM transaction WHERE payment_status = 'Completed' AND item_category = ? ORDER BY Reference_id DESC";
-                                                    $stmt = $conn->prepare($query_1); 
-                                                    $order_category = $_POST['complete_orders'];
-                                
+                                                    // Sanitize and prepare the search term
+                                                    $order_category_or_item_name = "%" . $conn->real_escape_string($_POST['complete_orders']) . "%";
+
+                                                    // Updated query
+                                                    $query_1 = "SELECT * FROM transaction 
+                                                                WHERE payment_status = 'Completed' 
+                                                                AND (item_name LIKE ? OR item_category LIKE ?) 
+                                                                ORDER BY Reference_id DESC";
+
+                                                    $stmt = $conn->prepare($query_1);
+
                                                     if ($stmt === false) {
-                                
                                                         die('Prepare error: ' . $conn->error);
-                                                        
                                                     }
-                                                    
-                                                    $stmt->bind_param("s", $order_category);
-                                
+
+                                                    // Bind the search term to both placeholders
+                                                    $stmt->bind_param("ss", $order_category_or_item_name, $order_category_or_item_name);
+
                                                     // Execute the statement
                                                     if (!$stmt->execute()) {
                                                         die('Execute error: ' . $stmt->error);
                                                     }
-                                
+
                                                     // Get result set from the statement
                                                     $result = $stmt->get_result();
+
 
                                                     if($result && $result->num_rows > 0) {
                                                         
@@ -492,7 +499,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                                     <td ><?= $row['item_category']; ?></td>
                                                                     <td ><?= "Rs ".$row['total_amount']; ?></td>
                                                                     <td class="flex items-center justify-center h-full text-center">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="#22c55e" viewBox="0 0 24 24" stroke-width="1.0" stroke="currentColor" class="mt-1 size-8">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="#22c55e" viewBox="0 0 24 24" stroke-width="1.0" stroke="currentColor" class="mt-1 size-7">
                                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                                         </svg>
                                                                     </td>
@@ -535,7 +542,7 @@ if(!isset($_SESSION['login_admin_user'])){
                             </div>
                 
                             <div class="mt-3">
-                                <div class="" id="customer_table" style="max-height: 500px; overflow-y: auto;">
+                                <div class="" id="customer_table" style="max-height: 610px; overflow-y: auto;">
                                     <table class="w-full font-sans text-center text-white table-auto table-hover">
                                         <thead>
                                             <tr class="h-10 text-center text-black bg-white">
@@ -557,9 +564,9 @@ if(!isset($_SESSION['login_admin_user'])){
                                                 $search2 = trim(isset($_POST['cancel_orders'])) ? $_POST['cancel_orders'] : '';
                                                 if($search2 != '') {
                                                     
-                                                    $query_1 = "SELECT * FROM transaction WHERE payment_status = 'Canceled' AND item_category = ? ORDER BY Reference_id DESC";
+                                                    $order_category = "%" . $conn->real_escape_string($_POST['cancel_orders']). "%";
+                                                    $query_1 = "SELECT * FROM transaction WHERE payment_status = 'Canceled' AND (item_name LIKE ? OR item_category LIKE ?) ORDER BY Reference_id DESC";
                                                     $stmt = $conn->prepare($query_1); 
-                                                    $order_category = $_POST['cancel_orders'];
                                 
                                                     if ($stmt === false) {
                                 
@@ -567,7 +574,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                         
                                                     }
                                                     
-                                                    $stmt->bind_param("s", $order_category);
+                                                    $stmt->bind_param("ss", $order_category,$order_category);
                                 
                                                     // Execute the statement
                                                     if (!$stmt->execute()) {
@@ -656,7 +663,7 @@ if(!isset($_SESSION['login_admin_user'])){
                                                 }else{
 
 
-                                                    $query = "SELECT * FROM transaction WHERE payment_status = 'Completed' ORDER BY Reference_id DESC";
+                                                    $query = "SELECT * FROM transaction WHERE payment_status = 'Canceled' ORDER BY Reference_id DESC";
 
                                                     // prepare statment
                                                     $stmt = $conn->prepare($query);

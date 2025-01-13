@@ -21,13 +21,13 @@
             case "customer":  
     
                 $username = $_POST['username'];
-                $password = $_POST['password'];      
+                $password = $_POST['password'];
                 $address = $_POST['address'];
                 $phone = $_POST['phone'];
                 
                 if (!empty($yourname) && !empty($username) && !empty($password) && !empty($address) && !empty($email) && !empty($phone)) {
-    
-                    echo $phone;
+                    
+                    $hash_password = password_hash($password, PASSWORD_DEFAULT);      
                     $SELECT = "SELECT username FROM customer WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT customer_email FROM customer WHERE customer_email = ? LIMIT 1";
                     $INSERT = "INSERT INTO customer (customer_name, username, password, customer_address, customer_email, customer_telno, create_time) values(?, ?, ?, ?, ?, ?,Now())";
@@ -52,9 +52,9 @@
                             $stmt->close();
                             $stmt1->close();
                             $stmt = $conn->prepare($INSERT);
-                            $stmt->bind_param("sssssi",$yourname, $username, $password, $address, $email, $phone);
                             $stmt->execute();
                             $_SESSION['reg_message'] = "Registered successfully!";
+                            $stmt->bind_param("sssssi",$yourname, $username, $hash_password, $address, $email, $phone);
                             $stmt->close();
                             $conn->close();
                             header("Location: customer.php");
@@ -82,6 +82,7 @@
                 
                 $username = $_POST['username'];
                 $password = $_POST['password'];
+                
                 $nic = $_POST['nic'];
                 $address = $_POST['address'];
                 $phone = $_POST['phone'];
@@ -89,6 +90,7 @@
     
                 if(!empty($yourname) || !empty($username) || !empty($password) || !empty($nic) || !empty($address) || !empty($email) || !empty($phone) || !empty($proof)){
     
+                    $hash_password = password_hash($password, PASSWORD_DEFAULT);  
                     $SELECT = "SELECT username FROM farmer WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT farmer_email FROM farmer WHERE farmer_email = ? LIMIT 1";
                     $SELECT2 = "SELECT farmer_nic FROM farmer WHERE farmer_nic = ? LIMIT 1";
@@ -162,7 +164,7 @@
                                             $stmt4->close();
                                             $stmt5->close();
                                             $stmt = $conn->prepare($INSERT);
-                                            $stmt->bind_param("sssssssis", $yourname, $username, $password, $usertype, $nic, $address, $email, $phone, $proof);
+                                            $stmt->bind_param("sssssssis", $yourname, $username, $hash_password, $usertype, $nic, $address, $email, $phone, $proof);
                                             $stmt->execute();
                                             move_uploaded_file($_FILES['image']['tmp_name'], "D:\\a XAmpp projec\\htdocs\\Agricultural-Support-Service-System\\MyAgro\\admin\\images\\reg/$proof");
                                             $_SESSION['reg_message'] = "Request sent successfully!";
@@ -226,6 +228,7 @@
     
                 if(!empty($yourname) || !empty($username) || !empty($password) || !empty($nic) || !empty($address) || !empty($shop_name) || !empty($email) || !empty($phone) || !empty($proof)){
     
+                    $hash_password = password_hash($password, PASSWORD_DEFAULT);
                     $SELECT = "SELECT username FROM supplier WHERE username = ? LIMIT 1";
                     $SELECT1 = "SELECT supplier_email FROM supplier WHERE supplier_email = ? LIMIT 1";
                     $SELECT2 = "SELECT supplier_nic FROM supplier WHERE supplier_nic = ? LIMIT 1";
@@ -299,7 +302,7 @@
                                             $stmt4->close();
                                             $stmt5->close();
                                             $stmt = $conn->prepare($INSERT);
-                                            $stmt->bind_param("sssssssiss", $yourname, $username, $password, $usertype, $nic, $address, $email, $phone, $proof, $shop_name);
+                                            $stmt->bind_param("sssssssiss", $yourname, $username, $hash_password, $usertype, $nic, $address, $email, $phone, $proof, $shop_name);
                                             $stmt->execute();
                                             move_uploaded_file($_FILES['image']['tmp_name'], "D:\\a XAmpp projec\\htdocs\\Agricultural-Support-Service-System\\MyAgro\\admin\\images\\reg/$proof");
                                             $_SESSION['reg_message'] = "Request sent successfully!";
@@ -367,13 +370,22 @@
             
             $usertype = $_POST['usertype']; 
 
-            $sql = "SELECT * FROM $usertype WHERE username = '$username' AND password = '$password'";
+            // $sql = "SELECT * FROM $usertype WHERE username = '$username' AND password = '$password'";
+            $sql = "SELECT * FROM $usertype WHERE username = '$username'";
 
             $query_run = mysqli_query($conn, $sql);
 
             if(mysqli_num_rows($query_run) >  0){
 
                 $row = mysqli_fetch_assoc($query_run);
+
+                $hash_password = $row['password'];
+
+                if(!password_verify($password, $hash_password)){
+                    $_SESSION['login_message'] = "Invalid username or password";
+                    header("Location: login.php");
+                    exit();
+                }
 
                 if($usertype == 'farmer'){
 

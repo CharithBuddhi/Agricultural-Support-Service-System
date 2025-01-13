@@ -34,7 +34,7 @@
             $category = $_POST['category'];
             $name = $_POST['name'];
 
-            $query = "SELECT min_price, max_price FROM controlprice WHERE crop_category = '$crop_origin' AND crop_name = '$category' AND varieties_name = '$name' LIMIT 1";
+            $query = "SELECT min_price, max_price, commission FROM controlprice WHERE crop_category = '$crop_origin' AND crop_name = '$category' AND varieties_name = '$name' LIMIT 1";
             $result = $conn->query($query);
             $row = $result->fetch_assoc();
             header('Content-Type: application/json');
@@ -42,7 +42,8 @@
             // Construct response array
             $row = [
                 'min_price' => $row['min_price'], // Example value
-                'max_price' => $row['max_price'] // Example value
+                'max_price' => $row['max_price'], // Example value
+                'commission' => $row['commission']
             ];
             
             // Return JSON response

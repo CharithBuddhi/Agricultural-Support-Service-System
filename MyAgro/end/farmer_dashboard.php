@@ -135,17 +135,17 @@ if(isset($_POST['update_profile_btn'])){
 // farmer_password_update_btn in profile
 if(isset($_POST['farmer_password_update_btn'])){
 
-    $id = $_POST['user_id'];
-    $old_password= $_POST['old_password'];
-    $new_password= $_POST['new_password'];
-    $confirm_password= $_POST['confirm_password'];
+    $id = trim($_POST['user_id']);
+    $old_password= trim($_POST['old_password']);
+    $new_password= trim($_POST['new_password']);
+    $confirm_password= trim($_POST['confirm_password']);
 
     $check = "SELECT `password` FROM `farmer` WHERE farmer_id  = '$id'";
     $result = mysqli_query($conn, $check);
     $row = mysqli_fetch_assoc($result);
-    $password = $row['password'];
+    $hash_password = $row['password'];
 
-    if($old_password==$password){
+    if(password_verify($old_password, $hash_password)){
 
         if($old_password==$new_password){
             $_SESSION['farmer_profile_update'] = 'You are not change your password';
@@ -158,7 +158,8 @@ if(isset($_POST['farmer_password_update_btn'])){
             exit(0);
 
         }else if($new_password==$confirm_password){
-            $sql = "UPDATE `farmer` SET `password`='$confirm_password' WHERE farmer_id  = '$id'";
+            $new_hash_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $sql = "UPDATE `farmer` SET `password`='$new_hash_password' WHERE farmer_id  = '$id'";
             $result1 = mysqli_query($conn, $sql);
             if($result1){
                 $_SESSION['farmer_profile_update'] = 'Your password update successfully';

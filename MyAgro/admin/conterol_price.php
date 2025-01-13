@@ -32,85 +32,83 @@ if(!isset($_SESSION['login_admin_user'])){
         <form action="cal.php" method="post" class="flex self-center text-black gap-[65px] mt-7">
             <div class="flex flex-col w-[300px] gap-4">
 
-                
-                
-            <!-- first tow input filed display condition. if update display with value, if add new disply witout value input fields value  -->
-            <?php
+                <!-- first tow input filed display condition. if update display with value, if add new disply witout value input fields value  -->
+                <?php
 
-                if(isset($_GET['crop'])){
-                    $crop = $_GET['crop'];
+                    if(isset($_GET['crop'])){
+                        $crop = $_GET['crop'];
+                        ?>
+                            <div class="flex flex-col">
+                                <label for="crop">Crop</label>
+                                <input type='text' id='crop' name='crop' value='<?php echo $crop?>' class='h-8 rounded-md' readonly required>
+                            </div>
+                        <?php
+                    }else{
+                        ?>
+                            <div class="flex flex-col">
+                                <label for="crop">Crop</label>
+                                <select id="crop" name="crop" class="h-8 font-semibold rounded-md" required>
+                                    <option value="">Select Crop</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                    <option value="Fruit">Fruit</option>
+                                </select>
+                            </div>
+                        <?php
+                    }
+
+
+                    if(isset($_GET['name'])){
+                    $name = $_GET['name'];
                     ?>
-                        <div class="flex flex-col">
-                            <label for="crop">Crop</label>
-                            <input type='text' id='crop' name='crop' value='<?php echo $crop?>' class='h-8 rounded-md' readonly required>
+                        <div class='flex flex-col '>
+                            <label for='crop_name'>Name of the crop</label>
+                            <input type='text' id='crop_name' name='crop_name' value='<?php echo $name?>' class='h-8 rounded-md' readonly required>
                         </div>
-                    <?php
-                }else{
-                    ?>
-                        <div class="flex flex-col">
-                            <label for="crop">Crop</label>
-                            <select id="crop" name="crop" class="h-8 font-semibold rounded-md" required>
+                        <?php
+                    }else{
+                        ?>
+                        <div class='flex flex-col '>
+                            <label for='crop_name'>Name of the crop</label>
+                            <select id="crop_name" name="crop_name" class='h-8 font-semibold rounded-md' required>
                                 <option value="">Select Crop</option>
-                                <option value="Vegetable">Vegetable</option>
-                                <option value="Fruit">Fruit</option>
                             </select>
                         </div>
-                    <?php
-                }
+                        <?php
+                    }
 
+                    if(isset($_GET['varieties'])){
+                        $varieties = $_GET['varieties'];
+                        ?>
+                        <div class='flex flex-col '>
+                            <label for='crop_variety'>Varieties of the crop</label>
+                            <input type='text' id='crop_variety' name='crop_variety' value='<?php echo $varieties?>' class='h-8 rounded-md' readonly required>
+                        </div>
+                        <?php
+                    }else{
+                        ?>
+                        <div class='flex flex-col '>
+                            <label for='crop_variety'>Varieties of the crop</label>
+                            <select id="crop_variety" name="crop_variety" class='h-8 font-semibold rounded-md' required>
+                                <option value="">Select Variety</option>
+                            </select>
+                        </div>
+                        <?php
+                    }
 
-                if(isset($_GET['name'])){
-                   $name = $_GET['name'];
-                   ?>
-                    <div class='flex flex-col '>
-                        <label for='crop_name'>Name of the crop</label>
-                        <input type='text' id='crop_name' name='crop_name' value='<?php echo $name?>' class='h-8 rounded-md' readonly required>
-                    </div>
-                    <?php
-                }else{
-                    ?>
-                    <div class='flex flex-col '>
-                        <label for='crop_name'>Name of the crop</label>
-                        <select id="crop_name" name="crop_name" class='h-8 font-semibold rounded-md' required>
-                            <option value="">Select Crop</option>
-                        </select>
-                    </div>
-                    <?php
-                }
-
-                if(isset($_GET['varieties'])){
-                    $varieties = $_GET['varieties'];
-                    ?>
-                    <div class='flex flex-col '>
-                        <label for='crop_variety'>Varieties of the crop</label>
-                        <input type='text' id='crop_variety' name='crop_variety' value='<?php echo $varieties?>' class='h-8 rounded-md' readonly required>
-                    </div>
-                    <?php
-                }else{
-                    ?>
-                    <div class='flex flex-col '>
-                        <label for='crop_variety'>Varieties of the crop</label>
-                        <select id="crop_variety" name="crop_variety" class='h-8 font-semibold rounded-md' required>
-                            <option value="">Select Variety</option>
-                        </select>
-                    </div>
-                    <?php
-                }
-
-                if(isset($_GET['id'])){
-                    $id = $_GET['id'];
-                    ?>
-                    <input type='hidden' id='price_id' name='price_id' value='<?php echo $id?>' class='h-8 rounded-md'>
-                    <?php
-                }
-                if(isset($_GET['search'])){
-                    $search = $_GET['search'];
-                    ?>
-                    <input type='hidden' id='search' name='search' value='<?php echo $search?>' class='h-8 rounded-md'>
-                    <?php
-                }
-                
-            ?>
+                    if(isset($_GET['id'])){
+                        $id = $_GET['id'];
+                        ?>
+                        <input type='hidden' id='price_id' name='price_id' value='<?php echo $id?>' class='h-8 rounded-md'>
+                        <?php
+                    }
+                    if(isset($_GET['search'])){
+                        $search = $_GET['search'];
+                        ?>
+                        <input type='hidden' id='search' name='search' value='<?php echo $search?>' class='h-8 rounded-md'>
+                        <?php
+                    }
+                    
+                ?>
 
                 <!-- Price Calculation Form -->
                 <div class="flex flex-col">
@@ -178,6 +176,10 @@ if(!isset($_SESSION['login_admin_user'])){
                 <div class="flex flex-col">
                     <label for="taxt">Tax percentage</label>
                     <input type="number" id="taxt" step="0.01" min="1" name="taxt" class="h-8 rounded-md" required>
+                </div>
+                <div class="flex flex-col">
+                    <label for="taxt">Commission percentage</label>
+                    <input type="number" id="commission" step="0.01" min="1" name="commission" class="h-8 rounded-md" required>
                 </div>
                 <div class="flex justify-around">
                     <button type="reset" id="clear" class="px-4 py-1 mt-4 border-2 w-[120px] cursor-pointer bg-cyan-300 rounded-xl">Clear</button>
@@ -248,6 +250,7 @@ if(!isset($_SESSION['login_admin_user'])){
         <input type="hidden" name="crop_variety" value="<?php echo $crop_variety_result ?? ''; ?>">
         <input type="hidden" name="min_result" value="<?php echo $min_result ?? ''; ?>">
         <input type="hidden" name="max_result" value="<?php echo $max_result ?? ''; ?>">
+        <input type="hidden" name="commission" value="<?php echo $_GET['commission'] ?? ''; ?>">
 
         <div class="flex justify-around gap-4 font-semibold text-black">
             <input type="submit" name="confirm" class="py-1 mt-4 bg-yellow-300 border-2 cursor-pointer px-14 w-fit rounded-xl">
@@ -355,9 +358,10 @@ if(isset($_POST['confirm'])) {
     $crop_variety_result = $_POST['crop_variety'] ?? '';
     $min_result = $_POST['min_result'] ?? '';
     $max_result = $_POST['max_result'] ?? '';
+    $commission = $_POST['commission'] ?? '';
 
     // Ensure all form data is present
-    if(!empty($crop_name_result) && !empty($crop_variety_result) && !empty($min_result) && !empty($max_result)) {
+    if(!empty($crop_name_result) && !empty($crop_variety_result) && !empty($min_result) && !empty($max_result) && !empty($commission)) {
         
         // Check if it's an update operation
         if(isset($_GET['id'])) {
@@ -378,9 +382,9 @@ if(isset($_POST['confirm'])) {
                 $update_date = $row['update_date'];
                 
                 // Prepare the update statement using prepared statements
-                $sql = "UPDATE `controlprice` SET `pervious_min_price`=?, `pervious_max_price`=?, `create_date`=?, `min_price`=?, `max_price`=?, `update_date`=now() WHERE price_id = ?";
+                $sql = "UPDATE `controlprice` SET `pervious_min_price`=?, `pervious_max_price`=?, `create_date`=?, `min_price`=?, `max_price`=?, `commission`=?, `update_date`=now() WHERE price_id = ?";
                 $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, "sssssi",$previuse_min_price, $previuse_max_price, $update_date, $min_result, $max_result, $id);
+                mysqli_stmt_bind_param($stmt, "ssssssi",$previuse_min_price, $previuse_max_price, $update_date, $min_result, $max_result, $commission, $id);
                 
                 // Execute the update query
                 if(mysqli_stmt_execute($stmt)) {
@@ -402,13 +406,13 @@ if(isset($_POST['confirm'])) {
             require('db_conn.php');
             if ($conn) {
                 // Prepare the SQL insert statement
-                $sql = "INSERT INTO controlprice (crop_category, crop_name, varieties_name, min_price, max_price, create_date, update_date) 
-                        VALUES (?, ?, ?, ?, ?, now(), now())";
+                $sql = "INSERT INTO controlprice (crop_category, crop_name, varieties_name, min_price, max_price, commission, create_date, update_date) 
+                        VALUES (?, ?, ?, ?, ?, ?, now(), now())";
 
                 $stmt = mysqli_prepare($conn, $sql);
                 
                 // Use appropriate data types: 'ssdd' for string, string, decimal, decimal
-                mysqli_stmt_bind_param($stmt, 'sssdd', $crop_result, $crop_name_result, $crop_variety_result, $min_result, $max_result);
+                mysqli_stmt_bind_param($stmt, 'sssddd', $crop_result, $crop_name_result, $crop_variety_result, $min_result, $max_result, $commission);
 
                 // Execute the insert query
                 if(mysqli_stmt_execute($stmt)) {
