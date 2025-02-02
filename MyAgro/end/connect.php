@@ -9,9 +9,7 @@
         $email = $_SESSION['email'];
         $yourname = $_SESSION['yourname'];
         
-        echo $usertype;
-                echo $email;
-                echo $yourname;
+
         
         // identify user type
         switch($usertype){
@@ -24,6 +22,8 @@
                 $password = $_POST['password'];
                 $address = $_POST['address'];
                 $phone = $_POST['phone'];
+                $email = $_SESSION['email'];
+                $yourname = $_SESSION['yourname'];
                 
                 if (!empty($yourname) && !empty($username) && !empty($password) && !empty($address) && !empty($email) && !empty($phone)) {
                     
@@ -51,11 +51,11 @@
                         if($rnum==0){
                             $stmt->close();
                             $stmt1->close();
-                            $stmt = $conn->prepare($INSERT);
-                            $stmt->execute();
+                            $stmt3 = $conn->prepare($INSERT);
+                            $stmt3->bind_param("sssssi",$yourname, $username, $hash_password, $address, $email, $phone);
+                            $stmt3->execute();
                             $_SESSION['reg_message'] = "Registered successfully!";
-                            $stmt->bind_param("sssssi",$yourname, $username, $hash_password, $address, $email, $phone);
-                            $stmt->close();
+                            $stmt3->close();
                             $conn->close();
                             header("Location: customer.php");
                             exit();

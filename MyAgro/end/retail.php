@@ -270,7 +270,7 @@ date_default_timezone_set("Asia/colombo");
                     ?>
                     <?php require('header.php'); ?>
                     <!-- order confirmed page -->
-                    <h1 class="mt-3 font-serif text-3xl font-bold h-1/5">Order confirmed</h1>
+                    <h1 class="mt-3 font-serif text-3xl font-bold h-1/5">Order confirmation</h1>
                     
                     <div class="flex h-[770px] mt-4">
 

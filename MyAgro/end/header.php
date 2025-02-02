@@ -13,7 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="flex p-2 border-b-2 shadow-2xl h-14 border-slate-300">
+    <nav class="z-50 flex p-2 border-b-2 shadow-2xl h-14 border-slate-300">
         <div class="grow">
             <a href="index.php" class="font-serif text-3xl font-bold  text-transparent bg-clip-text bg-[#73F80B]">MyAgro</a>
         </div>
