@@ -12,6 +12,10 @@
     <?php require('header.php'); ?>
 
     <div class="flex flex-col items-center w-full h-full gap-5">
+
+        <div class="bg-[#76e543] w-full h-[100px] mt-1">
+            <h1></h1>
+        </div>
         
         <div>
             <h1 class="flex justify-center mt-20 font-serif text-3xl italic font-bold ">Select Category</h1>   
@@ -39,6 +43,10 @@
                 </a>
             </div>
 
+        </div>
+
+        <div class="bg-[#76e543] w-full h-[100px] mt-20">
+            <h1></h1>
         </div>
         
         
